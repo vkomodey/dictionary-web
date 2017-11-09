@@ -1,7 +1,7 @@
 module.exports = {
     extends: 'airbnb-base',
     parserOptions: {
-        ecmaVersion: 6,
+        ecmaVersion: 2017,
         sourceType: 'script', // modules are not yet supported by Node.js
     },
     env: {
@@ -20,7 +20,7 @@ module.exports = {
         'indent': ['error', 4, { 'SwitchCase': 1 }],
         'max-len': ['error', 120],
         'no-debugger': 'warn', // avoid making it an 'error' - it'll break dev flow
-        'no-restricted-syntax': ['error', 'TryStatement', 'ForInStatement', 'LabeledStatement', 'WithStatement'],
+        'no-restricted-syntax': ['error', 'ForInStatement', 'LabeledStatement', 'WithStatement'],
         'no-underscore-dangle': ['error', { allow: ['_id'] }], // unable to avoid usage of MongoDB hardcoded ID field name
         'no-use-before-define': ['error', { 'functions': false }],
         'prefer-const': 'off',
@@ -38,5 +38,5 @@ module.exports = {
         'newline-after-var': ["error", "always"],
         'curly': ['warn', 'all'],
         'brace-style': ['error', '1tbs', { allowSingleLine: false }],
-    },
+    }
 };

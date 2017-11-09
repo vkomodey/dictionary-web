@@ -11,7 +11,9 @@ let envConfig = require('./env');
 
 let app = new Koa();
 
-mongoose.connect(envConfig.mongodb, () => {
+mongoose.connect(envConfig.mongodb, {
+    useMongoClient: true,
+}).then(() => {
     /* eslint-disable */
     console.log(`        MongoDB connected to ${envConfig.mongodb}`);
     console.log('*******************************************************');
