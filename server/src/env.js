@@ -9,4 +9,5 @@ module.exports = {
     combineUrl() {
         return `${this.schema}://${this.host}:${this.port}`;
     },
+    mongodb: 'mongodb://localhost:27017',
 };
