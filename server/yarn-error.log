@@ -1,0 +1,57 @@
+Arguments: 
+  /home/vlad/.nvm/versions/node/v8.9.0/bin/node /usr/bin/yarn install
+
+PATH: 
+  /home/vlad/.nvm/versions/node/v8.9.0/bin:/usr/local/sbin:/usr/local/bin:/usr/bin:/usr/lib/jvm/default/bin:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl:/home/vlad/mohito/bin:/home/vlad/bin
+
+Yarn version: 
+  1.2.1
+
+Node version: 
+  8.9.0
+
+Platform: 
+  linux x64
+
+npm manifest: 
+  {
+    "name": "dictionary",
+    "version": "1.0.0",
+    "main": "index.js",
+    "license": "MIT",
+    "scripts": {
+      "dev": "nodemon src/server/main.js",
+      "build": "webpack -p"
+    },
+    "devDependencies": {
+      "nodemon": "^1.12.1",
+    },
+    "dependencies": {
+      "app-module-path": "^2.2.0",
+      "koa": "^2.4.1",
+      "koa-bodyparser": "^4.2.0",
+      "koa-logger": "^3.1.0",
+      "koa-router": "^7.2.1"
+    },
+    "nodemonConfig": {
+      "ignore": [
+        "src/client*"
+      ],
+      "delay": "2500"
+    }
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile
+
+Trace: 
+  SyntaxError: /home/vlad/dev/dictionary/server/package.json: Unexpected token } in JSON at position 228
+      at JSON.parse (<anonymous>)
+      at /usr/lib/node_modules/yarn/lib/cli.js:770:59
+      at Generator.next (<anonymous>)
+      at step (/usr/lib/node_modules/yarn/lib/cli.js:92:30)
+      at /usr/lib/node_modules/yarn/lib/cli.js:103:13
+      at <anonymous>

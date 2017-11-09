@@ -1,0 +1,28 @@
+{
+  "name": "dictionary-client",
+  "version": "1.0.0",
+  "description": "Client for dictionary application",
+  "main": "index.js",
+  "author": "Vlad Komodey",
+  "license": "MIT",
+  "scripts": {
+    "dev": "node index.js"
+  },
+  "dependencies": {
+    "koa": "2.4.1",
+    "react": "16.0.0",
+    "react-dom": "16.0.0",
+    "koa-static": "4.0.1"
+  },
+  "devDependencies": {
+    "babel-core": "6.26.0",
+    "babel-loader": "7.1.2",
+    "babel-plugin-transform-runtime": "6.23.0",
+    "babel-preset-env": "1.6.1",
+    "babel-preset-react": "6.24.1",
+    "babel-preset-stage-1": "6.24.1",
+    "koa-webpack-dev-middleware": "2.0.2",
+    "koa-webpack-hot-middleware": "1.0.3",
+    "webpack": "3.8.1"
+  }
+}

@@ -1,8 +1,8 @@
 'use strict';
 
 let Router = require('koa-router');
-let pairRouter = require('src/server/modules/pair');
-let { apiPrefix } = require('src/server/env');
+let pairRouter = require('src/modules/pair');
+let { apiPrefix } = require('src/env');
 
 module.exports = (app) => {
     let mainRouter = new Router();

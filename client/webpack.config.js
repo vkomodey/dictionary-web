@@ -2,10 +2,9 @@
 
 let path = require('path');
 let webpack = require('webpack');
-let envConfig = require('src/server/env');
 
 module.exports = {
-    context: path.resolve(__dirname, 'app'),
+    context: path.resolve(__dirname, 'src'),
     entry: [
         './main.jsx',
         'webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000',
@@ -35,6 +34,6 @@ module.exports = {
         ],
     },
     resolve: {
-        modules: [path.resolve(__dirname, '../../node_modules')],
+        modules: [path.resolve(__dirname, 'node_modules')],
     }
 };
