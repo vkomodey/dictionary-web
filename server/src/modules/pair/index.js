@@ -9,6 +9,7 @@ router.get('/', getAll);
 
 function getById(ctx) {
     let { id } = ctx.params;
+
     ctx.body = { id };
 }
 

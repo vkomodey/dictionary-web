@@ -6,7 +6,7 @@ module.exports = {
     host: 'localhost',
     schema: 'http',
     apiPrefix: '/v1',
-    combineUrl: function() {
+    combineUrl() {
         return `${this.schema}://${this.host}:${this.port}`;
-    }
-}
+    },
+};

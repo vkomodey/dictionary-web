@@ -4,7 +4,8 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "dev": "nodemon src/main.js"
+    "dev": "yarn run lint && nodemon src/main.js",
+    "lint": "eslint . --fix --cache"
   },
   "dependencies": {
     "app-module-path": "^2.2.0",
@@ -14,6 +15,9 @@
     "koa-router": "^7.2.1"
   },
   "devDependencies": {
+    "eslint": "^4.10.0",
+    "eslint-plugin-import": "2.7.0",
+    "eslint-config-airbnb-base": "^12.1.0",
     "nodemon": "^1.12.1"
   }
 }
