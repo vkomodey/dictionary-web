@@ -8,7 +8,8 @@ let envConfig = require('./env');
 
 let app = new Koa();
 
-require('./configure-app')(app);
+require('./setup/koa')(app);
+require('./setup/routes')(app);
 
 app.use(ctx => {
     ctx.body = ctx.request.body;

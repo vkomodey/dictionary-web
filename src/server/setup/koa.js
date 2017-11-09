@@ -3,7 +3,6 @@
 let path = require('path');
 let koaLogger = require('koa-logger');
 let bodyParser = require('koa-bodyparser');
-//let { devMiddleware, hotMiddleware } = require('koa-webpack-middleware');
 var devMiddleware = require("koa-webpack-dev-middleware");
 var hotMiddleware = require("koa-webpack-hot-middleware");
 let serveStatic = require('koa-static');
@@ -18,6 +17,7 @@ module.exports = function(app) {
     app.use(koaLogger());
     app.use(bodyParser());
 
+    // webpack dev server middleware
     app.use(devMiddleware(compiledConfig, {
         noInfo: false,
         quiet: false,
@@ -27,6 +27,7 @@ module.exports = function(app) {
         }
     }));
 
+    // webpack hot reload middleware
     app.use(hotMiddleware(compiledConfig, {
         log: console.log,
         path: '/__webpack_hmr',
