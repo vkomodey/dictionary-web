@@ -3,8 +3,10 @@
 let koaLogger = require('koa-logger');
 let bodyParser = require('koa-bodyparser');
 let httpStatuses = require('src/constants/http');
+let cors = require('koa2-cors');
 
 module.exports = (app) => {
+    app.use(cors());
     app.use(koaLogger());
     app.use(bodyParser());
 

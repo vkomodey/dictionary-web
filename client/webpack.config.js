@@ -6,8 +6,9 @@ let webpack = require('webpack');
 module.exports = {
     context: path.resolve(__dirname, 'src'),
     entry: [
-        './main.jsx',
+        './main',
         'webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000',
+        'babel-polyfill',
     ],
     output: {
         filename: '[name].bundle.js',
@@ -34,6 +35,11 @@ module.exports = {
         ],
     },
     resolve: {
-        modules: [path.resolve(__dirname, 'node_modules')],
-    }
+        modules: [
+            path.resolve(__dirname, 'src'),
+            path.resolve(__dirname, 'node_modules'),
+        ],
+        extensions: ['.js', '.jsx', '.css']
+    },
+    devtool: 'source-map',
 };

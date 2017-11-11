@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import PairListing from 'app/modules/pair/listing';
+import httpService from 'app/utils/api-services/pairs';
 
 export default class App extends Component {
     constructor(props) {
@@ -10,7 +12,7 @@ export default class App extends Component {
     }
     render() {
         return (
-            <div> </div>
+            <PairListing />
         );
     }
 }

@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-//import App from './app/app.jsx';
+import App from 'app/app';
 
-ReactDOM.render((<div> azaza </div>), document.getElementById('root'))
+ReactDOM.render((<App />), document.getElementById('root'))
 
 if (module.hot) {
     module.hot.accept();

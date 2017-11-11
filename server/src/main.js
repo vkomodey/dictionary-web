@@ -15,7 +15,7 @@ mongoose.connect(envConfig.mongodb, {
     useMongoClient: true,
 }).then(() => {
     /* eslint-disable */
-    console.log(`        MongoDB connected to ${envConfig.mongodb}`);
+    console.log(`MongoDB connected to ${envConfig.mongodb}`);
     console.log('*******************************************************');
     /* eslint-enable */
 });
@@ -26,8 +26,8 @@ require('./setup/routes')(app);
 app.listen(envConfig.port, () => {
     /* eslint-disable */
     console.log('*******************************************************');
-    console.log(`        Starting ${meta.name} app`);
-    console.log(`        Listening ${envConfig.port} port`);
-    console.log(`        Time is ${(new Date()).toLocaleString()}`);
+    console.log(`Starting ${meta.name} app`);
+    console.log(`Listening ${envConfig.port} port`);
+    console.log(`Time is ${(new Date()).toLocaleString()}`);
     /* eslint-enable */
 });
