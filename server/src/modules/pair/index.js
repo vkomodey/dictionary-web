@@ -12,19 +12,26 @@ router.post('/', create);
 async function findById(ctx) {
     let { id } = ctx.params;
 
-    ctx.body = await Pair.findById(id);
+    try {
+        ctx.body = await Pair.findById(id);
+    } catch (err) {
+        ctx.internalError(err);
+    }
 }
 
 async function findAll(ctx) {
-    ctx.body = await Pair.find();
+    try {
+        ctx.respondSuccess(await Pair.find());
+    } catch (err) {
+        ctx.internalError(err);
+    }
 }
 
 async function create(ctx) {
     try {
-        ctx.body = await Pair.create(ctx.request.body);
+        ctx.respondSuccess(await Pair.create(ctx.request.body));
     } catch (err) {
-        ctx.status = 500;
-        ctx.body = 'Internaal';
+        ctx.internalError(err);
     }
 }
 
