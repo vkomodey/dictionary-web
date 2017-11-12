@@ -1,0 +1,14 @@
+$primary-color: #333;
+
+html {
+    height: 100%;
+}
+
+body {
+    display: flex;
+    height: 100%;
+    width: 100%;
+    font: 2em 'Raleway-Black', serif;
+    color: $primary-color;
+    overflow: hidden;
+}

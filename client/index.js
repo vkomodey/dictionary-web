@@ -13,7 +13,6 @@ let app = new Koa();
 let compiledConfig = webpack(webpackConfig);
 const PORT = 3001;
 
-// webpack dev server middleware
 app.use(devMiddleware(compiledConfig, {
     noInfo: false,
     quiet: false,
@@ -23,7 +22,6 @@ app.use(devMiddleware(compiledConfig, {
     }
 }));
 
-// webpack hot reload middleware
 app.use(hotMiddleware(compiledConfig, {
     log: console.log,
     path: '/__webpack_hmr',

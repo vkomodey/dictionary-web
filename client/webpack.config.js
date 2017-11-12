@@ -2,6 +2,7 @@
 
 let path = require('path');
 let webpack = require('webpack');
+let OpenBrowserPlugin = require('open-browser-webpack-plugin');
 
 module.exports = {
     context: path.resolve(__dirname, 'src'),
@@ -17,22 +18,39 @@ module.exports = {
     },
     plugins: [
         new webpack.HotModuleReplacementPlugin(),
+        new OpenBrowserPlugin({ url: 'http://localhost:3001' })
     ],
     module: {
-        rules: [
-            {
-                test: /.jsx$/,
-                exclude: /node_modules*/,
-                use: [
-                    {
-                        loader: 'babel-loader',
-                        options: {
-                            cacheDirectory: true,
-                        },
-                    },
-                ],
+        rules: [{
+            test: /\.jsx$/,
+            exclude: /node_modules*/,
+            use: [
+                {
+                    loader: 'babel-loader',
+                    options: { cacheDirectory: true},
+                },
+            ],
+        }, {
+            test: /\.scss$/,
+            use: [
+                {loader: "style-loader"},
+                {loader: "css-loader" },
+                {loader: "sass-loader"}
+            ]
+        }, {
+            test: /\.(woff2?|ttf|eot)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+            loader: 'url-loader',
+            options: {
+                limit: 30000,
+                name: 'fonts/[name]-[hash].[ext]',
             },
-        ],
+        }, {
+            test: /\.(jpg|png|svg)$/,
+            loader: 'file-loader',
+            options: {
+                name: '[path][name].[hash].[ext]',
+            },
+        }],
     },
     resolve: {
         modules: [
