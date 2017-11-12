@@ -1,9 +1,12 @@
 import React from 'react';
-//import PairListing from 'app/modules/pair/listing';
+import PairListing from 'app/modules/pair/listing';
 import Header from 'app/modules/header';
 
 export default function App() {
     return (
-        <Header />
+        <div>
+            <Header />
+            <PairListing />
+        </div>
     );
 }

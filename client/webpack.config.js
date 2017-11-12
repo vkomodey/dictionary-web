@@ -38,6 +38,12 @@ module.exports = {
                 {loader: "sass-loader"}
             ]
         }, {
+            test: /\.css$/,
+            use: [
+                {loader: 'style-loader'},
+                {loader: 'css-loader'},
+            ],
+        }, {
             test: /\.(woff2?|ttf|eot)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
             loader: 'url-loader',
             options: {

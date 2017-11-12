@@ -1,5 +1,8 @@
 {
   "devDependencies": {
     "open-browser-webpack-plugin": "^0.0.5"
+  },
+  "dependencies": {
+    "react-table": "^6.7.4"
   }
 }
