@@ -1,0 +1,27 @@
+input {
+    border: 1px solid $grey;
+    color: $input-color;
+    display: inline-block;
+    font-family: inherit;
+    font-weight: 450;
+    font-size: 20px;
+    width: 300px;
+    margin: 3px 3px;
+    height: 30px;
+    padding: 4px 4px 4px;
+    -webkit-transition: all 0.30s ease-in-out;
+    -moz-transition: all 0.30s ease-in-out;
+    -ms-transition: all 0.30s ease-in-out;
+    -o-transition: all 0.30s ease-in-out;
+}
+
+input:focus {
+    outline: 0;
+    box-shadow: 0 0 5px $grey;
+    border: 1px solid $grey-dark;
+}
+
+input::placeholder {
+    font-size: 20px;
+    padding: 2px 4px 2px;
+}

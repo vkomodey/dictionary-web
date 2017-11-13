@@ -1,0 +1,26 @@
+button {
+    border: 1px solid $grey;
+    background-color: $white;
+    cursor: pointer;
+    color: $input-color;
+    font-weight: 400;
+    letter-spacing: 0.5px;
+    margin: 5px 5px;
+    padding: 10px 10px;
+    text-transform: uppercase;
+    text-align: center;
+    width: 400px;
+    -webkit-transition: all 0.30s ease-in-out;
+    -moz-transition: all 0.30s ease-in-out;
+    -ms-transition: all 0.30s ease-in-out;
+    -o-transition: all 0.30s ease-in-out;
+}
+
+button:focus {
+    outline: 0;
+}
+
+button:hover {
+    outline: 0;
+    background-color: $grey-light; 
+}

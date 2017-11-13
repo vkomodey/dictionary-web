@@ -1,21 +1,8 @@
-import React, {Component} from 'react';
+import React from 'react';
+import PairItem from './pair.item';
 import apiPair from 'app/utils/api-services/pairs';
 
-import ReactTable from 'react-table';
-import "react-table/react-table.css";
-
-let columns = [
-    {
-        Header: "First Language",
-        accessor: "firstLangExpression",
-    },
-    {
-        Header: "Second Language",
-        accessor: "secondLangExpression",
-    }
-];
-
-export default class extends Component {
+export default class extends React.Component {
     constructor(props) {
         super(props);
 
@@ -32,11 +19,19 @@ export default class extends Component {
     }
 
     render() {
+        let { pairs } = this.state;
+        let pairsList = pairs.map(p => (
+                <li key={p._id}>
+                    <PairItem
+                        firstValue={p.firstLangExpression}
+                        secondValue={p.secondLangExpression}
+                    />
+                </li>
+        ));
         return (
-            <ReactTable
-                columns={columns}
-                data={this.state.pairs}
-            />
+            <ul>
+                {pairsList}
+            </ul>
         );
     }
 }

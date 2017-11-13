@@ -1,0 +1,20 @@
+.header {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    padding-top: 30px;
+    padding-bottom: 30px;
+    font-family: 'Lato', Calibri, Arial, sans-serif;
+    font-weight: 300;
+    font-size: 20px;
+    color: #89867e;
+
+    &__content_big {
+        letter-spacing: 1px;
+        font-size: 2em;
+    }
+    &__content_small {
+        letter-spacing: 1px;
+        font-size: 1em;
+    }
+}
