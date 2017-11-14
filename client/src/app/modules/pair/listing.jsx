@@ -37,6 +37,7 @@ class PairsListing extends React.Component {
                     </td>
                 </tr>
         ));
+
         return (
             <table>
                 <thead>
@@ -47,7 +48,7 @@ class PairsListing extends React.Component {
                     </tr>
                 </thead>
                 <tbody>
-                    {pairsList}
+                    {pairsList.length > 0 ? pairsList : <td colspan='3'> No pairs found! </td>}
                 </tbody>
             </table>
         );
