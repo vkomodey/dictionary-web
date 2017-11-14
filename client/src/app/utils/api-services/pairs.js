@@ -4,16 +4,11 @@ import endpoints from 'app/constants/endpoints';
 let endpoint = endpoints.pairs;
 
 export default { 
-    create(pair) {
-        return httpService.post(endpoint, null, pair);
-    },
+    create: pair => httpService.post(endpoint, null, pair),
 
-    findAll(query) {
-        return httpService.get(endpoint, query);
-    },
+    findAll: query => httpService.get(endpoint, query),
     
-    findById(id) {
-        let url = `${endpoint}/${id}`;
-        return httpService.get(url);
-    },
+    findById: id => httpService.get(`${endpoint}/${id}`),
+    
+    removeById: id => httpService.delete(`${endpoint}/${id}`),
 }

@@ -9,6 +9,7 @@ let defaultHeaders = {
 let apiService = {
     get: (url, query, headers) => makeRequest('GET', url, query, null, headers),
     post: (url, query, body, headers) => makeRequest('POST', url, query, body, headers),
+    delete: (url, query, headers) => makeRequest('DELETE', url, query, null, headers),
 };
 
 function makeRequest(method, url, query, body, headers) {

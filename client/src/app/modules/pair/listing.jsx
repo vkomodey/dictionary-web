@@ -1,7 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { fetchPairs, removePair } from 'app/redux/actions/pairs';
+import Button from 'app/components/button';
 import PairItem from './pair.item';
-import { fetchPairs } from 'app/redux/actions/pairs';
 
 class PairsListing extends React.Component {
     constructor(props) {
@@ -12,12 +13,28 @@ class PairsListing extends React.Component {
         this.props.retrievePairs();
     }
 
+    onRemoveClick = id => {
+        return e => {
+            e.preventDefault();
+
+            return this.props.removePair(id);
+        }
+    }
+
     render() {
         let { pairs } = this.props;
         let pairsList = pairs.map(p => (
                 <tr key={p._id}>
                     <td> {p.firstLangExpression} </td>
                     <td> {p.secondLangExpression} </td>
+                    <td> 
+                        <Button
+                            type='button'
+                            onClick={this.onRemoveClick(p._id)}
+                        >
+                            x
+                        </Button>
+                    </td>
                 </tr>
         ));
         return (
@@ -26,6 +43,7 @@ class PairsListing extends React.Component {
                     <tr>
                         <th>English</th>
                         <th>Russian</th>
+                        <th>Remove</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -45,6 +63,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
     return {
         retrievePairs: () => dispatch(fetchPairs()),
+        removePair: id => dispatch(removePair(id)), 
     }
 }
 
