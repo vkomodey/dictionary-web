@@ -6,8 +6,8 @@ export const PAIRS_RETRIEVED = 'PAIRS_RETRIEVED';
 export function createPair(pair) {
     return function(dispatch) {
         return pairApi.create(pair)
-            .then(pair =>
-                dispatch({ type: CREATE_PAIR, pair}));
+            .then(response =>
+                dispatch({ type: CREATE_PAIR, pair: response}));
     }
 }
 
