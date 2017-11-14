@@ -21,17 +21,25 @@ export default class extends React.Component {
     render() {
         let { pairs } = this.state;
         let pairsList = pairs.map(p => (
-                <li key={p._id}>
-                    <PairItem
-                        firstValue={p.firstLangExpression}
-                        secondValue={p.secondLangExpression}
-                    />
-                </li>
+                <tr key={p._id}>
+                    <td> {p.firstLangExpression} </td>
+                    <td> {p.secondLangExpression} </td>
+                </tr>
         ));
         return (
-            <ul>
-                {pairsList}
-            </ul>
+            <table>
+                <thead>
+                    <tr>
+                        <th>English</th>
+                    </tr>
+                    <tr>
+                        <th>Russian</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {pairsList}
+                </tbody>
+            </table>
         );
     }
 }

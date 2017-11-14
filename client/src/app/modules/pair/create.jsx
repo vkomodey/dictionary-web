@@ -15,10 +15,10 @@ export default class CreatePair extends React.Component {
                 </div>
                 <div className="create-pair__inputs-group">
                     <div className="create-pair__inputs-group__item">
-                        <Input type="text" placeholder="first expr"/>
+                        <Input type="text" placeholder="en"/>
                     </div>
                     <div className="create-pair__inputs-group__item">
-                        <Input type="text" placeholder="second expr"/>
+                        <Input type="text" placeholder="ru"/>
                     </div>
                 </div>
                 <Button type="button"> Create </Button>

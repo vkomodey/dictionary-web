@@ -23,5 +23,6 @@ button:focus {
 
 button:hover {
     outline: 0;
-    background-color: $grey-light; 
+    box-shadow: 0 0 5px $grey;
+    border: 1px solid $grey-dark;
 }
