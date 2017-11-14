@@ -8,12 +8,11 @@ let router = new Router();
 router.get('/:id', findById);
 router.get('/', findAll);
 router.post('/', create);
+router.delete('/:id', remove);
 
 async function findById(ctx) {
-    let { id } = ctx.params;
-
     try {
-        ctx.body = await Pair.findById(id);
+        ctx.body = await Pair.findById(ctx.params.id);
     } catch (err) {
         ctx.internalError(err);
     }
@@ -30,6 +29,14 @@ async function findAll(ctx) {
 async function create(ctx) {
     try {
         ctx.respondSuccess(await Pair.create(ctx.request.body));
+    } catch (err) {
+        ctx.internalError(err);
+    }
+}
+
+async function remove(ctx) {
+    try {
+        ctx.respondSuccess(await Pair.remove({ _id: ctx.params.id }));
     } catch (err) {
         ctx.internalError(err);
     }
