@@ -1,25 +1,19 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import PairItem from './pair.item';
-import apiPair from 'app/utils/api-services/pairs';
+import { fetchPairs } from 'app/redux/actions/pairs';
 
-export default class extends React.Component {
+class PairsListing extends React.Component {
     constructor(props) {
         super(props);
-
-        this.state = {
-            pairs: [],
-        };
     }
 
-    componentWillMount() {
-        apiPair.findAll()
-            .then(pairs => {
-                this.setState({pairs});
-            });
+    componentDidMount() {
+        this.props.retrievePairs();
     }
 
     render() {
-        let { pairs } = this.state;
+        let { pairs } = this.props;
         let pairsList = pairs.map(p => (
                 <tr key={p._id}>
                     <td> {p.firstLangExpression} </td>
@@ -31,8 +25,6 @@ export default class extends React.Component {
                 <thead>
                     <tr>
                         <th>English</th>
-                    </tr>
-                    <tr>
                         <th>Russian</th>
                     </tr>
                 </thead>
@@ -43,3 +35,17 @@ export default class extends React.Component {
         );
     }
 }
+
+function mapStateToProps(state) {
+    return {
+        pairs: state.pairs,
+    };
+}
+
+function mapDispatchToProps(dispatch) {
+    return {
+        retrievePairs: () => dispatch(fetchPairs()),
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(PairsListing);
