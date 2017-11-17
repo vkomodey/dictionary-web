@@ -4,7 +4,7 @@ let Koa = require('koa');
 let path = require('path');
 let devMiddleware = require("koa-webpack-dev-middleware");
 let hotMiddleware = require("koa-webpack-hot-middleware");
-let serveStatic = require('koa-static');
+let send = require('koa-send');
 let webpack = require('webpack');
 let webpackConfig = require('./webpack.config');
 let meta = require('./package.json');
@@ -28,7 +28,9 @@ app.use(hotMiddleware(compiledConfig, {
     heartbeat: 10 * 1000
 }));
 
-app.use(serveStatic(__dirname + '/src'));
+app.use(async (ctx) => {
+    await send(ctx, './src/index.html');
+});
 
 let server = app.listen(PORT, () => {
     console.log('*****************************************************');
