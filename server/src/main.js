@@ -11,11 +11,11 @@ let envConfig = require('./env');
 
 let app = new Koa();
 
-mongoose.connect(envConfig.mongodb, {
+mongoose.connect(envConfig.mongodbUrl, {
     useMongoClient: true,
 }).then(() => {
     /* eslint-disable */
-    console.log(`MongoDB connected to ${envConfig.mongodb}`);
+    console.log(`MongoDB connected to ${envConfig.mongodbUrl}`);
     console.log('*******************************************************');
     /* eslint-enable */
 });
@@ -23,11 +23,11 @@ mongoose.connect(envConfig.mongodb, {
 require('./setup/koa')(app);
 require('./setup/routes')(app);
 
-app.listen(envConfig.port, () => {
+app.listen(envConfig.nodePort, () => {
     /* eslint-disable */
     console.log('*******************************************************');
     console.log(`Starting ${meta.name} app`);
-    console.log(`Listening ${envConfig.port} port`);
+    console.log(`Listening ${envConfig.nodePort} port`);
     console.log(`Time is ${(new Date()).toLocaleString()}`);
     /* eslint-enable */
 });

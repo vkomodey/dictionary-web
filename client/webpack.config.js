@@ -2,7 +2,6 @@
 
 let path = require('path');
 let webpack = require('webpack');
-let OpenBrowserPlugin = require('open-browser-webpack-plugin');
 
 module.exports = {
     context: path.resolve(__dirname, 'src'),
@@ -17,8 +16,7 @@ module.exports = {
         publicPath: '/assets',
     },
     plugins: [
-        new webpack.HotModuleReplacementPlugin(),
-        new OpenBrowserPlugin({ url: 'http://localhost:3001' })
+        new webpack.HotModuleReplacementPlugin()
     ],
     module: {
         rules: [{

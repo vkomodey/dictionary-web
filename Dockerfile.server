@@ -1,0 +1,9 @@
+FROM kkarczmarczyk/node-yarn:8.0-slim
+
+ARG NODE_PORT=3000
+
+WORKDIR /usr/src/app/
+
+ARG 3000
+
+ENTRYPOINT yarn install && yarn run dev
