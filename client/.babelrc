@@ -6,7 +6,6 @@
     "react"
   ],
   "plugins": [
-    "transform-runtime",
-    "transform-export-default"
+    "transform-runtime"
   ]
 }
