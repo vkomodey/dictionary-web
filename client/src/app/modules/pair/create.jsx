@@ -16,12 +16,14 @@ class CreatePair extends React.Component {
     onClick = (e) => {
         e.preventDefault();
 
-        return this.props.onClick({
+        this.props.onClick({
             firstLangExpression: this.state.firstLangExpression,
             secondLangExpression: this.state.secondLangExpression,
             firstLang: 'en',
             secondLang: 'ru',
         });
+
+        this.clearInputs();
     }
 
     handleChange = (inputType) => {
@@ -32,6 +34,13 @@ class CreatePair extends React.Component {
                 secondLangExpression: inputType === 'ru' ? e.target.value : secondLangExpression,
             });
         }
+    }
+
+    clearInputs() {
+        this.setState({
+            firstLangExpression: '',
+            secondLangExpression: '',
+        });
     }
 
     render() {
