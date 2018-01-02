@@ -10,7 +10,7 @@ class PairsListing extends React.Component {
     }
 
     componentDidMount() {
-        this.props.retrievePairs();
+        this.props.findPairs();
     }
 
     onRemoveClick = id => {
@@ -24,18 +24,18 @@ class PairsListing extends React.Component {
     render() {
         let { pairs } = this.props;
         let pairsList = pairs.map(p => (
-                <tr key={p._id}>
-                    <td> {p.firstLangExpression} </td>
-                    <td> {p.secondLangExpression} </td>
-                    <td> 
-                        <Button
-                            type='button'
-                            onClick={this.onRemoveClick(p._id)}
-                        >
-                            x
-                        </Button>
-                    </td>
-                </tr>
+            <tr key={p._id}>
+                <td> {p.firstLangExpression} </td>
+                <td> {p.secondLangExpression} </td>
+                <td> 
+                    <Button
+                        type='button'
+                        onClick={this.onRemoveClick(p._id)}
+                    >
+                        x
+                    </Button>
+                </td>
+            </tr>
         ));
 
         return (
@@ -63,7 +63,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
     return {
-        retrievePairs: () => dispatch(fetchPairs()),
+        findPairs: () => dispatch(fetchPairs()),
         removePair: id => dispatch(removePair(id)), 
     }
 }

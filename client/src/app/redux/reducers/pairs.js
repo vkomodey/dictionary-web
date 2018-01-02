@@ -9,7 +9,7 @@ export function pairsReducer(state=[], { type, pair, pairs, id }) {
         case CREATE_PAIR:
             return [pair, ...state];
         case PAIRS_RETRIEVED:
-            return [...pairs, ...state];
+            return [...pairs];
         case REMOVE_PAIR:
             return state.filter(p => p._id !== id);
         default:

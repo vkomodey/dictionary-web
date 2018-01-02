@@ -49,30 +49,32 @@ class CreatePair extends React.Component {
                 <div className='create-pair__title'>
                     <span> Enter your pair </span>
                 </div>
-                <div className='create-pair__inputs-group'>
-                    <div className='create-pair__inputs-group__item'>
-                        <Input 
-                            type='text'
-                            placeholder='en'
-                            value={this.state.firstLangExpression}
-                            onChange={this.handleChange('en')}
-                        />
+                <form>
+                    <div className='create-pair__inputs-group'>
+                        <div className='create-pair__inputs-group__item'>
+                            <Input 
+                                type='text'
+                                placeholder='en'
+                                value={this.state.firstLangExpression}
+                                onChange={this.handleChange('en')}
+                            />
+                        </div>
+                        <div className='create-pair__inputs-group__item'>
+                            <Input 
+                                type='text' 
+                                placeholder='ru'
+                                value={this.state.secondLangExpression}
+                                onChange={this.handleChange('ru')}
+                            />
+                        </div>
                     </div>
-                    <div className='create-pair__inputs-group__item'>
-                        <Input 
-                            type='text' 
-                            placeholder='ru'
-                            value={this.state.secondLangExpression}
-                            onChange={this.handleChange('ru')}
-                        />
-                    </div>
-                </div>
-                <Button 
-                    type='button'
-                    onClick={this.onClick}
-                >
-                    Create 
-                </Button>
+                    <Button 
+                        type='submit'
+                        onClick={this.onClick}
+                    >
+                        Create 
+                    </Button>
+                </form>
             </div>
         );
     }
