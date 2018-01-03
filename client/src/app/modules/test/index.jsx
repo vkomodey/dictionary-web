@@ -38,7 +38,7 @@ class Test extends React.Component {
                     wrongLen: 0,
                     currentPairIndex: 0,
                     finished: false,
-                    pairs: shuffle(this.props.pairs),
+                    pairs: shuffle(this.props.pairs).map(p => Object.assign({answered: false}, p)),
                 });
             } else if ( actionType === FINISH ) {
                 this.setState({
@@ -63,11 +63,12 @@ class Test extends React.Component {
         let newIndex = currentPairIndex + 1;
         let isTestFinished = newIndex > pairs.length - 1; 
         let newPairs = [
-            ...pairs.slice(0, currentPairIndex),
-            Object.assign({
+            Object.assign({}, currentPair, {
                 isAnswerRight,
                 answer,
-            }, currentPair),
+                answered: true,
+            }),
+            ...pairs.slice(0, currentPairIndex),
             ...pairs.slice(currentPairIndex + 1, pairs.length)
         ];
 
@@ -118,7 +119,6 @@ class Test extends React.Component {
                             
                     </div>
                 }
-                <MatchedList pairs={this.state.pairs}/>
                 { this.state.finished &&
                     <div>
                         <div className="testing__progress-bar">
@@ -131,6 +131,7 @@ class Test extends React.Component {
                         </div>
                     </div>
                 }
+                <MatchedList pairs={this.state.pairs}/>
             </div>
         );
     }

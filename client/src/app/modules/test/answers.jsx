@@ -3,7 +3,7 @@ import CheckIcon from 'assets/icons/check.svg';
 import ErrorIcon from 'assets/icons/error.svg'; 
 
 export default function MatchedList(props) {
-    let answeredPairs = props.pairs.filter(p => p.answer);
+    let answeredPairs = props.pairs.filter(p => p.answered);
     let pairsView = answeredPairs.map(p => (
         <tr key={p._id}> 
             <td> {p.firstLangExpression} </td>
