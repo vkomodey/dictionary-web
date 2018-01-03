@@ -3,10 +3,10 @@ import { connect } from 'react-redux';
 import { fetchPairs } from 'app/redux/actions/pairs';
 import Input from 'app/components/input';
 import Button from 'app/components/button';
+import MatchedList from './answers';
 import { shuffle } from 'app/utils/array';
 
-const START = 'start';
-const FINISH = 'finish';
+const START = 'start'; const FINISH = 'finish';
 
 class Test extends React.Component {
     constructor(props) {
@@ -60,18 +60,28 @@ class Test extends React.Component {
         let { currentPairIndex, answer, rightLen, wrongLen, pairs } = this.state;
         let currentPair = pairs[currentPairIndex];
         let isAnswerRight = answer === currentPair.firstLangExpression;
-        let currentIndex = currentPairIndex + 1;
-        let isTestFinished = currentIndex > pairs.length - 1;
+        let newIndex = currentPairIndex + 1;
+        let isTestFinished = newIndex > pairs.length - 1; 
+        let newPairs = [
+            ...pairs.slice(0, currentPairIndex),
+            Object.assign({
+                isAnswerRight,
+                answer,
+            }, currentPair),
+            ...pairs.slice(currentPairIndex + 1, pairs.length)
+        ];
+
 
         e.preventDefault();
 
         this.setState({
             answer: '',
-            currentPairIndex: currentIndex,
+            currentPairIndex: newIndex,
             rightLen: isAnswerRight ? rightLen + 1 : rightLen,
             wrongLen: !isAnswerRight ? wrongLen + 1 : wrongLen,
             finished: isTestFinished,
             inProgress: !isTestFinished,
+            pairs: newPairs,
         });
     }
 
@@ -85,19 +95,17 @@ class Test extends React.Component {
                     { !this.state.inProgress &&
                         <Button onClick={this.handleStartFinish(START)} > Start </Button>
                     }
-                    { this.state.inProgress &&
-                        <Button onClick={this.handleStartFinish(FINISH)} > END </Button>
-                    }
                 </div>
 
                 { this.state.inProgress && 
-                    <div className="testing__work-section">
-                        <form>
+                    <div>
+                        <form className="testing__work-section" >
                             <span> { currentPair.secondLangExpression } </span>
                             <Input
                                 type='text'
                                 value={this.state.answer}
                                 onChange={this.handleAnswerChange}
+                                className="testing__work-section__input"
                             />
                             <Button
                                 type='submit'
@@ -105,10 +113,12 @@ class Test extends React.Component {
                             >
                                 Answer
                             </Button>
+                            <Button onClick={this.handleStartFinish(FINISH)} > END </Button>
                         </form>
                             
                     </div>
                 }
+                <MatchedList pairs={this.state.pairs}/>
                 { this.state.finished &&
                     <div>
                         <div className="testing__progress-bar">

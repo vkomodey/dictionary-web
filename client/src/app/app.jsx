@@ -7,13 +7,13 @@ import { BrowserRouter as Router, Route } from 'react-router-dom';
 
 export default function App() {
     return (
-            <Router>
-                <div>
-                    <Header />
-                    <Navbar />
-                    <Route exact path="/" component={PairPage} />
-                    <Route path="/test" component={TestPage} />
-                </div>
-            </Router>
+        <Router>
+            <div>
+                <Header />
+                <Navbar />
+                <Route exact path="/" component={PairPage} />
+                <Route path="/test" component={TestPage} />
+            </div>
+        </Router>
     );
 }
