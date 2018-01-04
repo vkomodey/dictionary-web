@@ -8,6 +8,7 @@ let Koa = require('koa');
 let mongoose = require('mongoose');
 let meta = require('package.json');
 let envConfig = require('./env');
+let startupTasks = require('./startup');
 
 let app = new Koa();
 
@@ -24,6 +25,7 @@ require('./setup/koa')(app);
 require('./setup/routes')(app);
 
 app.listen(envConfig.nodePort, () => {
+    startupTasks();
     /* eslint-disable */
     console.log('*******************************************************');
     console.log(`Starting ${meta.name} app`);

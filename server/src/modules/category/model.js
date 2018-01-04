@@ -6,13 +6,11 @@ let languages = require('src/utils/langs');
 
 let langCodes = Object.keys(languages);
 
-let pairSchema = new mongoose.Schema({
+let categorySchema = new mongoose.Schema({
     _id: { type: String, default: shortid.generate },
-    categoryId: { type: String, required: true },
-    firstLangExpression: { type: String, requried: true },
-    secondLangExpression: { type: String, required: true },
+    name: { type: String, required: true, unique: true },
     firstLang: { type: String, required: true, enum: langCodes },
     secondLang: { type: String, required: true, enum: langCodes },
 });
 
-module.exports = mongoose.model('pair', pairSchema);
+module.exports = mongoose.model('category', categorySchema);
