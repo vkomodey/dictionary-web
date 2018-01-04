@@ -19,8 +19,10 @@ async function findById(ctx) {
 }
 
 async function findAll(ctx) {
+    let query = ctx.query || {};
+
     try {
-        ctx.respondSuccess(await Pair.find());
+        ctx.respondSuccess(await Pair.find(query));
     } catch (err) {
         ctx.internalError(err);
     }
