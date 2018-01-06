@@ -8,6 +8,7 @@
     "dev": "nodemon --exec yarn run start",
     "lint": "eslint . --fix --cache"
   },
+  { "engines" : { "node" : "=8.9.0" } },
   "dependencies": {
     "app-module-path": "^2.2.0",
     "koa": "^2.4.1",

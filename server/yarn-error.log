@@ -1,14 +1,14 @@
 Arguments: 
-  /home/vlad/.nvm/versions/node/v8.9.0/bin/node /usr/bin/yarn run dev
+  /usr/local/bin/node /opt/yarn/bin/yarn.js run start
 
 PATH: 
-  /home/vlad/.nvm/versions/node/v8.9.0/bin:/usr/local/sbin:/usr/local/bin:/usr/bin:/usr/lib/jvm/default/bin:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl:/home/vlad/mohito/bin:/home/vlad/bin
+  /usr/src/app/node_modules/.bin:/usr/local/share/.config/yarn/link/node_modules/.bin:/usr/src/app/node_modules/.bin:/usr/local/share/.config/yarn/link/node_modules/.bin:/usr/local/lib/node_modules/npm/bin/node-gyp-bin:/usr/local/bin/node_modules/npm/bin/node-gyp-bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 
 Yarn version: 
-  1.2.1
+  1.3.2
 
 Node version: 
-  8.9.0
+  8.9.4
 
 Platform: 
   linux x64
@@ -24,12 +24,14 @@ npm manifest:
       "dev": "nodemon --exec yarn run start",
       "lint": "eslint . --fix --cache"
     },
+    { "engines" : { "node" : "=8.9.0" } },
     "dependencies": {
       "app-module-path": "^2.2.0",
       "koa": "^2.4.1",
       "koa-bodyparser": "^4.2.0",
       "koa-logger": "^3.1.0",
       "koa-router": "^7.2.1",
+      "koa2-cors": "^2.0.4",
       "mongoose": "^4.13.1",
       "shortid": "^2.2.8"
     },
@@ -38,9 +40,6 @@ npm manifest:
       "eslint-config-airbnb-base": "^12.1.0",
       "eslint-plugin-import": "2.7.0",
       "nodemon": "^1.12.1"
-    },
-    "nodemonConfig": {
-        "delay": 1000,
     }
   }
 
@@ -226,6 +225,13 @@ Lockfile:
       chalk "^1.1.3"
       esutils "^2.0.2"
       js-tokens "^3.0.2"
+  
+  babel-runtime@^6.20.0:
+    version "6.26.0"
+    resolved "https://registry.yarnpkg.com/babel-runtime/-/babel-runtime-6.26.0.tgz#965c7058668e82b55d7bfe04ff2337bc8b5647fe"
+    dependencies:
+      core-js "^2.4.0"
+      regenerator-runtime "^0.11.0"
   
   balanced-match@^1.0.0:
     version "1.0.0"
@@ -459,6 +465,10 @@ Lockfile:
   copy-to@^2.0.1:
     version "2.0.1"
     resolved "https://registry.yarnpkg.com/copy-to/-/copy-to-2.0.1.tgz#2680fbb8068a48d08656b6098092bdafc906f4a5"
+  
+  core-js@^2.4.0:
+    version "2.5.1"
+    resolved "https://registry.yarnpkg.com/core-js/-/core-js-2.5.1.tgz#ae6874dc66937789b80754ff5428df66819ca50b"
   
   core-util-is@1.0.2, core-util-is@~1.0.0:
     version "1.0.2"
@@ -1419,6 +1429,12 @@ Lockfile:
       methods "^1.0.1"
       path-to-regexp "^1.1.1"
   
+  koa2-cors@^2.0.4:
+    version "2.0.4"
+    resolved "https://registry.yarnpkg.com/koa2-cors/-/koa2-cors-2.0.4.tgz#6fbc339e3f6cb7c236513d1ca64e9b05ab7e1900"
+    dependencies:
+      babel-runtime "^6.20.0"
+  
   koa@^2.4.1:
     version "2.4.1"
     resolved "https://registry.yarnpkg.com/koa/-/koa-2.4.1.tgz#d449cfb970a7e9da571f699eda40bb9e32eb1484"
@@ -2088,6 +2104,10 @@ Lockfile:
       readable-stream "^2.0.2"
       set-immediate-shim "^1.0.1"
   
+  regenerator-runtime@^0.11.0:
+    version "0.11.0"
+    resolved "https://registry.yarnpkg.com/regenerator-runtime/-/regenerator-runtime-0.11.0.tgz#7e54fe5b5ccd5d6624ea6255c3473be090b802e1"
+  
   regex-cache@^0.4.2:
     version "0.4.4"
     resolved "https://registry.yarnpkg.com/regex-cache/-/regex-cache-0.4.4.tgz#75bdc58a2a1496cec48a12835bc54c8d562336dd"
@@ -2595,10 +2615,10 @@ Lockfile:
     resolved "https://registry.yarnpkg.com/yallist/-/yallist-2.1.2.tgz#1c11f9218f076089a47dd512f93c6699a6a81d52"
 
 Trace: 
-  SyntaxError: /home/vlad/dev/dictionary/server/package.json: Unexpected token } in JSON at position 662
+  SyntaxError: /usr/src/app/package.json: Unexpected token { in JSON at position 243
       at JSON.parse (<anonymous>)
-      at /usr/lib/node_modules/yarn/lib/cli.js:770:59
+      at /opt/yarn/lib/cli.js:770:59
       at Generator.next (<anonymous>)
-      at step (/usr/lib/node_modules/yarn/lib/cli.js:92:30)
-      at /usr/lib/node_modules/yarn/lib/cli.js:103:13
+      at step (/opt/yarn/lib/cli.js:92:30)
+      at /opt/yarn/lib/cli.js:103:13
       at <anonymous>

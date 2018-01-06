@@ -7,7 +7,6 @@ module.exports = {
     context: path.resolve(__dirname, 'src'),
     entry: [
         './main',
-        'webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000',
         'babel-polyfill',
     ],
     output: {
