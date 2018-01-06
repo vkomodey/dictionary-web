@@ -1,4 +1,4 @@
-FROM kkarczmarczyk/node-yarn:8.0-slim
+FROM node:8.9
 
 ARG NODE_PORT=3000
 
