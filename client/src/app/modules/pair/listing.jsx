@@ -1,16 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { fetchPairs, removePair } from 'app/redux/actions/pairs';
+import { removePair } from 'app/redux/actions/pairs';
 import Button from 'app/components/button';
-import PairItem from './pair.item';
 
 class PairsListing extends React.Component {
     constructor(props) {
         super(props);
-    }
-
-    componentDidMount() {
-        this.props.findPairs();
     }
 
     onRemoveClick = id => {
@@ -63,7 +58,6 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
     return {
-        findPairs: () => dispatch(fetchPairs()),
         removePair: id => dispatch(removePair(id)), 
     }
 }

@@ -1,5 +1,5 @@
 import 'whatwg-fetch';
-import url from 'url';
+import urlLib from 'url';
 import _ from 'lodash';
 
 let defaultHeaders = {
@@ -25,7 +25,7 @@ function getUrl(url, query) {
     let urlToSend = url;
 
     if ( _.isObject(query) ){ 
-        urlToSend = `${urlToSend}${url.format({query})}`;
+        urlToSend = `${urlToSend}${urlLib.format({query})}`;
     } else if ( _.isString(query) ) {
         urlToSend = `${urlToSend}${query}`;
     }

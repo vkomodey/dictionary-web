@@ -19,6 +19,7 @@ class CreatePair extends React.Component {
         this.props.onClick({
             firstLangExpression: this.state.firstLangExpression,
             secondLangExpression: this.state.secondLangExpression,
+            categoryId: this.props.activeCategoryId,
             firstLang: 'en',
             secondLang: 'ru',
         });
@@ -72,13 +73,19 @@ class CreatePair extends React.Component {
                         type='submit'
                         onClick={this.onClick}
                     >
-                        Create 
+                        Add 
                     </Button>
                 </form>
             </div>
         );
     }
 }
+
+function mapStateToProps(state) {
+    return {
+        activeCategoryId: state.activeCategoryId,
+    };
+};
 
 function mapDispatchToProps(dispatch) {
     return {
@@ -88,4 +95,4 @@ function mapDispatchToProps(dispatch) {
     }
 }
 
-export default connect(null, mapDispatchToProps)(CreatePair);
+export default connect(mapStateToProps, mapDispatchToProps)(CreatePair);

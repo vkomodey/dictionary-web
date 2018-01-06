@@ -1,6 +1,5 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { fetchPairs } from 'app/redux/actions/pairs';
 import Input from 'app/components/input';
 import Button from 'app/components/button';
 import MatchedList from './answers';
@@ -21,10 +20,6 @@ class Test extends React.Component {
             wrongLen: 0,
             pairs: [],
         };
-    }
-
-    componentWillMount() {
-        this.props.findPairs()
     }
 
     handleStartFinish = (actionType) => {

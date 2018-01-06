@@ -12,9 +12,9 @@ export function createPair(pair) {
     }
 }
 
-export function fetchPairs() {
+export function fetchPairs(categoryId) {
     return function(dispatch) {
-        return pairApi.findAll()
+        return pairApi.findAll({ categoryId })
             .then(pairs =>
                 dispatch({ type: PAIRS_RETRIEVED, pairs}));
     };
