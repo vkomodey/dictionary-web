@@ -1,4 +1,4 @@
-let api = 'http://localhost:3000';
+let api = window.config.apiUrl;
 let prefix = 'v1';
 
 export default {

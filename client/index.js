@@ -1,6 +1,7 @@
 'use strict';
 
 let Koa = require('koa');
+let render = require('koa-ejs');
 let path = require('path');
 let send = require('koa-send');
 let webpack = require('webpack');
@@ -10,6 +11,7 @@ let meta = require('./package.json');
 let config = {
     env: process.env.NODE_ENV || 'development',
     port: process.env.PORT || 3001,
+    apiUrl: process.env.API_URL || 'http://localhost:3000',
 }
 let app = new Koa();
 let compiledConfig = webpack(webpackConfig);
@@ -30,8 +32,13 @@ if ( config.env === 'development') {
         path: '/__webpack_hmr',
         heartbeat: 10 * 1000
     }));
-
 }
+
+render(app, {
+    root: path.join(__dirname, 'src'),
+    layout: 'index',
+    viewExt: 'html'
+});
 
 app.use(async (ctx) => {
     if ( ctx.path.startsWith('/assets') ) {
@@ -40,7 +47,9 @@ app.use(async (ctx) => {
         return await send(ctx, `./dist/${assetPath}`);
     }
     
-    return await send(ctx, './src/index.html');
+    return await ctx.render('index', {
+        apiUrl: config.apiUrl,
+    });
 });
 
 let server = app.listen(config.port, () => {

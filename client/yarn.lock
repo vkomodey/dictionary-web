@@ -1471,7 +1471,7 @@ debug@*:
   dependencies:
     ms "2.0.0"
 
-debug@^2.2.0, debug@^2.6.3, debug@^2.6.8:
+debug@^2.2.0, debug@^2.6.1, debug@^2.6.3, debug@^2.6.8:
   version "2.6.9"
   resolved "https://registry.yarnpkg.com/debug/-/debug-2.6.9.tgz#5d128515df134ff327e90a4c93f4e077a536341f"
   dependencies:
@@ -1547,6 +1547,10 @@ ecc-jsbn@~0.1.1:
 ee-first@1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/ee-first/-/ee-first-1.1.1.tgz#590c61156b0ae2f4f0255732a158b266bc56b21d"
+
+ejs@^2.5.6:
+  version "2.5.7"
+  resolved "https://registry.yarnpkg.com/ejs/-/ejs-2.5.7.tgz#cc872c168880ae3c7189762fd5ffc00896c9518a"
 
 electron-to-chromium@^1.2.7, electron-to-chromium@^1.3.27:
   version "1.3.27"
@@ -2465,6 +2469,14 @@ koa-convert@^1.2.0:
   dependencies:
     co "^4.6.0"
     koa-compose "^3.0.0"
+
+koa-ejs@^4.1.0:
+  version "4.1.0"
+  resolved "https://registry.yarnpkg.com/koa-ejs/-/koa-ejs-4.1.0.tgz#40d54786e69d0be7ef3d23d5c9e8e6f6570f26fc"
+  dependencies:
+    debug "^2.6.1"
+    ejs "^2.5.6"
+    mz "^2.6.0"
 
 koa-is-json@^1.0.0:
   version "1.0.0"
