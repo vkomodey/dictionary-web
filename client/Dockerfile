@@ -8,7 +8,7 @@ ENV NODE_ENV=production
 ADD package.json .
 ADD yarn.lock .
 
-RUN yarn install
+RUN yarn install --prod --pure-lockfile --non-interactive
 
 ADD src ./src
 ADD webpack.config.js .

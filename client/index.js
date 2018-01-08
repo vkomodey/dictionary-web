@@ -2,8 +2,6 @@
 
 let Koa = require('koa');
 let path = require('path');
-let devMiddleware = require("koa-webpack-dev-middleware");
-let hotMiddleware = require("koa-webpack-hot-middleware");
 let send = require('koa-send');
 let webpack = require('webpack');
 let webpackConfig = require('./webpack.config');
@@ -18,7 +16,7 @@ let compiledConfig = webpack(webpackConfig);
 
 if ( config.env === 'development') {
     webpackConfig.entry.push('webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000');
-    app.use(devMiddleware(compiledConfig, {
+    app.use(require('koa-webpack-dev-middleware')(compiledConfig, {
         noInfo: false,
         quiet: false,
         publicPath: webpackConfig.output.publicPath,
@@ -27,7 +25,7 @@ if ( config.env === 'development') {
         }
     }));
 
-    app.use(hotMiddleware(compiledConfig, {
+    app.use(require('koa-webpack-hot-middleware')(compiledConfig, {
         log: console.log,
         path: '/__webpack_hmr',
         heartbeat: 10 * 1000
