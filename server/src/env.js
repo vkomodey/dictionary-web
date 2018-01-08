@@ -4,7 +4,7 @@ let stringUtils = require('src/utils/string');
 
 let config = {
     nodeEnv: 'development',
-    nodePort: 3000,
+    port: 3000,
     host: 'localhost',
     schema: 'http',
     apiPrefix: '/v1',

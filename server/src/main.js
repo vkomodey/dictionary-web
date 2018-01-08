@@ -24,12 +24,12 @@ mongoose.connect(envConfig.mongodbUrl, {
 require('./setup/koa')(app);
 require('./setup/routes')(app);
 
-app.listen(envConfig.nodePort, () => {
+app.listen(envConfig.port, () => {
     startupTasks();
     /* eslint-disable */
     console.log('*******************************************************');
     console.log(`Starting ${meta.name} app`);
-    console.log(`Listening ${envConfig.nodePort} port`);
+    console.log(`Listening ${envConfig.port} port`);
     console.log(`Time is ${(new Date()).toLocaleString()}`);
     /* eslint-enable */
 });
