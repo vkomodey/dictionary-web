@@ -5,6 +5,7 @@ import Header from 'app/modules/header';
 import PairPage from 'app/modules/pair';
 import TestPage from 'app/modules/test';
 import Navbar from 'app/modules/header/navbar';
+import ActiveCategory from 'app/modules/header/active-category';
 import { fetchCategories, checkActiveCategory } from 'app/redux/actions/categories';
 import { fetchPairs } from 'app/redux/actions/pairs';
 
@@ -42,6 +43,7 @@ class App extends React.Component {
                 <div>
                     <Header />
                     <Navbar />
+                    <ActiveCategory />
                     <Route exact path="/" component={PairPage} />
                     <Route path="/test" component={TestPage} />
                 </div>
