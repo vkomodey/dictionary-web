@@ -35,7 +35,6 @@ class App extends React.Component {
 
             return this.props.checkActiveCategory(categories[0]._id);
         }
-        
     }
 
     render() {
