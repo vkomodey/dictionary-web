@@ -12,7 +12,8 @@ body {
     margin: 0;
     font-family: 'Lato', sans-serif;
     color: $primary-color;
-    overflow: hidden;
+    overflow-x: hidden;
+    padding-bottom: 20px;
 }
 
 ul {

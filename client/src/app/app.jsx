@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route } from 'react-router-dom';
 import { connect } from 'react-redux';
 import Header from 'app/modules/header';
 import PairPage from 'app/modules/pair';
+import CategoryPage from 'app/modules/category';
 import TestPage from 'app/modules/test';
 import Navbar from 'app/modules/header/navbar';
 import ActiveCategory from 'app/modules/header/active-category';
@@ -46,6 +47,7 @@ class App extends React.Component {
                     <ActiveCategory />
                     <Route exact path="/" component={PairPage} />
                     <Route path="/test" component={TestPage} />
+                    <Route path="/category" component={CategoryPage} />
                 </div>
             </Router>
         );

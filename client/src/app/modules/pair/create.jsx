@@ -48,9 +48,9 @@ class CreatePair extends React.Component {
         return (
             <div className='create-pair'>
                 <div className='create-pair__title'>
-                    <span> Enter your pair </span>
+                    <span> Pair </span>
                 </div>
-                <form>
+                <form className="create-pair__form">
                     <div className='create-pair__inputs-group'>
                         <div className='create-pair__inputs-group__item'>
                             <Input 
@@ -69,12 +69,11 @@ class CreatePair extends React.Component {
                             />
                         </div>
                     </div>
-                    <Button 
-                        type='submit'
-                        onClick={this.onClick}
-                    >
-                        Add 
-                    </Button>
+                    <div>
+                        <Button type='submit' onClick={this.onClick}>
+                            Add 
+                        </Button>
+                    </div>
                 </form>
             </div>
         );

@@ -4,7 +4,7 @@ select {
     color: $input-color;
     display: inline-block;
     font-family: inherit;
-    font-weight: 450;
+    font-weight: 500;
     font-size: 20px;
     width: 300px;
     margin: 3px 3px;
@@ -14,6 +14,11 @@ select {
     -moz-transition: all 0.30s ease-in-out;
     -ms-transition: all 0.30s ease-in-out;
     -o-transition: all 0.30s ease-in-out;
+}
+
+select > option {
+    font-family: inherit;
+    font-weight: 500;
 }
 
 select:focus {
