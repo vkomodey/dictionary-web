@@ -2,6 +2,7 @@
 
 let Router = require('koa-router');
 let Category = require('./model');
+let Pair = require('./../pair/model');
 
 let router = new Router();
 
@@ -36,7 +37,9 @@ async function create(ctx) {
 
 async function remove(ctx) {
     try {
-        ctx.respondSuccess(await Category.remove({ _id: ctx.params.id }));
+        await Category.remove({ _id: ctx.params.id });
+        await Pair.remove({ categoryId: ctx.params.id });
+        ctx.respondSuccess({ categoryId: ctx.params.id });
     } catch (err) {
         ctx.internalError(err);
     }
