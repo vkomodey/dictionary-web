@@ -7,6 +7,7 @@ import CategoryPage from 'app/modules/category';
 import TestPage from 'app/modules/test';
 import Navbar from 'app/modules/header/navbar';
 import ActiveCategory from 'app/modules/header/active-category';
+import Loader from 'app/components/loader';
 import { fetchCategories, checkActiveCategory } from 'app/redux/actions/categories';
 import { fetchPairs } from 'app/redux/actions/pairs';
 
@@ -41,6 +42,7 @@ class App extends React.Component {
         return (
             <Router>
                 <div>
+                    <Loader loading={this.props.isLoading} />
                     <Header />
                     <Navbar />
                     <ActiveCategory />
@@ -53,11 +55,12 @@ class App extends React.Component {
     }
 }
 
-function mapStateToProps({ categories, pairs, activeCategoryId }) {
+function mapStateToProps({ categories, pairs, activeCategoryId, isLoading }) {
     return {
         categories,
         pairs,
         activeCategoryId,
+        isLoading,
     };
 }
 function mapDispatchToProps(dispatch) {
