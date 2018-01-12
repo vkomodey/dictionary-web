@@ -1,2 +1,2 @@
-cd client/
-heroku container:push web --remote api
+cd server/
+heroku container:push api --remote api
