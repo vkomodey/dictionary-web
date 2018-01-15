@@ -4,7 +4,6 @@ import Input from 'app/components/input';
 import Button from 'app/components/button';
 import MatchedList from './answers';
 import { shuffle } from 'app/utils/array';
-
 const START = 'start'; const FINISH = 'finish';
 
 class Test extends React.Component {
@@ -106,6 +105,7 @@ class Test extends React.Component {
                             <Button
                                 type='submit'
                                 onClick={this.submitAnswer}
+                                disabled={!this.state.answer}
                             >
                                 Answer
                             </Button>

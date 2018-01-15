@@ -56,6 +56,7 @@ class CreateCategory extends React.Component {
                     <Button 
                         type='submit'
                         onClick={this.createCategory}
+                        disabled={!this.state.name}
                     >
                         Add 
                     </Button>

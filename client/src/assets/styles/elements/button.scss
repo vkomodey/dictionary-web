@@ -21,8 +21,13 @@ button:focus {
     outline: 0;
 }
 
-button:hover {
+button:active:hover {
     outline: 0;
     box-shadow: 0 0 5px $grey;
     border: 1px solid $grey-dark;
+}
+
+button:disabled {
+    background-color: $grey-super-light;
+    cursor: not-allowed;
 }
