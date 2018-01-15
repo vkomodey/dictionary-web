@@ -8,6 +8,7 @@ import TestPage from 'app/modules/test';
 import Navbar from 'app/modules/header/navbar';
 import ActiveCategory from 'app/modules/header/active-category';
 import Loader from 'app/components/loader';
+import noCategoryHoc from 'app/modules/no-category.hoc';
 import { fetchCategories, checkActiveCategory } from 'app/redux/actions/categories';
 import { fetchPairs } from 'app/redux/actions/pairs';
 
@@ -24,6 +25,10 @@ class App extends React.Component {
         let oldCategoryId = this.props.activeCategoryId;
         let newCategoryId = nextProps.activeCategoryId;
         let categories = nextProps.categories;
+
+        if ( categories.length === 0 ) {
+            return this.props.checkActiveCategory('');
+        }
         
         // Fetch new pairs in case of changing activeCategoryId
         if ( oldCategoryId !== newCategoryId ) {
@@ -45,9 +50,11 @@ class App extends React.Component {
                     <Loader loading={this.props.isLoading} />
                     <Header />
                     <Navbar />
-                    <ActiveCategory />
-                    <Route exact path="/" component={PairPage} />
-                    <Route path="/test" component={TestPage} />
+                    { this.props.activeCategoryId && this.props.categories.length > 1 &&
+                        <ActiveCategory />
+                    }
+                    <Route exact path="/" component={noCategoryHoc(PairPage)} />
+                    <Route path="/test" component={noCategoryHoc(TestPage)} />
                     <Route path="/category" component={CategoryPage} />
                 </div>
             </Router>
