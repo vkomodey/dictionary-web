@@ -17,6 +17,14 @@ button {
     -o-transition: all 0.30s ease-in-out;
 }
 
+button.btn-nav {
+    border-width: 1px;
+}
+
+.btn-nav:hover, {
+    box-shadow: 0 2px 0 $grey;
+}
+
 button:focus {
     outline: 0;
 }
