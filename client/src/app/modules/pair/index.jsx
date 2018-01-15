@@ -1,7 +1,6 @@
 import React from 'react';
 import Listing from './listing';
 import CreatePair from './create';
-import noCategoryHoc from './../no-category.hoc';
 
 export default function PairsPage(props) {
     return (

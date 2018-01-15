@@ -8,7 +8,7 @@ import TestPage from 'app/modules/test';
 import Navbar from 'app/modules/header/navbar';
 import ActiveCategory from 'app/modules/header/active-category';
 import Loader from 'app/components/loader';
-import noCategoryHoc from 'app/modules/no-category.hoc';
+import noDataHoc from 'app/modules/no-data.hoc';
 import { fetchCategories, checkActiveCategory } from 'app/redux/actions/categories';
 import { fetchPairs } from 'app/redux/actions/pairs';
 
@@ -44,6 +44,12 @@ class App extends React.Component {
     }
 
     render() {
+        let categoriesHocParams = {
+            entityName: 'category',
+            pageUrl: '/category',
+            isDataPresent: Boolean(this.props.activeCategoryId)
+        };
+
         return (
             <Router>
                 <div>
@@ -53,8 +59,8 @@ class App extends React.Component {
                     { this.props.activeCategoryId && this.props.categories.length > 1 &&
                         <ActiveCategory />
                     }
-                    <Route exact path="/" component={noCategoryHoc(PairPage)} />
-                    <Route path="/test" component={noCategoryHoc(TestPage)} />
+                    <Route exact path="/" component={noDataHoc(PairPage, categoriesHocParams)} />
+                    <Route path="/test" component={noDataHoc(TestPage, categoriesHocParams)} />
                     <Route path="/category" component={CategoryPage} />
                 </div>
             </Router>
