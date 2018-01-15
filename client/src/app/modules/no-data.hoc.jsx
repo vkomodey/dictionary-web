@@ -20,7 +20,7 @@ export default function NoDataHoc(WrappedPage, params) {
                         { props.children }
                     </div>  
                 }
-                { isDataPresent && <WrappedPage { ...pageProps } /> }
+                { isDataPresent && <WrappedPage /> }
             </div>
         );
     }
