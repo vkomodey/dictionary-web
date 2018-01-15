@@ -88,7 +88,10 @@ class Test extends React.Component {
             <div className="testing">
                 <div className="testing__control-panel">
                     { !this.state.inProgress &&
-                        <Button onClick={this.handleStartFinish(START)} > Start </Button>
+                        <Button disabled={this.props.pairs.length === 0} onClick={this.handleStartFinish(START)} > Start </Button>
+                    }
+                    { this.props.pairs.length === 0 && 
+                            <div><span>No pairs found</span></div>
                     }
                 </div>
 
