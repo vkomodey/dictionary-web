@@ -12,7 +12,7 @@ let config = {
     env: process.env.NODE_ENV || 'development',
     port: process.env.PORT || 3001,
     apiUrl: process.env.API_URL || 'http://localhost:3000',
-}
+};
 let app = new Koa();
 let compiledConfig = webpack(webpackConfig);
 
@@ -41,10 +41,10 @@ render(app, {
 });
 
 app.use(async (ctx) => {
-    if ( ctx.path.startsWith('/assets') ) {
-        let assetPath = ctx.path.slice(8, ctx.path.length);
+    console.log(ctx.path);
+    if ( ctx.path.startsWith('/dist') ) {
 
-        return await send(ctx, `./dist/${assetPath}`);
+        return await send(ctx, ctx.path);
     }
     
     return await ctx.render('index', {

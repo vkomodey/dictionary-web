@@ -12,7 +12,7 @@ module.exports = {
     output: {
         filename: '[name].bundle.js',
         path: path.resolve(__dirname, 'dist'),
-        publicPath: '/assets',
+        publicPath: '/dist/',
     },
     plugins: [
         new webpack.HotModuleReplacementPlugin()
@@ -51,7 +51,7 @@ module.exports = {
             test: /\.(jpg|png|svg)$/,
             loader: 'file-loader',
             options: {
-                name: '[path][name].[hash].[ext]',
+                name: '[name].[hash].[ext]',
             },
         }],
     },
