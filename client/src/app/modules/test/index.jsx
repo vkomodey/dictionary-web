@@ -6,6 +6,14 @@ import MatchedList from './answers';
 import { shuffle } from 'app/utils/array';
 const START = 'start'; const FINISH = 'finish';
 
+
+function isMatch(value1='', value2='') {
+    let cleared1 = value1.trim().toLowerCase();
+    let cleared2 = value2.trim().toLowerCase();
+
+    return cleared1 === cleared2;
+}
+
 class Test extends React.Component {
     constructor(props) {
         super(props);
@@ -53,7 +61,7 @@ class Test extends React.Component {
     submitAnswer = (e) => {
         let { currentPairIndex, answer, rightLen, wrongLen, pairs } = this.state;
         let currentPair = pairs[currentPairIndex];
-        let isAnswerRight = answer === currentPair.firstLangExpression;
+        let isAnswerRight = isMatch(answer, currentPair.firstLangExpression);
         let newIndex = currentPairIndex + 1;
         let isTestFinished = newIndex > pairs.length - 1; 
         let newPairs = [
