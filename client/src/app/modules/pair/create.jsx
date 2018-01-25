@@ -64,6 +64,7 @@ class CreatePair extends React.Component {
                                 placeholder='en'
                                 value={this.state.firstLangExpression}
                                 onChange={this.handleChange('en')}
+                                autoFocus
                             />
                         </div>
                         <div className='create-pair__inputs-group__item'>
