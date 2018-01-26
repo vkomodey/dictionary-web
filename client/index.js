@@ -41,7 +41,6 @@ render(app, {
 });
 
 app.use(async (ctx) => {
-    console.log(ctx.path);
     if ( ctx.path.startsWith('/dist') ) {
 
         return await send(ctx, ctx.path);
