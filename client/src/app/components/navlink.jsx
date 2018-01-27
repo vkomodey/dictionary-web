@@ -9,10 +9,11 @@ export default class Navlink extends React.Component {
     render() {
         return (
             <Button
-                className="btn-nav"
+                className='btn btn-primary'
                 onClick={this.onButtonClick}
             >
                 <Link 
+                    className='nav-link'
                     {...this.props}
                     ref={(linkElem => this.linkElem = linkElem)}
                 >

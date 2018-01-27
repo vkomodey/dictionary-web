@@ -1,5 +1,3 @@
-$primary-color: #333;
-
 * {
   box-sizing: border-box;
 }
@@ -10,10 +8,13 @@ html {
 
 body {
     margin: 0;
-    font-family: 'Lato', sans-serif;
-    color: $primary-color;
+    font-family: 'Oxygen', sans-serif;
+    color: #b3b2b2;
     overflow-x: hidden;
     padding-bottom: 20px;
+    background-color: $black;
+    background-image: url(https://www.m2mblue.com/assets/img/map.svg);
+    background-repeat: no-repeat;
 }
 
 ul {

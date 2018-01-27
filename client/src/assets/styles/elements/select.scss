@@ -1,12 +1,13 @@
 select {
     border: 1px solid $grey;
-    background-color: white;
-    color: $input-color;
+    background-color: $black;
+    color: inherit;
+    cursor: pointer;
     display: inline-block;
     font-family: inherit;
     font-weight: 500;
     font-size: 20px;
-    width: 300px;
+    min-width: 200px;
     margin: 3px 3px;
     height: 38px;
     padding: 4px 4px 4px;
@@ -14,21 +15,26 @@ select {
     -moz-transition: all 0.30s ease-in-out;
     -ms-transition: all 0.30s ease-in-out;
     -o-transition: all 0.30s ease-in-out;
-}
-
-select > option {
-    font-family: inherit;
-    font-weight: 500;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background: url(./../icons/arrow-down.svg) no-repeat right;
 }
 
 select:focus {
     outline: 0;
-    box-shadow: 0 0 5px $grey;
-    border: 1px solid $grey-dark;
+    box-shadow: 0 0 1px $light-green;
+    border: 1px solid $light-green;
 }
 
 select:hover {
     outline: 0;
-    box-shadow: 0 0 5px $grey;
-    border: 1px solid $grey-dark;
+    box-shadow: 0 0 1px $light-green;
+    border: 1px solid $light-green;
+}
+
+select option {
+    background-color: $black;
+    color: $white;
+    height: 30px;
 }

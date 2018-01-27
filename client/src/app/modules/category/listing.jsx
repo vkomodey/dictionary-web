@@ -25,6 +25,7 @@ class CategoriesListing extends React.Component {
                     <Button
                         type='button'
                         onClick={this.onRemoveClick(category._id)}
+                        className='btn btn-danger'
                     >
                         x
                     </Button>

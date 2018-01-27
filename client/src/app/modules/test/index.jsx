@@ -4,6 +4,9 @@ import Input from 'app/components/input';
 import Button from 'app/components/button';
 import MatchedList from './answers';
 import { shuffle } from 'app/utils/array';
+import CheckIcon from 'assets/icons/check.svg'; 
+import ErrorIcon from 'assets/icons/error.svg'; 
+
 const START = 'start'; const FINISH = 'finish';
 
 
@@ -96,7 +99,13 @@ class Test extends React.Component {
             <div className="testing">
                 <div className="testing__control-panel">
                     { !this.state.inProgress &&
-                        <Button disabled={this.props.pairs.length === 0} onClick={this.handleStartFinish(START)} > Start </Button>
+                        <Button
+                            disabled={this.props.pairs.length === 0}
+                            onClick={this.handleStartFinish(START)}
+                            className='btn btn-primary'
+                        >
+                            Start
+                        </Button>
                     }
                     { this.props.pairs.length === 0 && 
                             <div><span>No pairs found</span></div>
@@ -115,13 +124,17 @@ class Test extends React.Component {
                                 autoFocus
                             />
                             <Button
+                                className='btn btn-primary'
                                 type='submit'
                                 onClick={this.submitAnswer}
                                 disabled={!this.state.answer}
                             >
                                 Answer
                             </Button>
-                            <Button onClick={this.handleStartFinish(FINISH)} > END </Button>
+                            <Button
+                                className='btn btn-danger'
+                                onClick={this.handleStartFinish(FINISH)}
+                            > END </Button>
                         </form>
                             
                     </div>
@@ -129,11 +142,11 @@ class Test extends React.Component {
                 { this.state.finished &&
                     <div>
                         <div className="testing__progress-bar">
-                            <div>
-                                <span>Right: { rightLen }</span>
-                            </div>
-                            <div>
-                                <span>Wrong: { wrongLen }</span>
+                            <div className="testing__progress-bar__entry">
+                                <img src={CheckIcon} />
+                                <span>{ rightLen }</span>
+                                <img src={ErrorIcon} />
+                                <span>{ wrongLen }</span>
                             </div>
                         </div>
                     </div>

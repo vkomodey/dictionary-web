@@ -26,6 +26,7 @@ class PairsListing extends React.Component {
                     <Button
                         type='button'
                         onClick={this.onRemoveClick(p._id)}
+                        className='btn btn-danger'
                     >
                         x
                     </Button>

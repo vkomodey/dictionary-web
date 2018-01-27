@@ -41,14 +41,7 @@ module.exports = {
                 {loader: 'css-loader'},
             ],
         }, {
-            test: /\.(woff2?|ttf|eot)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-            loader: 'url-loader',
-            options: {
-                limit: 30000,
-                name: 'fonts/[name]-[hash].[ext]',
-            },
-        }, {
-            test: /\.(jpg|png|svg)$/,
+            test: /\.(jpg|png|svg|woff2?|ttf|eot|otf)$/,
             loader: 'file-loader',
             options: {
                 name: '[name].[hash].[ext]',

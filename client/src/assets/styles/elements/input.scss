@@ -1,6 +1,7 @@
 input {
     border: 1px solid $grey;
-    color: $input-color;
+    color: $white;
+    background-color: $black;
     display: inline-block;
     font-family: inherit;
     font-weight: 450;
@@ -15,10 +16,10 @@ input {
     -o-transition: all 0.30s ease-in-out;
 }
 
-input:focus {
+input:focus,input:hover {
     outline: 0;
-    box-shadow: 0 0 5px $grey;
-    border: 1px solid $grey-dark;
+    box-shadow: 0 0 1px $light-green;
+    border: 1px solid $light-green;
 }
 
 input::placeholder {

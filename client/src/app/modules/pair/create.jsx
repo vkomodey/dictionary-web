@@ -81,6 +81,7 @@ class CreatePair extends React.Component {
                             type='submit'
                             onClick={this.onClick}
                             disabled={this.areInputsEmpty()}
+                            className='btn btn-primary'
                         >
                             Add 
                         </Button>

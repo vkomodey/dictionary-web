@@ -13,6 +13,9 @@
         flex-direction: column;
         align-items: center;
         margin-top: 20px;
+        &__entry {
+            display: flex;
+        }
     }
 
     &__answers {

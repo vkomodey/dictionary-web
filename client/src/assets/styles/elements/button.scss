@@ -1,15 +1,16 @@
-button {
-    border: 1px solid $grey;
+button.btn {
     background-color: $white;
+    border-radius: 2px;
+    border: 1px solid $grey;
     cursor: pointer;
-    color: $input-color;
+    color: $white;
     font-weight: 400;
     letter-spacing: 0.5px;
     margin: 5px 5px;
     padding: 10px 10px;
     text-transform: uppercase;
     text-align: center;
-    min-width: 150px;
+    min-width: 50px;
     height: 38px;
     -webkit-transition: all 0.30s ease-in-out;
     -moz-transition: all 0.30s ease-in-out;
@@ -17,25 +18,40 @@ button {
     -o-transition: all 0.30s ease-in-out;
 }
 
-button.btn-nav {
+button.btn.btn-primary {
+    background-color: $black;
+    color: $white; 
+}
+
+button.btn.btn-primary:active,
+button.btn.btn-primary:hover {
+    color: $white;
+    background-color: $light-green;
+}
+
+button.btn.btn-danger {
+    background-color: $black;
+    color: $white; 
+}
+
+button.btn.btn-danger:active,
+button.btn.btn-danger:hover {
+    color: $white;
+    background-color: $red;
+}
+
+button.btn.btn-nav {
     border-width: 1px;
 }
 
-.btn-nav:hover, {
+button.btn.btn-nav:hover, {
     box-shadow: 0 2px 0 $grey;
 }
 
-button:focus {
-    outline: 0;
-}
-
-button:active:hover {
-    outline: 0;
-    box-shadow: 0 0 5px $grey;
-    border: 1px solid $grey-dark;
-}
-
-button:disabled {
-    background-color: $grey-super-light;
+button.btn:disabled,
+button.btn:disabled:hover{
+    background-color: $black;
+    color: $grey-light;
+    border-color: $grey-light;
     cursor: not-allowed;
 }
