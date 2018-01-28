@@ -108,7 +108,7 @@ class Test extends React.Component {
                         </Button>
                     }
                     { this.props.pairs.length === 0 && 
-                            <div><span>No pairs found</span></div>
+                        <div><span>No pairs found</span></div>
                     }
                 </div>
 
@@ -127,14 +127,14 @@ class Test extends React.Component {
                                 className='btn btn-primary'
                                 type='submit'
                                 onClick={this.submitAnswer}
-                                disabled={!this.state.answer}
                             >
                                 Answer
                             </Button>
                             <Button
                                 className='btn btn-danger'
                                 onClick={this.handleStartFinish(FINISH)}
-                            > END </Button>
+                            > END
+                            </Button>
                         </form>
                             
                     </div>

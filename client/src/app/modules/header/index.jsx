@@ -4,10 +4,10 @@ export default function() {
     return (
         <div className="header">
             <div className="header__content_big">
-                <span> Learn languages! </span>
+                <span> Dictify </span>
             </div>
             <div className="header__content_small">
-                <span> Use this form anywhere in big town </span>
+                <span> Use this dictionary anywhere in big town </span>
             </div>
         </div>
     );

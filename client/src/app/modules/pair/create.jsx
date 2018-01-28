@@ -43,13 +43,6 @@ class CreatePair extends React.Component {
         return !firstLangExpression && !secondLangExpression;
     }
 
-    clearInputs() {
-        this.setState({
-            firstLangExpression: '',
-            secondLangExpression: '',
-        });
-    }
-
     render() {
         return (
             <div className='create-pair'>
@@ -80,7 +73,7 @@ class CreatePair extends React.Component {
                         <Button 
                             type='submit'
                             onClick={this.onClick}
-                            disabled={this.areInputsEmpty()}
+                            disabled={!this.state.firstLangExpression || !this.state.secondLangExpression}
                             className='btn btn-primary'
                         >
                             Add 
