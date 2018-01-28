@@ -1,6 +1,7 @@
 'use strict';
 
 let Router = require('koa-router');
+let Category = require('src/modules/category/model');
 let Pair = require('./model');
 
 let router = new Router();
@@ -9,6 +10,7 @@ router.get('/:id', findById);
 router.get('/', findAll);
 router.post('/', create);
 router.delete('/:id', remove);
+router.post('/move', move);
 
 async function findById(ctx) {
     try {
@@ -39,6 +41,26 @@ async function create(ctx) {
 async function remove(ctx) {
     try {
         ctx.respondSuccess(await Pair.remove({ _id: ctx.params.id }));
+    } catch (err) {
+        ctx.internalError(err);
+    }
+}
+
+async function move(ctx) {
+    try {
+        let { newCategoryId } = ctx.query;
+        let ids = ctx.query.ids.split(',');
+        let isNewCategoryExists = await Category.findById(newCategoryId);
+
+        if (isNewCategoryExists) {
+            let result = await Pair.update(
+                { _id: { $in: ids } },
+                { $set: { categoryId: newCategoryId } },
+                { multi: true }
+            );
+
+            ctx.respondSuccess({ result: 'OK' });
+        }
     } catch (err) {
         ctx.internalError(err);
     }
