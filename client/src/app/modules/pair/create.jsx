@@ -57,6 +57,7 @@ class CreatePair extends React.Component {
                                 placeholder='en'
                                 value={this.state.firstLangExpression}
                                 onChange={this.handleChange('en')}
+                                className='inpt'
                                 autoFocus
                             />
                         </div>
@@ -66,6 +67,7 @@ class CreatePair extends React.Component {
                                 placeholder='ru'
                                 value={this.state.secondLangExpression}
                                 onChange={this.handleChange('ru')}
+                                className='inpt'
                             />
                         </div>
                     </div>

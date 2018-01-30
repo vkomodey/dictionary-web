@@ -16,7 +16,7 @@ export default function MatchedList(props) {
     ));
 
     return (
-        <table className="testing__answers">
+        <table className="tbl testing__answers">
             <thead>
                 <tr>
                     <th>English</th>

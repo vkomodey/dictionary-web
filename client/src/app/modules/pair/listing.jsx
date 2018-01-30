@@ -2,10 +2,15 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { removePair } from 'app/redux/actions/pairs';
 import Button from 'app/components/button';
+import Checkbox from 'app/components/checkbox/index';
+import DeleteIcon from 'assets/icons/delete.svg';
 
 class PairsListing extends React.Component {
     constructor(props) {
         super(props);
+        this.state = {
+            checked: {},
+        };
     }
 
     onRemoveClick = id => {
@@ -16,10 +21,31 @@ class PairsListing extends React.Component {
         }
     }
 
+    onChecked = (pairId) => {
+        return (e) => {
+            let previousChecked = Boolean(this.state.checked[pairId]);
+
+            this.setState({
+                checked: {
+                    ...this.state.checked,
+                    [pairId]: !previousChecked,
+                }
+            });
+        };
+    }
+
     render() {
         let { pairs } = this.props;
         let pairsList = pairs.map(p => (
             <tr key={p._id}>
+                <th>
+                    <Checkbox
+                        className='ccc'
+                        checked={this.state.checked[p._id]}
+                        onChange={this.onChecked(p._id)}
+                        uniqValue={p._id}
+                    />
+                </th>
                 <td> {p.firstLangExpression} </td>
                 <td> {p.secondLangExpression} </td>
                 <td> 
@@ -28,16 +54,17 @@ class PairsListing extends React.Component {
                         onClick={this.onRemoveClick(p._id)}
                         className='btn btn-danger'
                     >
-                        x
+                        <img src={DeleteIcon} />
                     </Button>
                 </td>
             </tr>
         ));
 
         return (
-            <table>
+            <table className='tbl pair-listing'>
                 <thead>
                     <tr>
+                        <th />
                         <th>English</th>
                         <th>Russian</th>
                         <th>Remove</th>

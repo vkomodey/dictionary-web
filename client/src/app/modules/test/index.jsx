@@ -120,7 +120,7 @@ class Test extends React.Component {
                                 type='text'
                                 value={this.state.answer}
                                 onChange={this.handleAnswerChange}
-                                className="testing__work-section__input"
+                                className="inpt testing__work-section__input"
                                 autoFocus
                             />
                             <Button

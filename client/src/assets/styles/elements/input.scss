@@ -1,4 +1,4 @@
-input {
+input.inpt {
     border: 1px solid $grey;
     color: $white;
     background-color: $black;
@@ -16,13 +16,13 @@ input {
     -o-transition: all 0.30s ease-in-out;
 }
 
-input:focus,input:hover {
+input.inpt:focus,input.inpt:hover {
     outline: 0;
     box-shadow: 0 0 1px $light-green;
     border: 1px solid $light-green;
 }
 
-input::placeholder {
+input.inpt::placeholder {
     font-size: 20px;
     padding: 2px 4px 2px;
 }

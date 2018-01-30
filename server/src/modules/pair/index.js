@@ -59,7 +59,7 @@ async function move(ctx) {
                 { multi: true }
             );
 
-            ctx.respondSuccess({ result: 'OK' });
+            ctx.respondSuccess({ result });
         }
     } catch (err) {
         ctx.internalError(err);

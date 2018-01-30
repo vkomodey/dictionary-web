@@ -50,6 +50,7 @@ class CreateCategory extends React.Component {
                                 placeholder='Category Name'
                                 value={this.state.name}
                                 onChange={this.handleChange}
+                                className='inpt'
                                 autoFocus
                             />
                         </div>

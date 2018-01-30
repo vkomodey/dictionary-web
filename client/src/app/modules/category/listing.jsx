@@ -34,7 +34,7 @@ class CategoriesListing extends React.Component {
         ));
 
         return (
-            <table>
+            <table className="tbl">
                 <thead>
                     <tr>
                         <th>Name</th>
