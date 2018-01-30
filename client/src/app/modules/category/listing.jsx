@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { removeCategory } from 'app/redux/actions/categories';
 import Button from 'app/components/button';
+import DeleteIcon from 'assets/icons/delete.svg';
 
 class CategoriesListing extends React.Component {
     constructor(props) {
@@ -27,7 +28,7 @@ class CategoriesListing extends React.Component {
                         onClick={this.onRemoveClick(category._id)}
                         className='btn btn-danger'
                     >
-                        x
+                        <img src={DeleteIcon} />
                     </Button>
                 </td>
             </tr>
