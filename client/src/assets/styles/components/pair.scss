@@ -40,6 +40,11 @@
 .pair-listing {
     table-layout: fixed;
     width: 100%;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 
 .pair-listing th:nth-child(1) {
@@ -53,4 +58,18 @@
 
 .pair-listing th:nth-child(4) {
     width: 10%;
+}
+
+.pair-listing tr.selected {
+    background: rgba(97,137,47,0.6);
+    color: $white;
+}
+
+.pair-listing tr:not(.selected):hover{
+    background: rgba(97,137,47,0.2);
+    color: $white;
+}
+
+.pair-listing tr:hover {
+    cursor: pointer;
 }

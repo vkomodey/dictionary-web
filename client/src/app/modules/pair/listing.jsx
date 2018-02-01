@@ -1,4 +1,5 @@
 import React from 'react';
+import _ from 'lodash';
 import { connect } from 'react-redux';
 import { removePair } from 'app/redux/actions/pairs';
 import Button from 'app/components/button';
@@ -9,7 +10,8 @@ class PairsListing extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            checked: {},
+            checkedKeyMap: {},
+            lastSelectedKey: null,
         };
     }
 
@@ -23,42 +25,75 @@ class PairsListing extends React.Component {
 
     onChecked = (pairId) => {
         return (e) => {
-            let previousChecked = Boolean(this.state.checked[pairId]);
+            let { pairs } = this.props;
+            let { checkedKeyMap, lastSelectedKey } = this.state;
+            let key = '_id';
+            let checkedIndex = pairs.findIndex(p => p[key] === pairId);
+            let lastIndex = pairs.findIndex(p => p[key] === lastSelectedKey) || 0;
+            let checkValue = !Boolean(checkedKeyMap[pairId]);
+            let newCheckedKeyMap = {
+                [pairId]: checkValue,
+            };
+
+            if ( e.nativeEvent.shiftKey ) {
+                let startIndex = Math.min(checkedIndex, lastIndex);
+                let endIndex = Math.max(checkedIndex, lastIndex);
+
+                for ( let i = startIndex; i <= endIndex; ++i ) {
+                    let id = pairs[i]._id;
+                    if ( checkedKeyMap[id] === checkValue && i !== checkedIndex ) {
+                        lastIndex = i;
+                    }
+                }
+
+                startIndex = Math.min(checkedIndex, lastIndex);
+                endIndex = Math.max(checkedIndex, lastIndex);
+
+                for ( let i = startIndex; i <= endIndex; ++i ) {
+                    // Fill all opposite of current check value
+                    let id = pairs[i][key];
+                    newCheckedKeyMap[id] = checkValue;
+                }
+            }
 
             this.setState({
-                checked: {
-                    ...this.state.checked,
-                    [pairId]: !previousChecked,
-                }
+                checkedKeyMap: { ...checkedKeyMap, ...newCheckedKeyMap },
+                lastSelectedKey: pairId,
             });
         };
     }
 
     render() {
         let { pairs } = this.props;
-        let pairsList = pairs.map(p => (
-            <tr key={p._id}>
-                <th>
-                    <Checkbox
-                        className='ccc'
-                        checked={this.state.checked[p._id]}
-                        onChange={this.onChecked(p._id)}
-                        uniqValue={p._id}
-                    />
-                </th>
-                <td> {p.firstLangExpression} </td>
-                <td> {p.secondLangExpression} </td>
-                <td> 
-                    <Button
-                        type='button'
-                        onClick={this.onRemoveClick(p._id)}
-                        className='btn btn-danger'
-                    >
-                        <img src={DeleteIcon} />
-                    </Button>
-                </td>
-            </tr>
-        ));
+        let { lastSelectedKey } = this.state;
+        let pairsList = pairs.map(p => {
+            let pairId = p._id;
+            let rowClass = this.state.checkedKeyMap[pairId] ? 'selected' : '';
+
+            return (
+                <tr key={pairId} className={rowClass} >
+                    <td>
+                        <Checkbox
+                            onChange={this.onChecked(pairId)}
+                            checked={Boolean(this.state.checkedKeyMap[pairId])}
+                            selected={pairId === lastSelectedKey}
+                            uniqValue={pairId}
+                        />
+                    </td>
+                    <td onClick={this.onChecked(pairId)}> {p.firstLangExpression} </td>
+                    <td onClick={this.onChecked(pairId)}> {p.secondLangExpression} </td>
+                    <td> 
+                        <Button
+                            type='button'
+                            onClick={this.onRemoveClick(pairId)}
+                            className='btn btn-danger'
+                        >
+                            <img src={DeleteIcon} />
+                        </Button>
+                    </td>
+                </tr>
+            );
+        });
 
         return (
             <table className='tbl pair-listing'>
@@ -67,7 +102,7 @@ class PairsListing extends React.Component {
                         <th />
                         <th>English</th>
                         <th>Russian</th>
-                        <th>Remove</th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>

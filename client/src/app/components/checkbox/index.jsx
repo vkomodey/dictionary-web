@@ -8,18 +8,19 @@ export default class Checkbox extends React.Component {
 
         this.state = {
             isChecked: this.props.checked || false,
+            selected: this.props.selected || false,
         }
     }
 
     componentWillReceiveProps(newProps) {
-        this.setState({isChecked: newProps.checked});
+        this.setState({isChecked: newProps.checked, selected: newProps.selected});
     }
 
     onChange = (e) => {
         let isChecked = !this.state.isChecked;
 
         this.setState({isChecked});
-        this.props.onChange({
+        this.props.onChange(e, {
             isChecked,
             value: e.target.value,
         });
@@ -27,6 +28,7 @@ export default class Checkbox extends React.Component {
 
     render() {
         let { uniqValue } = this.props;
+        let spanClass = this.state.selected ? 'outlined' : '';
 
         return (
             <div className='checkbox-container'>
@@ -35,11 +37,11 @@ export default class Checkbox extends React.Component {
                     name={uniqValue}
                     id={uniqValue}
                     value={uniqValue}
-                    checked={this.state.checked}
-                    onChange={this.state.onChange}
+                    checked={this.state.isChecked}
+                    onChange={this.onChange}
                 />
                 <label htmlFor={uniqValue} >
-                    <span />
+                    <span className={spanClass}/>
                 </label>
             </div>
         );

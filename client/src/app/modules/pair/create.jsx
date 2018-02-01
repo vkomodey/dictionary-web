@@ -27,6 +27,13 @@ class CreatePair extends React.Component {
         this.clearInputs();
     }
 
+    clearInputs = () => {
+        this.setState({
+            firstLangExpression: '',
+            secondLangExpression: '',
+        });
+    }
+
     handleChange = (inputType) => {
         return e => {
             let { firstLangExpression, secondLangExpression } = this.state;
