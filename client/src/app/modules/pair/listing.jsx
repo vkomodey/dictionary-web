@@ -9,6 +9,7 @@ import DeleteIcon from 'assets/icons/delete.svg';
 class PairsListing extends React.Component {
     constructor(props) {
         super(props);
+        this.key = '_id';
         this.state = {
             checkedKeyMap: {},
             lastSelectedKey: null,
@@ -23,35 +24,43 @@ class PairsListing extends React.Component {
         }
     }
 
+    checkAll = () => {
+        let checkedKeys = Object.keys(this.state.checkedKeyMap);
+        let allUnchecked = checkedKeys.filter(key => this.state.checkedKeyMap[key]).length === 0;
+        let checkValue = allUnchecked;
+        let keyMap = {};
+
+        this.props.pairs.forEach(p => keyMap[p[this.key]] = checkValue);
+
+        this.setState({
+            checkedKeyMap: keyMap,
+        });
+    }
+
     onChecked = (pairId) => {
         return (e) => {
             let { pairs } = this.props;
             let { checkedKeyMap, lastSelectedKey } = this.state;
-            let key = '_id';
-            let checkedIndex = pairs.findIndex(p => p[key] === pairId);
-            let lastIndex = pairs.findIndex(p => p[key] === lastSelectedKey) || 0;
+            let checkedIndex = pairs.findIndex(p => p[this.key] === pairId);
+            let lastIndex = pairs.findIndex(p => p[this.key] === lastSelectedKey);
             let checkValue = !Boolean(checkedKeyMap[pairId]);
             let newCheckedKeyMap = {
                 [pairId]: checkValue,
             };
+
+            // In case user has not checked anything, we should consider last selected index 
+            // as a first element
+            if ( lastIndex < 0) {
+                lastIndex = 0;
+            }
 
             if ( e.nativeEvent.shiftKey ) {
                 let startIndex = Math.min(checkedIndex, lastIndex);
                 let endIndex = Math.max(checkedIndex, lastIndex);
 
                 for ( let i = startIndex; i <= endIndex; ++i ) {
-                    let id = pairs[i]._id;
-                    if ( checkedKeyMap[id] === checkValue && i !== checkedIndex ) {
-                        lastIndex = i;
-                    }
-                }
-
-                startIndex = Math.min(checkedIndex, lastIndex);
-                endIndex = Math.max(checkedIndex, lastIndex);
-
-                for ( let i = startIndex; i <= endIndex; ++i ) {
-                    // Fill all opposite of current check value
-                    let id = pairs[i][key];
+                    // Fill all with the opposite of current check value
+                    let id = pairs[i][this.key];
                     newCheckedKeyMap[id] = checkValue;
                 }
             }
@@ -64,10 +73,12 @@ class PairsListing extends React.Component {
     }
 
     render() {
+        let checkedKeys = Object.keys(this.state.checkedKeyMap);
         let { pairs } = this.props;
+        let allUnchecked = checkedKeys.filter(key => this.state.checkedKeyMap[key]).length === 0;
         let { lastSelectedKey } = this.state;
         let pairsList = pairs.map(p => {
-            let pairId = p._id;
+            let pairId = p[this.key];
             let rowClass = this.state.checkedKeyMap[pairId] ? 'selected' : '';
 
             return (
@@ -99,7 +110,13 @@ class PairsListing extends React.Component {
             <table className='tbl pair-listing'>
                 <thead>
                     <tr>
-                        <th />
+                        <th>
+                            <Checkbox
+                                onChange={this.checkAll}
+                                checked={!allUnchecked}
+                                uniqValue={'all'}
+                            />
+                        </th>
                         <th>English</th>
                         <th>Russian</th>
                         <th></th>
