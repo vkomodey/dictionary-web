@@ -9,6 +9,7 @@ let router = new Router();
 router.get('/:id', findById);
 router.get('/', findAll);
 router.post('/', create);
+router.delete('/multiple', removeMultiple);
 router.delete('/:id', remove);
 router.post('/move', move);
 
@@ -41,6 +42,16 @@ async function create(ctx) {
 async function remove(ctx) {
     try {
         ctx.respondSuccess(await Pair.remove({ _id: ctx.params.id }));
+    } catch (err) {
+        ctx.internalError(err);
+    }
+}
+
+async function removeMultiple(ctx) {
+    try {
+        let ids = ctx.query.ids.split(',');
+
+        ctx.respondSuccess({ ids });
     } catch (err) {
         ctx.internalError(err);
     }

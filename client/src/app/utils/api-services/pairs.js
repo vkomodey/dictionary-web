@@ -11,4 +11,13 @@ export default {
     findById: id => httpService.get(`${endpoint}/${id}`),
     
     removeById: id => httpService.delete(`${endpoint}/${id}`),
+
+    removeMultiple(ids=[]) {
+        let query = {
+            ids: ids.join(','),
+        };
+        let endpoint = `${endpoint}/multiple`;
+
+        return httpService.delete(endpoint, query);
+    }
 }
