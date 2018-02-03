@@ -8,5 +8,5 @@ export default function Navbar() {
             <Navlink to="/category">Categories</Navlink>
             <Navlink to="/test">Test</Navlink>
         </div>
-    )
+    );
 }

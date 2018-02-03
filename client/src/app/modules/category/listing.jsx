@@ -1,20 +1,28 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { removeCategory } from 'app/redux/actions/categories';
 import Button from 'app/components/button';
 import DeleteIcon from 'assets/icons/delete.svg';
 
 class CategoriesListing extends React.Component {
-    constructor(props) {
-        super(props);
+    static propTypes = {
+        removeCategory: PropTypes.func,
+        categories: PropTypes.arrayOf({
+            _id: PropTypes.string,
+            name: PropTypes.string,
+        }),
     }
 
-    onRemoveClick = id => {
-        return e => {
-            e.preventDefault();
+    static defaultProps = {
+        removeCategory: () => {},
+        categories: [],
+    }
 
-            return this.props.removeCategory(id);
-        }
+    onRemoveClick = id => (e) => {
+        e.preventDefault();
+
+        return this.props.removeCategory(id);
     }
 
     render() {
@@ -22,13 +30,13 @@ class CategoriesListing extends React.Component {
         let categoriesList = categories.map(category => (
             <tr key={category._id}>
                 <td> {category.name} </td>
-                <td> 
+                <td>
                     <Button
-                        type='button'
+                        type="button"
                         onClick={this.onRemoveClick(category._id)}
-                        className='btn btn-danger'
+                        className="btn btn-danger"
                     >
-                        <img src={DeleteIcon} />
+                        <img src={DeleteIcon} alt="Delete category" />
                     </Button>
                 </td>
             </tr>
@@ -43,7 +51,7 @@ class CategoriesListing extends React.Component {
                     </tr>
                 </thead>
                 <tbody>
-                    {categoriesList.length > 0 ? categoriesList : <tr><td colSpan='2'> No categories found! </td></tr>}
+                    {categoriesList.length > 0 ? categoriesList : <tr><td colSpan="2"> No categories found! </td></tr>}
                 </tbody>
             </table>
         );
@@ -58,8 +66,8 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
     return {
-        removeCategory: id => dispatch(removeCategory(id)), 
-    }
+        removeCategory: id => dispatch(removeCategory(id)),
+    };
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(CategoriesListing);

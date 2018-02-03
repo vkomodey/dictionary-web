@@ -4,5 +4,5 @@ export function loading(isLoading) {
     return {
         type: LOADING,
         isLoading,
-    }
+    };
 }

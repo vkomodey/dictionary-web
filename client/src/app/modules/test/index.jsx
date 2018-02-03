@@ -1,18 +1,19 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Input from 'app/components/input';
 import Button from 'app/components/button';
-import MatchedList from './answers';
 import { shuffle } from 'app/utils/array';
-import CheckIcon from 'assets/icons/check.svg'; 
-import ErrorIcon from 'assets/icons/error.svg'; 
+import CheckIcon from 'assets/icons/check.svg';
+import ErrorIcon from 'assets/icons/error.svg';
 import { loading } from 'app/redux/actions/app';
 import pairApi from 'app/utils/api-services/pairs';
+import MatchedList from './answers';
 
 const START = 'start';
 const FINISH = 'finish';
 
-function isMatch(value1='', value2='') {
+function isMatch(value1 = '', value2 = '') {
     let cleared1 = value1.trim().toLowerCase();
     let cleared2 = value2.trim().toLowerCase();
 
@@ -20,6 +21,11 @@ function isMatch(value1='', value2='') {
 }
 
 class Test extends React.Component {
+    static propTypes = {
+        activeCategoryId: PropTypes.string.isRequired,
+        loading: PropTypes.func.isRequired,
+    }
+
     constructor(props) {
         super(props);
 
@@ -31,6 +37,10 @@ class Test extends React.Component {
             rightLen: 0,
             pairs: [],
         };
+    }
+
+    componentDidMount() {
+        this.fetchPairs(this.props.activeCategoryId);
     }
 
     componentWillReceiveProps(nextProps) {
@@ -50,27 +60,23 @@ class Test extends React.Component {
         });
     }
 
-    componentDidMount() {
-        this.fetchPairs(this.props.activeCategoryId);
-    }
-
     fetchPairs = (categoryId) => {
         this.props.loading(true);
 
-        return pairApi.findAll({categoryId})
-            .then(pairs => {
-                this.setState({pairs});
+        return pairApi.findAll({ categoryId })
+            .then((pairs) => {
+                this.setState({ pairs });
                 this.props.loading(false);
             })
-            .catch(err => {
-                console.error(err);
+            .catch((err) => {
+                console.error(err); //eslint-disable-line
 
                 this.props.loading(false);
             });
     }
 
-    handleStartFinish = (actionType) => {
-        return (e) => {
+    handleStartFinish = actionType =>
+        (e) => {
             e.preventDefault();
 
             if ( actionType === START) {
@@ -79,7 +85,7 @@ class Test extends React.Component {
                     rightLen: 0,
                     currentPairIndex: 0,
                     finished: false,
-                    pairs: shuffle(this.state.pairs).map(p => Object.assign({answered: false}, p)),
+                    pairs: shuffle(this.state.pairs).map(p => Object.assign({ answered: false }, p)),
                 });
             } else if ( actionType === FINISH ) {
                 this.setState({
@@ -89,7 +95,6 @@ class Test extends React.Component {
                 });
             }
         }
-    }
 
     handleAnswerChange = (e) => {
         this.setState({
@@ -98,11 +103,16 @@ class Test extends React.Component {
     }
 
     submitAnswer = (e) => {
-        let { currentPairIndex, answer, rightLen, pairs } = this.state;
+        let {
+            currentPairIndex,
+            answer,
+            rightLen,
+            pairs,
+        } = this.state;
         let currentPair = pairs[currentPairIndex];
         let isAnswerRight = isMatch(answer, currentPair.firstLangExpression);
         let newIndex = currentPairIndex + 1;
-        let isTestFinished = newIndex > pairs.length - 1; 
+        let isTestFinished = newIndex > pairs.length - 1;
         let newPairs = [
             Object.assign({}, currentPair, {
                 isAnswerRight,
@@ -110,9 +120,8 @@ class Test extends React.Component {
                 answered: true,
             }),
             ...pairs.slice(0, currentPairIndex),
-            ...pairs.slice(currentPairIndex + 1, pairs.length)
+            ...pairs.slice(currentPairIndex + 1, pairs.length),
         ];
-
 
         e.preventDefault();
 
@@ -127,66 +136,77 @@ class Test extends React.Component {
     }
 
     render() {
-        let { testPairs, rightLen, currentPairIndex, inProgress, finished, pairs } = this.state;
+        let {
+            rightLen,
+            currentPairIndex,
+            inProgress,
+            finished,
+            pairs,
+        } = this.state;
         let currentPair = pairs[currentPairIndex];
 
         return (
             <div className="testing">
                 <div className="testing__control-panel">
-                    { !this.state.inProgress &&
+                    { !inProgress &&
                         <Button
                             disabled={pairs.length === 0}
                             onClick={this.handleStartFinish(START)}
-                            className='btn btn-primary'
+                            className="btn btn-primary"
                         >
                             Start
                         </Button>
                     }
-                    { pairs.length === 0 && 
+                    { pairs.length === 0 &&
                         <div><span>No pairs found</span></div>
                     }
                 </div>
 
-                { this.state.inProgress && 
+                { inProgress &&
                     <div>
                         <form className="testing__work-section" >
                             <span> { currentPair.secondLangExpression } </span>
                             <Input
-                                type='text'
+                                type="text"
                                 value={this.state.answer}
                                 onChange={this.handleAnswerChange}
                                 className="inpt testing__work-section__input"
                                 autoFocus
                             />
                             <Button
-                                className='btn btn-primary'
-                                type='submit'
+                                className="btn btn-primary"
+                                type="submit"
                                 onClick={this.submitAnswer}
                             >
                                 Answer
                             </Button>
                             <Button
-                                className='btn btn-danger'
+                                className="btn btn-danger"
                                 onClick={this.handleStartFinish(FINISH)}
                             > END
                             </Button>
                         </form>
-                            
                     </div>
                 }
-                { this.state.finished &&
+                { finished &&
                     <div>
                         <div className="testing__progress-bar">
                             <div className="testing__progress-bar__entry">
-                                <img src={CheckIcon} />
+                                <img
+                                    src={CheckIcon}
+                                    alt="Right"
+                                />
                                 <span>{ rightLen }</span>
-                                <img src={ErrorIcon} />
+                                <img
+                                    src={ErrorIcon}
+                                    alt="Wrong"
+                                />
                                 <span>{ pairs.length - rightLen }</span>
                             </div>
                         </div>
                     </div>
                 }
-                <MatchedList pairs={pairs}/>
+                <MatchedList pairs={pairs} />
             </div>
         );
     }
@@ -195,12 +215,12 @@ class Test extends React.Component {
 function mapStateToProps(state) {
     return {
         activeCategoryId: state.activeCategoryId,
-    }
+    };
 }
 function mapDispatchToProps(dispatch) {
     return {
         loading: value => dispatch(loading(value)),
-    }
+    };
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Test);

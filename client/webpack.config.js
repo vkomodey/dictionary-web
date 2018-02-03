@@ -3,7 +3,9 @@
 let path = require('path');
 let webpack = require('webpack');
 
-module.exports = {
+let isDev = process.env.NODE_ENV === 'development';
+
+let config = {
     context: path.resolve(__dirname, 'src'),
     entry: [
         './main',
@@ -57,3 +59,19 @@ module.exports = {
     },
     devtool: 'source-map',
 };
+
+
+if (isDev) {
+    // consfigure ESLint
+    config.module.rules.push({
+        test: /\.jsx?$/,
+        include: path.join(__dirname, 'src'),
+        exclude: /node_modules/,
+        use: [
+            'babel-loader',
+            'eslint-loader',
+        ],
+    });
+}
+
+module.exports = config;

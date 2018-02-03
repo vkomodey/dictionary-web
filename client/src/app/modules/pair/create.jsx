@@ -6,6 +6,15 @@ import Input from 'app/components/input';
 import pairApi from 'app/utils/api-services/pairs';
 
 class CreatePair extends React.Component {
+    static propTypes = {
+        onAdded: PropTypes.func,
+        activeCategoryId: PropTypes.string.isRequired,
+    }
+
+    static defaultProps = {
+        onAdded: () => {},
+    };
+
     constructor(props) {
         super(props);
         this.state = {
@@ -35,14 +44,13 @@ class CreatePair extends React.Component {
         });
     }
 
-    handleChange = (inputType) => {
-        return e => {
-            let { firstLangExpression, secondLangExpression } = this.state;
-            this.setState({
-                firstLangExpression: inputType === 'en' ? e.target.value : firstLangExpression,
-                secondLangExpression: inputType === 'ru' ? e.target.value : secondLangExpression,
-            });
-        }
+    handleChange = inputType => (e) => {
+        let { firstLangExpression, secondLangExpression } = this.state;
+
+        this.setState({
+            firstLangExpression: inputType === 'en' ? e.target.value : firstLangExpression,
+            secondLangExpression: inputType === 'ru' ? e.target.value : secondLangExpression,
+        });
     }
 
     areInputsEmpty = () => {
@@ -53,40 +61,40 @@ class CreatePair extends React.Component {
 
     render() {
         return (
-            <div className='create-pair'>
-                <div className='create-pair__title'>
+            <div className="create-pair">
+                <div className="create-pair__title">
                     <span> Pair </span>
                 </div>
                 <form className="create-pair__form">
-                    <div className='create-pair__inputs-group'>
-                        <div className='create-pair__inputs-group__item'>
-                            <Input 
-                                type='text'
-                                placeholder='en'
+                    <div className="create-pair__inputs-group">
+                        <div className="create-pair__inputs-group__item">
+                            <Input
+                                type="text"
+                                placeholder="en"
                                 value={this.state.firstLangExpression}
                                 onChange={this.handleChange('en')}
-                                className='inpt'
+                                className="inpt"
                                 autoFocus
                             />
                         </div>
-                        <div className='create-pair__inputs-group__item'>
-                            <Input 
-                                type='text' 
-                                placeholder='ru'
+                        <div className="create-pair__inputs-group__item">
+                            <Input
+                                type="text"
+                                placeholder="ru"
                                 value={this.state.secondLangExpression}
                                 onChange={this.handleChange('ru')}
-                                className='inpt'
+                                className="inpt"
                             />
                         </div>
                     </div>
                     <div>
-                        <Button 
-                            type='submit'
+                        <Button
+                            type="submit"
                             onClick={this.onClick}
                             disabled={!this.state.firstLangExpression || !this.state.secondLangExpression}
-                            className='btn btn-primary'
+                            className="btn btn-primary"
                         >
-                            Add 
+                            Add
                         </Button>
                     </div>
                 </form>
@@ -95,17 +103,8 @@ class CreatePair extends React.Component {
     }
 }
 
-CreatePair.propTypes = {
-    onAdded: PropTypes.func,
-    activeCategoryId: PropTypes.string,
-}
-
-CreatePair.defaultProps = {
-    onAdded: () => {},
-}
-
 function mapStateToProps(state) {
     return { activeCategoryId: state.activeCategoryId };
-};
+}
 
 export default connect(mapStateToProps)(CreatePair);

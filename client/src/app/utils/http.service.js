@@ -3,7 +3,7 @@ import urlLib from 'url';
 import _ from 'lodash';
 
 let defaultHeaders = {
-    'Content-Type': 'application/json'
+    'Content-Type': 'application/json',
 };
 
 let apiService = {
@@ -18,19 +18,19 @@ function makeRequest(method, url, query, body, headers) {
         headers: Object.assign(defaultHeaders, headers),
         body: body ? JSON.stringify(body) : null,
     })
-        .then(response => response.json())
-};
+        .then(response => response.json());
+}
 
 function getUrl(url, query) {
     let urlToSend = url;
 
-    if ( _.isObject(query) ){ 
-        urlToSend = `${urlToSend}${urlLib.format({query})}`;
+    if ( _.isObject(query) ) {
+        urlToSend = `${urlToSend}${urlLib.format({ query })}`;
     } else if ( _.isString(query) ) {
         urlToSend = `${urlToSend}${query}`;
     }
-    
+
     return urlToSend;
-};
+}
 
 export default apiService;

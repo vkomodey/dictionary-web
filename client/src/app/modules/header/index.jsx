@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default function() {
+export default function () {
     return (
         <div className="header">
             <div className="header__content_big">

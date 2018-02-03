@@ -1,17 +1,24 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
-export default class Button extends React.Component {
-    constructor(props) {
-        super(props);
-    }
-
-    render() {
-        return (
-            <button
-                {...this.props}
-            >
-                {this.props.children}
-            </button>
-        )
-    }
+export default function Button(props) {
+    return (
+        <button
+            {...props}
+        >
+            {props.children}
+        </button>
+    );
 }
+
+Button.propTypes = {
+    children: PropTypes.oneOfType([
+        PropTypes.element,
+        PropTypes.object,
+        PropTypes.string,
+    ]),
+};
+
+Button.defaultProps = {
+    children: <span />,
+};

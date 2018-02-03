@@ -1,10 +1,19 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Button from 'app/components/button';
 import Input from 'app/components/input';
 import { createCategory, checkActiveCategory } from 'app/redux/actions/categories';
 
 class CreateCategory extends React.Component {
+    static propTypes = {
+        createCategory: PropTypes.func,
+    }
+
+    static defaultProps = {
+        createCategory: () => {},
+    }
+
     constructor(props) {
         super(props);
         this.state = {
@@ -38,30 +47,30 @@ class CreateCategory extends React.Component {
 
     render() {
         return (
-            <div className='create-category'>
-                <div className='create-category__title'>
+            <div className="create-category">
+                <div className="create-category__title">
                     <span>  Category </span>
                 </div>
-                <form className='create-category__form'>
-                    <div className='create-category__inputs-group'>
-                        <div className='create-category__inputs-group__item'>
-                            <Input 
-                                type='text'
-                                placeholder='Category Name'
+                <form className="create-category__form">
+                    <div className="create-category__inputs-group">
+                        <div className="create-category__inputs-group__item">
+                            <Input
+                                type="text"
+                                placeholder="Category Name"
                                 value={this.state.name}
                                 onChange={this.handleChange}
-                                className='inpt'
+                                className="inpt"
                                 autoFocus
                             />
                         </div>
                     </div>
-                    <Button 
-                        type='submit'
+                    <Button
+                        type="submit"
                         onClick={this.createCategory}
                         disabled={!this.state.name}
-                        className='btn btn-primary'
+                        className="btn btn-primary"
                     >
-                        Add 
+                        Add
                     </Button>
                 </form>
             </div>
@@ -71,9 +80,9 @@ class CreateCategory extends React.Component {
 
 function mapDispatchToProps(dispatch) {
     return {
-        createCategory: (category={}) => dispatch(createCategory(category)),
+        createCategory: (category = {}) => dispatch(createCategory(category)),
         chooseActive: id => dispatch(checkActiveCategory(id)),
-    }
+    };
 }
 
 export default connect(null, mapDispatchToProps)(CreateCategory);

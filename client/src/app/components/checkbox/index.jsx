@@ -1,25 +1,36 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import _ from 'lodash';
 
 export default class Checkbox extends React.Component {
+    static propTypes = {
+        uniqValue: PropTypes.string.isRequired,
+        checked: PropTypes.bool,
+        onChange: PropTypes.func,
+        selected: PropTypes.bool,
+    }
+
+    static defaultProps = {
+        checked: false,
+        onChange: () => {},
+        selected: false,
+    }
     constructor(props) {
         super(props);
 
         this.state = {
             isChecked: this.props.checked || false,
             selected: this.props.selected || false,
-        }
+        };
     }
 
     componentWillReceiveProps(newProps) {
-        this.setState({isChecked: newProps.checked, selected: newProps.selected});
+        this.setState({ isChecked: newProps.checked, selected: newProps.selected });
     }
 
     onChange = (e) => {
         let isChecked = !this.state.isChecked;
 
-        this.setState({isChecked});
+        this.setState({ isChecked });
         this.props.onChange(e, {
             isChecked,
             value: e.target.value,
@@ -31,9 +42,9 @@ export default class Checkbox extends React.Component {
         let spanClass = this.state.selected ? 'outlined' : '';
 
         return (
-            <div className='checkbox-container'>
-                <input 
-                    type='checkbox'
+            <div className="checkbox-container">
+                <input
+                    type="checkbox"
                     name={uniqValue}
                     id={uniqValue}
                     value={uniqValue}
@@ -41,15 +52,9 @@ export default class Checkbox extends React.Component {
                     onChange={this.onChange}
                 />
                 <label htmlFor={uniqValue} >
-                    <span className={spanClass}/>
+                    <span className={spanClass} />
                 </label>
             </div>
         );
     }
 }
-
-Checkbox.propTypes = {
-    uniqValue: PropTypes.string.isRequired,
-    checked: PropTypes.bool,
-    onChange: PropTypes.func,
-};

@@ -6,26 +6,35 @@ export const REMOVE_CATEGORY = 'REMOVE_CATEGORY';
 export const CHECK_ACTIVE_CATEGORY = 'CHECK_ACTIVE_CATEGORY';
 
 export function createCategory(category) {
-    return function(dispatch) {
+    return function create(dispatch) {
         return categoryApi.create(category)
             .then(response =>
-                dispatch({ type: CREATE_CATEGORY, category: response}));
-    }
+                dispatch({
+                    type: CREATE_CATEGORY,
+                    category: response,
+                }));
+    };
 }
 
 export function fetchCategories() {
-    return function(dispatch) {
+    return function fetch(dispatch) {
         return categoryApi.findAll()
             .then(categories =>
-                dispatch({ type: CATEGORIES_RETRIEVED, categories}));
+                dispatch({
+                    type: CATEGORIES_RETRIEVED,
+                    categories,
+                }));
     };
 }
 
 export function removeCategory(id) {
-    return function(dispatch) {
+    return function remove(dispatch) {
         return categoryApi.removeById(id)
-            .then(categories => dispatch({ type: REMOVE_CATEGORY, id }));
-    }
+            .then(() => dispatch({
+                type: REMOVE_CATEGORY,
+                id,
+            }));
+    };
 }
 
 export function checkActiveCategory(id) {

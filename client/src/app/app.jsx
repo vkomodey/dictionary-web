@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import { connect } from 'react-redux';
 import Header from 'app/modules/header';
@@ -11,38 +12,41 @@ import Loader from 'app/components/loader';
 import { fetchCategories, checkActiveCategory } from 'app/redux/actions/categories';
 
 class App extends React.Component {
-    constructor(props) {
-        super(props);
+    static propTypes = {
+        findCategories: PropTypes.func.isRequired,
+        checkActiveCategory: PropTypes.func.isRequired,
+        activeCategoryId: PropTypes.string,
+        isLoading: PropTypes.bool,
+        categories: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.string)),
     }
 
+    static defaultProps = {
+        activeCategoryId: '',
+        isLoading: false,
+        categories: [],
+    }
     componentWillMount() {
         this.props.findCategories();
     }
 
     componentWillReceiveProps(nextProps) {
         let oldCategoryId = this.props.activeCategoryId;
-        let newCategoryId = nextProps.activeCategoryId;
-        let categories = nextProps.categories;
+        let { categories } = nextProps;
 
         if ( categories.length === 0 ) {
-            return this.props.checkActiveCategory('');
+            this.props.checkActiveCategory('');
         }
-        
-        // First time application have to set categoryId from categories
-        if ( !oldCategoryId && nextProps.categories.length > 0 ) {
-            let defaultCategoryId = categories[0]._id;
 
-            return this.props.checkActiveCategory(categories[0]._id);
+        // First time application have to set categoryId from categories
+        console.log({ oldCategoryId });
+        console.log({ c: nextProps.categories });
+
+        if ( !oldCategoryId && nextProps.categories.length > 0 ) {
+            this.props.checkActiveCategory(categories[0]._id);
         }
     }
 
     render() {
-        let categoriesHocParams = {
-            entityName: 'category',
-            pageUrl: '/category',
-            isDataPresent: Boolean(this.props.activeCategoryId)
-        };
-
         return (
             <Router>
                 <div>

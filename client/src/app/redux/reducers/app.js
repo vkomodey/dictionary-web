@@ -1,9 +1,9 @@
-import { 
-    LOADING
+import {
+    LOADING,
 } from 'app/redux/actions/app';
 
-export function loadingReducer(state=false, action) {
-    switch(action.type) {
+export function loadingReducer(state = false, action) {
+    switch (action.type) {
         case LOADING:
             return action.isLoading;
         default:
