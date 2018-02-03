@@ -8,7 +8,6 @@ import TestPage from 'app/modules/test';
 import Navbar from 'app/modules/header/navbar';
 import ActiveCategory from 'app/modules/header/active-category';
 import Loader from 'app/components/loader';
-import noDataHoc from 'app/modules/no-data.hoc';
 import { fetchCategories, checkActiveCategory } from 'app/redux/actions/categories';
 
 class App extends React.Component {
