@@ -1,7 +1,5 @@
 import 'whatwg-fetch';
 import urlLib from 'url';
-import store from '../store';
-import { loading } from 'app/redux/actions/app';
 import _ from 'lodash';
 
 let defaultHeaders = {
@@ -15,18 +13,12 @@ let apiService = {
 };
 
 function makeRequest(method, url, query, body, headers) {
-    store.dispatch(loading(true));
-
     return fetch(getUrl(url, query), {
         method,
         headers: Object.assign(defaultHeaders, headers),
         body: body ? JSON.stringify(body) : null,
     })
-        .then(response => {
-            store.dispatch(loading(false));
-            return response.json();
-        })
-        .catch(() => store.dispatch(loading(false)));
+        .then(response => response.json())
 };
 
 function getUrl(url, query) {

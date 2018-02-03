@@ -6,9 +6,11 @@ import MatchedList from './answers';
 import { shuffle } from 'app/utils/array';
 import CheckIcon from 'assets/icons/check.svg'; 
 import ErrorIcon from 'assets/icons/error.svg'; 
+import { loading } from 'app/redux/actions/app';
+import pairApi from 'app/utils/api-services/pairs';
 
-const START = 'start'; const FINISH = 'finish';
-
+const START = 'start';
+const FINISH = 'finish';
 
 function isMatch(value1='', value2='') {
     let cleared1 = value1.trim().toLowerCase();
@@ -27,9 +29,44 @@ class Test extends React.Component {
             finished: false,
             inProgress: false,
             rightLen: 0,
-            wrongLen: 0,
             pairs: [],
         };
+    }
+
+    componentWillReceiveProps(nextProps) {
+        if ( this.props.activeCategoryId !== nextProps.activeCategoryId ) {
+            this.fetchPairs(nextProps.activeCategoryId)
+                .then(this.resetTestActivities);
+        }
+    }
+
+    resetTestActivities = () => {
+        this.setState({
+            answer: '',
+            currentPairIndex: 0,
+            finished: false,
+            inProgress: false,
+            rightLen: 0,
+        });
+    }
+
+    componentDidMount() {
+        this.fetchPairs(this.props.activeCategoryId);
+    }
+
+    fetchPairs = (categoryId) => {
+        this.props.loading(true);
+
+        return pairApi.findAll({categoryId})
+            .then(pairs => {
+                this.setState({pairs});
+                this.props.loading(false);
+            })
+            .catch(err => {
+                console.error(err);
+
+                this.props.loading(false);
+            });
     }
 
     handleStartFinish = (actionType) => {
@@ -40,10 +77,9 @@ class Test extends React.Component {
                 this.setState({
                     inProgress: true,
                     rightLen: 0,
-                    wrongLen: 0,
                     currentPairIndex: 0,
                     finished: false,
-                    pairs: shuffle(this.props.pairs).map(p => Object.assign({answered: false}, p)),
+                    pairs: shuffle(this.state.pairs).map(p => Object.assign({answered: false}, p)),
                 });
             } else if ( actionType === FINISH ) {
                 this.setState({
@@ -62,7 +98,7 @@ class Test extends React.Component {
     }
 
     submitAnswer = (e) => {
-        let { currentPairIndex, answer, rightLen, wrongLen, pairs } = this.state;
+        let { currentPairIndex, answer, rightLen, pairs } = this.state;
         let currentPair = pairs[currentPairIndex];
         let isAnswerRight = isMatch(answer, currentPair.firstLangExpression);
         let newIndex = currentPairIndex + 1;
@@ -84,7 +120,6 @@ class Test extends React.Component {
             answer: '',
             currentPairIndex: newIndex,
             rightLen: isAnswerRight ? rightLen + 1 : rightLen,
-            wrongLen: !isAnswerRight ? wrongLen + 1 : wrongLen,
             finished: isTestFinished,
             inProgress: !isTestFinished,
             pairs: newPairs,
@@ -92,7 +127,7 @@ class Test extends React.Component {
     }
 
     render() {
-        let { testPairs, rightLen, wrongLen, currentPairIndex, inProgress, finished, pairs } = this.state;
+        let { testPairs, rightLen, currentPairIndex, inProgress, finished, pairs } = this.state;
         let currentPair = pairs[currentPairIndex];
 
         return (
@@ -100,14 +135,14 @@ class Test extends React.Component {
                 <div className="testing__control-panel">
                     { !this.state.inProgress &&
                         <Button
-                            disabled={this.props.pairs.length === 0}
+                            disabled={pairs.length === 0}
                             onClick={this.handleStartFinish(START)}
                             className='btn btn-primary'
                         >
                             Start
                         </Button>
                     }
-                    { this.props.pairs.length === 0 && 
+                    { pairs.length === 0 && 
                         <div><span>No pairs found</span></div>
                     }
                 </div>
@@ -146,12 +181,12 @@ class Test extends React.Component {
                                 <img src={CheckIcon} />
                                 <span>{ rightLen }</span>
                                 <img src={ErrorIcon} />
-                                <span>{ wrongLen }</span>
+                                <span>{ pairs.length - rightLen }</span>
                             </div>
                         </div>
                     </div>
                 }
-                <MatchedList pairs={this.state.pairs}/>
+                <MatchedList pairs={pairs}/>
             </div>
         );
     }
@@ -159,13 +194,12 @@ class Test extends React.Component {
 
 function mapStateToProps(state) {
     return {
-        pairs: state.pairs,
-    };
+        activeCategoryId: state.activeCategoryId,
+    }
 }
-
 function mapDispatchToProps(dispatch) {
     return {
-        findPairs: () => dispatch(fetchPairs()),
+        loading: value => dispatch(loading(value)),
     }
 }
 

@@ -5,7 +5,7 @@ import {
 export function loadingReducer(state=false, action) {
     switch(action.type) {
         case LOADING:
-            return Boolean(action.isLoading);
+            return action.isLoading;
         default:
             return state;
     }

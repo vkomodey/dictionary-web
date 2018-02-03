@@ -1,8 +1,9 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Button from 'app/components/button';
 import Input from 'app/components/input';
-import { createPair } from 'app/redux/actions/pairs';
+import pairApi from 'app/utils/api-services/pairs';
 
 class CreatePair extends React.Component {
     constructor(props) {
@@ -14,16 +15,16 @@ class CreatePair extends React.Component {
     }
 
     onClick = (e) => {
-        e.preventDefault();
-
-        this.props.onClick({
+        let pair = {
             firstLangExpression: this.state.firstLangExpression,
             secondLangExpression: this.state.secondLangExpression,
             categoryId: this.props.activeCategoryId,
             firstLang: 'en',
             secondLang: 'ru',
-        });
+        };
 
+        e.preventDefault();
+        pairApi.create(pair).then(added => this.props.onAdded(added));
         this.clearInputs();
     }
 
@@ -94,18 +95,17 @@ class CreatePair extends React.Component {
     }
 }
 
-function mapStateToProps(state) {
-    return {
-        activeCategoryId: state.activeCategoryId,
-    };
-};
-
-function mapDispatchToProps(dispatch) {
-    return {
-        onClick: (pair={}) => {
-            return dispatch(createPair(pair));
-        }
-    }
+CreatePair.propTypes = {
+    onAdded: PropTypes.func,
+    activeCategoryId: PropTypes.string,
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(CreatePair);
+CreatePair.defaultProps = {
+    onAdded: () => {},
+}
+
+function mapStateToProps(state) {
+    return { activeCategoryId: state.activeCategoryId };
+};
+
+export default connect(mapStateToProps)(CreatePair);

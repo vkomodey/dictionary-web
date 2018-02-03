@@ -10,7 +10,6 @@ import ActiveCategory from 'app/modules/header/active-category';
 import Loader from 'app/components/loader';
 import noDataHoc from 'app/modules/no-data.hoc';
 import { fetchCategories, checkActiveCategory } from 'app/redux/actions/categories';
-import { fetchPairs } from 'app/redux/actions/pairs';
 
 class App extends React.Component {
     constructor(props) {
@@ -30,11 +29,6 @@ class App extends React.Component {
             return this.props.checkActiveCategory('');
         }
         
-        // Fetch new pairs in case of changing activeCategoryId
-        if ( oldCategoryId !== newCategoryId ) {
-            return this.props.findPairs(newCategoryId);
-        }
-
         // First time application have to set categoryId from categories
         if ( !oldCategoryId && nextProps.categories.length > 0 ) {
             let defaultCategoryId = categories[0]._id;
@@ -59,8 +53,8 @@ class App extends React.Component {
                     { this.props.activeCategoryId && this.props.categories.length > 1 &&
                         <ActiveCategory />
                     }
-                    <Route exact path="/" component={noDataHoc(PairPage, categoriesHocParams)} />
-                    <Route path="/test" component={noDataHoc(TestPage, categoriesHocParams)} />
+                    <Route exact path="/" component={PairPage} />
+                    <Route path="/test" component={TestPage} />
                     <Route path="/category" component={CategoryPage} />
                 </div>
             </Router>
@@ -68,10 +62,9 @@ class App extends React.Component {
     }
 }
 
-function mapStateToProps({ categories, pairs, activeCategoryId, isLoading }) {
+function mapStateToProps({ categories, activeCategoryId, isLoading }) {
     return {
         categories,
-        pairs,
         activeCategoryId,
         isLoading,
     };
@@ -79,7 +72,6 @@ function mapStateToProps({ categories, pairs, activeCategoryId, isLoading }) {
 function mapDispatchToProps(dispatch) {
     return {
         findCategories: () => dispatch(fetchCategories()),
-        findPairs: categoryId => dispatch(fetchPairs(categoryId)),
         checkActiveCategory: id => dispatch(checkActiveCategory(id)),
     };
 }

@@ -51,6 +51,7 @@ async function removeMultiple(ctx) {
     try {
         let ids = ctx.query.ids.split(',');
 
+        await Pair.remove({ _id: { $in: ids } });
         ctx.respondSuccess({ ids });
     } catch (err) {
         ctx.internalError(err);

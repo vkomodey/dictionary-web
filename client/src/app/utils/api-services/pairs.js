@@ -16,8 +16,8 @@ export default {
         let query = {
             ids: ids.join(','),
         };
-        let endpoint = `${endpoint}/multiple`;
+        let url = `${endpoint}/multiple`;
 
-        return httpService.delete(endpoint, query);
+        return httpService.delete(url, query);
     }
 }
