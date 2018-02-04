@@ -1,5 +1,5 @@
 import React from 'react';
-import Listing from './listing';
+import Listing from './main.listing';
 import CreateCategory from './create';
 
 export default function CategoryPage() {

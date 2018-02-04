@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import { connect } from 'react-redux';
 import Header from 'app/modules/header';
-import PairPage from 'app/modules/pair';
+import StoragePage from 'app/modules/storage/index';
 import CategoryPage from 'app/modules/category';
 import TestPage from 'app/modules/test';
 import Navbar from 'app/modules/header/navbar';
@@ -52,7 +52,7 @@ class App extends React.Component {
                     { this.props.activeCategoryId && this.props.categories.length > 1 &&
                         <ActiveCategory />
                     }
-                    <Route exact path="/" component={PairPage} />
+                    <Route exact path="/" component={StoragePage} />
                     <Route path="/test" component={TestPage} />
                     <Route path="/category" component={CategoryPage} />
                 </div>

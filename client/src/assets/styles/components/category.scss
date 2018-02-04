@@ -36,3 +36,11 @@
         align-items: center;
     }
 }
+
+.category-listing th:nth-child(1) {
+    min-width: 200px;
+}
+
+.category-listing th:nth-child(2) {
+    min-width: 100px;
+}

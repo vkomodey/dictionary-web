@@ -129,17 +129,17 @@ export default class PairsListing extends React.Component {
 
         return (
             <div>
+                { !allUnchecked &&
                 <div className="actions">
-                    { !allUnchecked &&
-                        <Button
-                            type="button"
-                            onClick={this.onRemoveClick(checkedKeys)}
-                            className="btn btn-danger"
-                        >
-                            <img src={DeleteIcon} alt="Delete selected" />
-                        </Button>
-                    }
+                    <Button
+                        type="button"
+                        onClick={this.onRemoveClick(checkedKeys)}
+                        className="btn btn-danger"
+                    >
+                        Remove
+                    </Button>
                 </div>
+                }
                 <table className="tbl pair-listing">
                     <thead>
                         <tr>

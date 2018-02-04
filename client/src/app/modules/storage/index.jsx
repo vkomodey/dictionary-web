@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import pairApi from 'app/utils/api-services/pairs';
 import { loading } from 'app/redux/actions/app';
+import ActiveCategories from './active.widgets';
 import Listing from './listing';
 import CreatePair from './create';
 
@@ -62,19 +63,23 @@ class PairsPage extends React.Component {
 
     render() {
         return (
-            <div className="pair-page">
-                <div className="pair-page__section">
-                    <CreatePair
-                        onAdded={this.onAdded}
-                    />
+            <div className="storage-container">
+                <div className="pair-page">
+                    <div className="pair-page__section">
+                        <CreatePair
+                            onAdded={this.onAdded}
+                        />
+                    </div>
+                    <div className="pair-page__section">
+                        <Listing
+                            pairs={this.state.pairs}
+                            uniqKey="_id"
+                            onRemove={this.onRemove}
+                        />
+                    </div>
                 </div>
-
-                <div className="pair-page__section">
-                    <Listing
-                        pairs={this.state.pairs}
-                        uniqKey="_id"
-                        onRemove={this.onRemove}
-                    />
+                <div>
+                    <ActiveCategories />
                 </div>
             </div>
         );

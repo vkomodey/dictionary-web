@@ -43,17 +43,19 @@ class CategoriesListing extends React.Component {
         ));
 
         return (
-            <table className="tbl">
-                <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Remove</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {categoriesList.length > 0 ? categoriesList : <tr><td colSpan="2"> No categories found! </td></tr>}
-                </tbody>
-            </table>
+            <div className="category-listing">
+                <table className="tbl">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Remove</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {categoriesList.length > 0 ? categoriesList : <tr><td colSpan="2"> No categories found! </td></tr>}
+                    </tbody>
+                </table>
+            </div>
         );
     }
 }
