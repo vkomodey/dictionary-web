@@ -7,7 +7,7 @@ import { checkActiveCategory } from 'app/redux/actions/categories';
 
 class CategoryListing extends React.Component {
     static propTypes = {
-        categories: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.string)),
+        categories: PropTypes.arrayOf(PropTypes.shape({})),
         activeCategoryId: PropTypes.string,
         checkActive: PropTypes.func,
     }

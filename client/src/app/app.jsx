@@ -17,7 +17,7 @@ class App extends React.Component {
         checkActiveCategory: PropTypes.func.isRequired,
         activeCategoryId: PropTypes.string,
         isLoading: PropTypes.bool,
-        categories: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.string)),
+        categories: PropTypes.arrayOf(PropTypes.shape({})),
     }
 
     static defaultProps = {
@@ -36,10 +36,6 @@ class App extends React.Component {
         if ( categories.length === 0 ) {
             this.props.checkActiveCategory('');
         }
-
-        // First time application have to set categoryId from categories
-        console.log({ oldCategoryId });
-        console.log({ c: nextProps.categories });
 
         if ( !oldCategoryId && nextProps.categories.length > 0 ) {
             this.props.checkActiveCategory(categories[0]._id);

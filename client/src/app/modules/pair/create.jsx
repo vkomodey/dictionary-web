@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import * as AppActions from 'app/redux/actions/app';
 import Button from 'app/components/button';
 import Input from 'app/components/input';
 import pairApi from 'app/utils/api-services/pairs';
@@ -9,6 +11,7 @@ class CreatePair extends React.Component {
     static propTypes = {
         onAdded: PropTypes.func,
         activeCategoryId: PropTypes.string.isRequired,
+        loading: PropTypes.func.isRequired,
     }
 
     static defaultProps = {
@@ -24,6 +27,7 @@ class CreatePair extends React.Component {
     }
 
     onClick = (e) => {
+        let { loading } = this.props;
         let pair = {
             firstLangExpression: this.state.firstLangExpression,
             secondLangExpression: this.state.secondLangExpression,
@@ -33,8 +37,21 @@ class CreatePair extends React.Component {
         };
 
         e.preventDefault();
-        pairApi.create(pair).then(added => this.props.onAdded(added));
-        this.clearInputs();
+
+        loading(true);
+
+        return pairApi.create(pair)
+            .then((added) => {
+                this.props.onAdded(added);
+                this.clearInputs();
+
+                loading(false);
+            })
+            .catch((err) => {
+                console.error(err); // eslint-disable-line
+
+                loading(false);
+            });
     }
 
     clearInputs = () => {
@@ -107,4 +124,8 @@ function mapStateToProps(state) {
     return { activeCategoryId: state.activeCategoryId };
 }
 
-export default connect(mapStateToProps)(CreatePair);
+function mapDispatchToProps(dispatch) {
+    return bindActionCreators(AppActions, dispatch);
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(CreatePair);

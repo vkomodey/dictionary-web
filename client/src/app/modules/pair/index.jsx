@@ -50,7 +50,6 @@ class PairsPage extends React.Component {
 
         pairApi.findAll({ categoryId })
             .then((pairs) => {
-                console.log(pairs);
                 this.setState({ pairs });
                 this.props.loading(false);
             })
