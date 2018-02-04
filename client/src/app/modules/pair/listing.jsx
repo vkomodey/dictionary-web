@@ -128,36 +128,40 @@ export default class PairsListing extends React.Component {
         let pairsList = pairs.map(this.renderRow);
 
         return (
-            <table className="tbl pair-listing">
-                <thead>
-                    <tr>
-                        <th> {
-                            pairs.length > 0 &&
-                            <Checkbox
-                                onChange={this.checkAll}
-                                checked={!allUnchecked}
-                                uniqValue="all"
-                            />
-                        }
-                        </th>
-                        <th>English</th>
-                        <th>Russian</th>
-                        <th>{ !allUnchecked &&
-                            <Button
-                                type="button"
-                                onClick={this.onRemoveClick(checkedKeys)}
-                                className="btn btn-danger"
-                            >
-                                <img src={DeleteIcon} alt="Delete selected" />
-                            </Button>
-                        }
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {pairsList.length > 0 ? pairsList : <tr><td colSpan="4"> No pairs found! </td></tr>}
-                </tbody>
-            </table>
+            <div>
+                <div className="actions">
+                    { !allUnchecked &&
+                        <Button
+                            type="button"
+                            onClick={this.onRemoveClick(checkedKeys)}
+                            className="btn btn-danger"
+                        >
+                            <img src={DeleteIcon} alt="Delete selected" />
+                        </Button>
+                    }
+                </div>
+                <table className="tbl pair-listing">
+                    <thead>
+                        <tr>
+                            <th> {
+                                pairs.length > 0 &&
+                                <Checkbox
+                                    onChange={this.checkAll}
+                                    checked={!allUnchecked}
+                                    uniqValue="all"
+                                />
+                            }
+                            </th>
+                            <th>English</th>
+                            <th>Russian</th>
+                            <th />
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {pairsList.length > 0 ? pairsList : <tr><td colSpan="4"> No pairs found! </td></tr>}
+                    </tbody>
+                </table>
+            </div>
         );
     }
 }
