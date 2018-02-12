@@ -7,7 +7,6 @@ import StoragePage from 'app/modules/storage/index';
 import CategoryPage from 'app/modules/category';
 import TestPage from 'app/modules/test';
 import Navbar from 'app/modules/header/navbar';
-import ActiveCategory from 'app/modules/header/active-category';
 import Loader from 'app/components/loader';
 import { fetchCategories, checkActiveCategory } from 'app/redux/actions/categories';
 
@@ -49,9 +48,6 @@ class App extends React.Component {
                     <Loader loading={this.props.isLoading} />
                     <Header />
                     <Navbar />
-                    { this.props.activeCategoryId && this.props.categories.length > 1 &&
-                        <ActiveCategory />
-                    }
                     <Route exact path="/" component={StoragePage} />
                     <Route path="/test" component={TestPage} />
                     <Route path="/category" component={CategoryPage} />

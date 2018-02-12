@@ -2,3 +2,45 @@
     display: flex;
     justify-content: center;
 }
+
+.widgets-container {
+    display: flex;
+    flex-wrap: wrap;
+    max-width: 550px;
+    min-width: 200px;
+    border: 1px solid $grey;
+    padding: 10px 10px 10px;
+}
+
+.category-widget {
+    border: 1px solid $grey;
+    background-color: rgba(71,75,79,0.6);
+    cursor: pointer;
+    height: 100px;
+    width: 259px;
+    padding: 10px 10px 10px 10px;
+    margin-bottom: 5px;
+    margin-right: 5px;
+    -webkit-transition: all 0.30s ease-in-out;
+    -moz-transition: all 0.30s ease-in-out;
+    -ms-transition: all 0.30s ease-in-out;
+    -o-transition: all 0.30s ease-in-out;
+
+    &__title {
+        text-align: center;
+        text-transform: uppercase;
+        font-weight: 800;
+        padding: 1px 1px 1px 1px;
+    }
+
+    &__content {
+        font-size: 14px;
+    }
+}
+
+.category-widget:hover,
+.category-widget__active{
+    border: 2px solid $grey;
+    //background-color: rgba(97,137,47,0.6);
+    background-color: rgba(75,79,79,0.98);
+}

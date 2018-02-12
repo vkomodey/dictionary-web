@@ -1,5 +1,6 @@
 'use strict';
 
+let _ = require('lodash');
 let Router = require('koa-router');
 let Category = require('./model');
 let Pair = require('./../pair/model');
@@ -21,7 +22,24 @@ async function findById(ctx) {
 
 async function findAll(ctx) {
     try {
-        ctx.respondSuccess(await Category.find());
+        let categories = await Category.find().lean().exec();
+
+        let pairStatistics = await Pair.aggregate([
+            {
+                $group: {
+                    _id: '$categoryId',
+                    count: { $sum: 1 },
+                },
+            },
+        ]);
+
+        for (let category of categories) {
+            let pairStats = pairStatistics.find(s => s._id === category._id);
+
+            category.pairAmount = _.get(pairStats, 'count', 0);
+        }
+
+        ctx.respondSuccess(categories);
     } catch (err) {
         ctx.internalError(err);
     }
