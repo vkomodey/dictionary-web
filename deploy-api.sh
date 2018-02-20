@@ -1,2 +1,2 @@
 cd server/
-heroku container:push api --remote api
+heroku container:push web --remote vkomodey-dict-api
