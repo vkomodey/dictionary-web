@@ -8,10 +8,10 @@ import DeleteIcon from 'assets/icons/delete.svg';
 class CategoriesListing extends React.Component {
     static propTypes = {
         removeCategory: PropTypes.func,
-        categories: PropTypes.arrayOf({
+        categories: PropTypes.arrayOf(PropTypes.shape({
             _id: PropTypes.string,
             name: PropTypes.string,
-        }),
+        })),
     }
 
     static defaultProps = {
