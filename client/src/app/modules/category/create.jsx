@@ -5,7 +5,15 @@ import Button from 'app/components/button';
 import Input from 'app/components/input';
 import { createCategory, checkActiveCategory } from 'app/redux/actions/categories';
 
-class CreateCategory extends React.Component {
+function mapDispatchToProps(dispatch) {
+    return {
+        createCategory: (category = {}) => dispatch(createCategory(category)),
+        chooseActive: id => dispatch(checkActiveCategory(id)),
+    };
+}
+
+@connect(null, mapDispatchToProps)
+export default class CreateCategory extends React.Component {
     static propTypes = {
         createCategory: PropTypes.func,
     }
@@ -78,11 +86,3 @@ class CreateCategory extends React.Component {
     }
 }
 
-function mapDispatchToProps(dispatch) {
-    return {
-        createCategory: (category = {}) => dispatch(createCategory(category)),
-        chooseActive: id => dispatch(checkActiveCategory(id)),
-    };
-}
-
-export default connect(null, mapDispatchToProps)(CreateCategory);

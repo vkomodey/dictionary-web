@@ -5,7 +5,20 @@ import { removeCategory } from 'app/redux/actions/categories';
 import Button from 'app/components/button';
 import DeleteIcon from 'assets/icons/delete.svg';
 
-class CategoriesListing extends React.Component {
+function mapStateToProps(state) {
+    return {
+        categories: state.categories,
+    };
+}
+
+function mapDispatchToProps(dispatch) {
+    return {
+        removeCategory: id => dispatch(removeCategory(id)),
+    };
+}
+
+@connect(mapStateToProps, mapDispatchToProps)
+export default class CategoriesListing extends React.Component {
     static propTypes = {
         removeCategory: PropTypes.func,
         categories: PropTypes.arrayOf(PropTypes.shape({
@@ -57,17 +70,3 @@ class CategoriesListing extends React.Component {
         );
     }
 }
-
-function mapStateToProps(state) {
-    return {
-        categories: state.categories,
-    };
-}
-
-function mapDispatchToProps(dispatch) {
-    return {
-        removeCategory: id => dispatch(removeCategory(id)),
-    };
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(CategoriesListing);

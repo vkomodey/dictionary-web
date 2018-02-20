@@ -20,7 +20,20 @@ function isMatch(value1 = '', value2 = '') {
     return cleared1 === cleared2;
 }
 
-class Test extends React.Component {
+function mapStateToProps(state) {
+    return {
+        activeCategoryId: state.activeCategoryId,
+    };
+}
+
+function mapDispatchToProps(dispatch) {
+    return {
+        loading: value => dispatch(loading(value)),
+    };
+}
+
+@connect(mapStateToProps, mapDispatchToProps)
+export default class Test extends React.Component {
     static propTypes = {
         activeCategoryId: PropTypes.string.isRequired,
         loading: PropTypes.func.isRequired,
@@ -211,16 +224,3 @@ class Test extends React.Component {
         );
     }
 }
-
-function mapStateToProps(state) {
-    return {
-        activeCategoryId: state.activeCategoryId,
-    };
-}
-function mapDispatchToProps(dispatch) {
-    return {
-        loading: value => dispatch(loading(value)),
-    };
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(Test);

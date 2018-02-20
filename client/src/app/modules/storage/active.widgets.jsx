@@ -4,7 +4,21 @@ import { connect } from 'react-redux';
 import classnames from 'classnames';
 import { checkActiveCategory } from 'app/redux/actions/categories';
 
-class ActiveCategories extends Component {
+function mapProps(state) {
+    return {
+        categories: state.categories,
+        activeCategoryId: state.activeCategoryId,
+    };
+}
+
+function mapDispatch(dispatch) {
+    return {
+        checkActiveCategory: categoryId => dispatch(checkActiveCategory(categoryId)),
+    };
+}
+
+@connect(mapProps, mapDispatch)
+export default class ActiveCategories extends Component {
     static propTypes = {
         categories: PropTypes.arrayOf(PropTypes.shape({})),
         activeCategoryId: PropTypes.string.isRequired,
@@ -61,18 +75,3 @@ class ActiveCategories extends Component {
         );
     }
 }
-
-function mapProps(state) {
-    return {
-        categories: state.categories,
-        activeCategoryId: state.activeCategoryId,
-    };
-}
-
-function mapDispatch(dispatch) {
-    return {
-        checkActiveCategory: categoryId => dispatch(checkActiveCategory(categoryId)),
-    };
-}
-
-export default connect(mapProps, mapDispatch)(ActiveCategories);

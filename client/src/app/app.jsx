@@ -10,7 +10,23 @@ import Navbar from 'app/modules/header/navbar';
 import Loader from 'app/components/loader';
 import { fetchCategories, checkActiveCategory } from 'app/redux/actions/categories';
 
-class App extends React.Component {
+function mapStateToProps({ categories, activeCategoryId, isLoading }) {
+    return {
+        categories,
+        activeCategoryId,
+        isLoading,
+    };
+}
+
+function mapDispatchToProps(dispatch) {
+    return {
+        findCategories: () => dispatch(fetchCategories()),
+        checkActiveCategory: id => dispatch(checkActiveCategory(id)),
+    };
+}
+
+@connect(mapStateToProps, mapDispatchToProps)
+export default class App extends React.Component {
     static propTypes = {
         findCategories: PropTypes.func.isRequired,
         checkActiveCategory: PropTypes.func.isRequired,
@@ -56,19 +72,3 @@ class App extends React.Component {
         );
     }
 }
-
-function mapStateToProps({ categories, activeCategoryId, isLoading }) {
-    return {
-        categories,
-        activeCategoryId,
-        isLoading,
-    };
-}
-function mapDispatchToProps(dispatch) {
-    return {
-        findCategories: () => dispatch(fetchCategories()),
-        checkActiveCategory: id => dispatch(checkActiveCategory(id)),
-    };
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(App);

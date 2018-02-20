@@ -8,7 +8,20 @@ import ActiveCategories from './active.widgets';
 import Listing from './listing';
 import CreatePair from './create';
 
-class PairsPage extends React.Component {
+function mapStateToProps(state) {
+    return { activeCategoryId: state.activeCategoryId };
+}
+
+function mapDispatchToProps(dispatch) {
+    return {
+        loading: value => dispatch(loading(value)),
+        addPair: pair => dispatch(addPair(pair)),
+        removePairs: pairs => dispatch(removePairs(pairs)),
+    };
+}
+
+@connect(mapStateToProps, mapDispatchToProps)
+export default class PairsPage extends React.Component {
     static propTypes = {
         activeCategoryId: PropTypes.string.isRequired,
         loading: PropTypes.func.isRequired,
@@ -94,17 +107,3 @@ class PairsPage extends React.Component {
         );
     }
 }
-
-function mapStateToProps(state) {
-    return { activeCategoryId: state.activeCategoryId };
-}
-
-function mapDispatchToProps(dispatch) {
-    return {
-        loading: value => dispatch(loading(value)),
-        addPair: pair => dispatch(addPair(pair)),
-        removePairs: pairs => dispatch(removePairs(pairs)),
-    };
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(PairsPage);

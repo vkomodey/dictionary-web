@@ -5,7 +5,21 @@ import { connect } from 'react-redux';
 import Select from 'app/components/select';
 import { checkActiveCategory } from 'app/redux/actions/categories';
 
-class CategoryListing extends React.Component {
+function mapStateToProps(state) {
+    return {
+        categories: state.categories,
+        activeCategoryId: state.activeCategoryId,
+    };
+}
+
+function mapDispatchToProps(dispatch) {
+    return {
+        checkActive: id => dispatch(checkActiveCategory(id)),
+    };
+}
+
+@connect(mapStateToProps, mapDispatchToProps)
+export default class CategoryListing extends React.Component {
     static propTypes = {
         categories: PropTypes.arrayOf(PropTypes.shape({})),
         activeCategoryId: PropTypes.string,
@@ -59,18 +73,3 @@ class CategoryListing extends React.Component {
         );
     }
 }
-
-function mapStateToProps(state) {
-    return {
-        categories: state.categories,
-        activeCategoryId: state.activeCategoryId,
-    };
-}
-
-function mapDispatchToProps(dispatch) {
-    return {
-        checkActive: id => dispatch(checkActiveCategory(id)),
-    };
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(CategoryListing);

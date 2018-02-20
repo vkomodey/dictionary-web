@@ -7,7 +7,16 @@ import Button from 'app/components/button';
 import Input from 'app/components/input';
 import pairApi from 'app/utils/api-services/pairs';
 
-class CreatePair extends React.Component {
+function mapStateToProps(state) {
+    return { activeCategoryId: state.activeCategoryId };
+}
+
+function mapDispatchToProps(dispatch) {
+    return bindActionCreators(AppActions, dispatch);
+}
+
+@connect(mapStateToProps, mapDispatchToProps)
+export default class CreatePair extends React.Component {
     static propTypes = {
         onAdded: PropTypes.func,
         activeCategoryId: PropTypes.string.isRequired,
@@ -119,13 +128,3 @@ class CreatePair extends React.Component {
         );
     }
 }
-
-function mapStateToProps(state) {
-    return { activeCategoryId: state.activeCategoryId };
-}
-
-function mapDispatchToProps(dispatch) {
-    return bindActionCreators(AppActions, dispatch);
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(CreatePair);
