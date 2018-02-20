@@ -1,5 +1,7 @@
 FROM node:8.9
 
+ADD ./.profile.d /app/.profile.d
+
 WORKDIR /usr/src/app/
 
 ENV NODE_PORT=3001
