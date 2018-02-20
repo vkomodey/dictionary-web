@@ -12,6 +12,8 @@ let envConfig = require('./env');
 
 let app = new Koa();
 
+console.log('asd');
+
 app.use(cors());
 
 mongoose.connect(envConfig.mongodbUrl, {
