@@ -1,9 +1,22 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { DragSource } from 'react-dnd';
+import { itemTypes } from 'app/constants/dnd';
 import Button from 'app/components/button';
 import Checkbox from 'app/components/checkbox/index';
 import DeleteIcon from 'assets/icons/delete.svg';
 
+let dndSource = {
+    beginDrag: () => ({}),
+};
+
+let collect = connect => ({
+    connectDragSource: connect.dragSource(),
+    // connectDragPreview: connect.dragPreview(),
+    // isDragging: monitor.isDragging(),
+});
+
+@DragSource(itemTypes.pair, dndSource, collect)
 export default class PairsListing extends React.Component {
     static propTypes = {
         pairs: PropTypes.arrayOf(PropTypes.shape({
@@ -12,6 +25,9 @@ export default class PairsListing extends React.Component {
         })),
         onRemove: PropTypes.func,
         uniqKey: PropTypes.string.isRequired,
+        connectDragSource: PropTypes.func.isRequired,
+        // connectDragPreview: PropTypes.func.isRequired,
+        // isDragging: PropTypes.bool.isRequired,
     }
 
     static defaultProps = {
@@ -92,11 +108,11 @@ export default class PairsListing extends React.Component {
 
     renderRow = (entity) => {
         let { checkedKeyMap, lastSelectedKey } = this.state;
-        let { uniqKey } = this.props;
+        let { uniqKey, connectDragSource } = this.props;
         let entityKey = entity[uniqKey];
         let rowClass = checkedKeyMap[entityKey] ? 'selected' : '';
 
-        return (
+        let view = (
             <tr key={entityKey} className={rowClass} >
                 <td>
                     <Checkbox
@@ -119,12 +135,15 @@ export default class PairsListing extends React.Component {
                 </td>
             </tr>
         );
+
+        return connectDragSource(view);
     }
 
     render() {
         let checkedKeys = Object.keys(this.state.checkedKeyMap);
         let { pairs } = this.props;
         let allUnchecked = checkedKeys.filter(key => this.state.checkedKeyMap[key]).length === 0;
+
         let pairsList = pairs.map(this.renderRow);
 
         return (
