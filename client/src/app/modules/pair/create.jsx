@@ -1,25 +1,22 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import * as AppActions from 'app/redux/actions/app';
+import { loading } from 'app/redux/actions/app';
 import Button from 'app/components/button';
 import Input from 'app/components/input';
 import pairApi from 'app/utils/api-services/pairs';
 
-function mapStateToProps(state) {
-    return { activeCategoryId: state.activeCategoryId };
-}
-
 function mapDispatchToProps(dispatch) {
-    return bindActionCreators(AppActions, dispatch);
+    return {
+        loading: value => dispatch(loading(value)),
+    };
 }
 
-@connect(mapStateToProps, mapDispatchToProps)
+@connect(null, mapDispatchToProps)
 export default class CreatePair extends React.Component {
     static propTypes = {
         onAdded: PropTypes.func,
-        activeCategoryId: PropTypes.string.isRequired,
+        categoryId: PropTypes.string.isRequired,
         loading: PropTypes.func.isRequired,
     }
 
@@ -35,32 +32,28 @@ export default class CreatePair extends React.Component {
         };
     }
 
-    onClick = (e) => {
-        let { loading } = this.props;
+    onClick = async (e) => {
         let pair = {
             firstLangExpression: this.state.firstLangExpression,
             secondLangExpression: this.state.secondLangExpression,
-            categoryId: this.props.activeCategoryId,
+            categoryId: this.props.categoryId,
             firstLang: 'en',
             secondLang: 'ru',
         };
 
         e.preventDefault();
 
-        loading(true);
+        this.props.loading(true);
 
-        return pairApi.create(pair)
-            .then((added) => {
-                this.props.onAdded(added);
-                this.clearInputs();
+        try {
+            this.props.onAdded(await pairApi.create(pair));
 
-                loading(false);
-            })
-            .catch((err) => {
-                console.error(err); // eslint-disable-line
+            this.clearInputs();
+        } catch (err) {
+            console.log(err); // eslint-disable-line
+        }
 
-                loading(false);
-            });
+        this.props.loading(false);
     }
 
     clearInputs = () => {

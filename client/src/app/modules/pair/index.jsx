@@ -3,29 +3,20 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import pairApi from 'app/utils/api-services/pairs';
 import { loading } from 'app/redux/actions/app';
-import { addPair, removePairs } from 'app/redux/actions/pairs';
 import Listing from './listing';
 import CreatePair from './create';
-
-function mapStateToProps(state) {
-    return { activeCategoryId: state.activeCategoryId };
-}
 
 function mapDispatchToProps(dispatch) {
     return {
         loading: value => dispatch(loading(value)),
-        addPair: pair => dispatch(addPair(pair)),
-        removePairs: pairs => dispatch(removePairs(pairs)),
     };
 }
 
-@connect(mapStateToProps, mapDispatchToProps)
+@connect(null, mapDispatchToProps)
 export default class PairsPage extends React.Component {
     static propTypes = {
-        activeCategoryId: PropTypes.string.isRequired,
+        categoryId: PropTypes.string.isRequired,
         loading: PropTypes.func.isRequired,
-        addPair: PropTypes.func.isRequired,
-        removePairs: PropTypes.func.isRequired,
     }
 
     constructor(props) {
@@ -37,26 +28,35 @@ export default class PairsPage extends React.Component {
     }
 
     componentDidMount() {
-        this.fetchPairs(this.props.activeCategoryId);
+        this.fetchPairs(this.props.categoryId);
     }
 
     componentWillReceiveProps(nextProps) {
-        if ( this.props.activeCategoryId !== nextProps.activeCategoryId ) {
-            this.fetchPairs(nextProps.activeCategoryId);
+        if ( this.props.categoryId !== nextProps.categoryId ) {
+            this.fetchPairs(nextProps.categoryId);
         }
     }
 
-    onRemove = (ids) => {
-        let removedPairs = this.state.pairs.filter(p => ids.includes(p._id));
-        let removePromise = Array.isArray(ids) ? pairApi.removeMultiple(ids) : pairApi.removeById(ids);
+    onRemove = async (ids) => {
+        this.props.loading(true);
 
-        return removePromise
-            .then(() => this.fetchPairs(this.props.activeCategoryId))
-            .then(() => this.props.removePairs(removedPairs));
+        try {
+            if ( Array.isArray(ids) ) {
+                await pairApi.removeMultiple(ids);
+            } else {
+                await pairApi.removeById(ids);
+            }
+
+            await this.fetchPairs(this.props.categoryId);
+        } catch (err) {
+            // TODO handle the error properly
+            console.log(err); // eslint-disable-line
+        }
+
+        this.props.loading(false);
     }
 
-    onAdded = (pair) => {
-        this.props.addPair(pair);
+    onAdded = async (pair) => {
         this.setState({
             pairs: [
                 pair,
@@ -65,21 +65,19 @@ export default class PairsPage extends React.Component {
         });
     }
 
-    fetchPairs = (categoryId) => {
+    fetchPairs = async (categoryId) => {
         this.props.loading(true);
 
-        pairApi.findAll({ categoryId })
-            .then((pairs) => {
-                this.setState({ pairs });
-                this.props.loading(false);
-
-                return pairs;
-            })
-            .catch((err) => {
-                console.error(err); //eslint-disable-line
-
-                this.props.loading(false);
+        try {
+            this.setState({
+                pairs: await pairApi.findAll({ categoryId }),
             });
+        } catch (err) {
+            // TODO handle the error properly
+            console.error(err); // eslint-disable-line
+        }
+
+        this.props.loading(false);
     }
 
     render() {
@@ -88,6 +86,7 @@ export default class PairsPage extends React.Component {
                 <div className="pair-page__section">
                     <CreatePair
                         onAdded={this.onAdded}
+                        categoryId={this.props.categoryId}
                     />
                 </div>
                 <div className="pair-page__section">

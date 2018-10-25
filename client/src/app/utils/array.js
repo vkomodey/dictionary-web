@@ -2,7 +2,7 @@ export function shuffle(array) {
     let copy = Array.from(array);
     let shuffled = [];
 
-    if ( !array ) {
+    if (!array) {
         return array;
     }
 

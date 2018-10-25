@@ -1,49 +1,41 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
 import classnames from 'classnames';
-import { checkActiveCategory } from 'app/redux/actions/categories';
+import categoryApi from 'app/utils/api-services/categories';
 
-function mapProps(state) {
-    return {
-        categories: state.categories,
-        activeCategoryId: state.activeCategoryId,
-    };
-}
-
-function mapDispatch(dispatch) {
-    return {
-        checkActiveCategory: categoryId => dispatch(checkActiveCategory(categoryId)),
-    };
-}
-
-@connect(mapProps, mapDispatch)
-export default class ActiveCategories extends Component {
+export default class CategoriesContainer extends Component {
     static propTypes = {
-        categories: PropTypes.arrayOf(PropTypes.shape({})),
-        activeCategoryId: PropTypes.string.isRequired,
-        checkActiveCategory: PropTypes.func.isRequired,
+        onCategoryChoosen: PropTypes.func,
     }
-
     static defaultProps = {
-        categories: [],
+        onCategoryChoosen: () => {},
     }
 
     constructor(props) {
         super(props);
 
-        this.state = {};
+        this.state = {
+            categories: [],
+            activeCategoryId: null,
+        };
     }
 
-    checkActive = categoryId =>
+    async componentWillMount() {
+        this.setState({
+            categories: await categoryApi.findAll(),
+        });
+    }
+
+    onSetActive = categoryId =>
         () => {
-            this.props.checkActiveCategory(categoryId);
+            this.setState({ activeCategoryId: categoryId });
+            this.props.onCategoryChoosen(categoryId);
         }
 
     render() {
-        let { categories } = this.props;
+        let { categories } = this.state;
         let view = categories.map((c) => {
-            let isActive = c._id === this.props.activeCategoryId;
+            let isActive = c._id === this.state.activeCategoryId;
 
             let className = classnames('category-widget', {
                 'category-widget__active': isActive,
@@ -53,7 +45,7 @@ export default class ActiveCategories extends Component {
                 <div
                     key={c._id}
                     className={className}
-                    onClick={this.checkActive(c._id)}
+                    onClick={this.onSetActive(c._id)}
                     onKeyPress={() => {}}
                     role="button"
                     tabIndex="0"
@@ -70,6 +62,7 @@ export default class ActiveCategories extends Component {
 
         return (
             <div className="widgets-container">
+                {categories.length === 0 && <span> No categories, wannna som? </span>}
                 { view }
             </div>
         );

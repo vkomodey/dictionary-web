@@ -4,57 +4,24 @@ import { BrowserRouter as Router, Route } from 'react-router-dom';
 import { connect } from 'react-redux';
 import Header from 'app/modules/header';
 import StoragePage from 'app/modules/storage/index';
-import CategoryPage from 'app/modules/category';
 import TestPage from 'app/modules/test';
 import Navbar from 'app/modules/header/navbar';
 import Loader from 'app/components/loader';
-import { fetchCategories, checkActiveCategory } from 'app/redux/actions/categories';
 
-function mapStateToProps({ categories, activeCategoryId, isLoading }) {
+function mapStateToProps({ isLoading }) {
     return {
-        categories,
-        activeCategoryId,
         isLoading,
     };
 }
 
-function mapDispatchToProps(dispatch) {
-    return {
-        findCategories: () => dispatch(fetchCategories()),
-        checkActiveCategory: id => dispatch(checkActiveCategory(id)),
-    };
-}
-
-@connect(mapStateToProps, mapDispatchToProps)
+@connect(mapStateToProps)
 export default class App extends React.Component {
     static propTypes = {
-        findCategories: PropTypes.func.isRequired,
-        checkActiveCategory: PropTypes.func.isRequired,
-        activeCategoryId: PropTypes.string,
         isLoading: PropTypes.bool,
-        categories: PropTypes.arrayOf(PropTypes.shape({})),
     }
 
     static defaultProps = {
-        activeCategoryId: '',
         isLoading: false,
-        categories: [],
-    }
-    componentWillMount() {
-        this.props.findCategories();
-    }
-
-    componentWillReceiveProps(nextProps) {
-        let oldCategoryId = this.props.activeCategoryId;
-        let { categories } = nextProps;
-
-        if ( categories.length === 0 ) {
-            this.props.checkActiveCategory('');
-        }
-
-        if ( !oldCategoryId && nextProps.categories.length > 0 ) {
-            this.props.checkActiveCategory(categories[0]._id);
-        }
     }
 
     render() {
@@ -66,7 +33,6 @@ export default class App extends React.Component {
                     <Navbar />
                     <Route exact path="/" component={StoragePage} />
                     <Route path="/test" component={TestPage} />
-                    <Route path="/category" component={CategoryPage} />
                 </div>
             </Router>
         );
