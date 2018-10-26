@@ -34,9 +34,11 @@ export default class CategoriesContainer extends Component {
         this.props.loading(true);
 
         try {
-            this.setState({
-                categories: await categoryApi.findAll(),
-            });
+            let categories = await categoryApi.findAll() || [];
+
+            this.setState({ categories });
+
+            this.setActive(categories[0] && categories[0]._id);
         } catch (err) {
             // TODO add normal error handling
             console.log(err); //eslint-disable-line
