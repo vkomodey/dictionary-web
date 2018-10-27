@@ -34,7 +34,7 @@ async function findAll(ctx) {
         ]);
 
         for (let category of categories) {
-            let pairStats = pairStatistics.find(s => s._id === category._id);
+            let pairStats = pairStatistics.find(s => s._id.toString() === category._id.toString());
 
             category.pairAmount = _.get(pairStats, 'count', 0);
         }

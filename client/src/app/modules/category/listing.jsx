@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import categoryApi from 'app/utils/api-services/categories';
 import { loading } from 'app/redux/actions/app';
 import CategoryItem from './category.item';
+import CreateCategory from './create';
 
 function mapDispatchToProps(dispatch) {
     return {
@@ -16,9 +17,11 @@ export default class CategoriesContainer extends Component {
     static propTypes = {
         onCategoryChoosen: PropTypes.func,
         loading: PropTypes.func.isRequired,
+        displayAddForm: PropTypes.bool,
     }
     static defaultProps = {
         onCategoryChoosen: () => {},
+        displayAddForm: true,
     }
 
     constructor(props) {
@@ -34,11 +37,7 @@ export default class CategoriesContainer extends Component {
         this.props.loading(true);
 
         try {
-            let categories = await categoryApi.findAll() || [];
-
-            this.setState({ categories });
-
-            this.setActive(categories[0] && categories[0]._id);
+            await this.setCategories();
         } catch (err) {
             // TODO add normal error handling
             console.log(err); //eslint-disable-line
@@ -47,9 +46,45 @@ export default class CategoriesContainer extends Component {
         this.props.loading(false);
     }
 
+    async setCategories() {
+        let categories = await categoryApi.findAll() || [];
+
+        this.setState({ categories });
+
+        this.setActive(categories[0] && categories[0]._id);
+    }
+
     setActive = (categoryId) => {
         this.setState({ activeCategoryId: categoryId });
         this.props.onCategoryChoosen(categoryId);
+    }
+
+    removeCategory = async (categoryId) => {
+        this.props.loading(true);
+
+        try {
+            await categoryApi.removeById(categoryId);
+            await this.setCategories();
+        } catch (err) {
+            // TODO add normal error handling
+            console.log(err); //eslint-disable-line
+        }
+
+        this.props.loading(false);
+    }
+
+    addCategory = async (category) => {
+        this.props.loading(true);
+
+        try {
+            await categoryApi.create(category);
+            await this.setCategories();
+        } catch (err) {
+            // TODO add normal error handling
+            console.log(err); //eslint-disable-line
+        }
+
+        this.props.loading(false);
     }
 
     render() {
@@ -62,13 +97,22 @@ export default class CategoriesContainer extends Component {
                 pairAmount={category.pairAmount}
                 isActive={category._id === this.state.activeCategoryId}
                 onClick={this.setActive}
+                onRemoveClick={this.removeCategory}
             />
         ));
 
         return (
-            <div className="widgets-container">
+            <div className="category-container">
                 {categories.length === 0 && <span> No categories, wannna som? </span>}
                 { view }
+
+                { this.props.displayAddForm &&
+                    <div className="widgets-container__add-category">
+                        <CreateCategory
+                            onAdd={this.addCategory}
+                        />
+                    </div>
+                }
             </div>
         );
     }

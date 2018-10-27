@@ -17,7 +17,10 @@ export default class TestContainer extends React.Component {
             <div className="storage-container">
                 { this.state.activeCategoryId && <Tests categoryId={this.state.activeCategoryId} /> }
 
-                <Categories onCategoryChoosen={this.onCheckActiveCategory} />
+                <Categories
+                    onCategoryChoosen={this.onCheckActiveCategory}
+                    displayAddForm={false}
+                />
             </div>
         );
     }
