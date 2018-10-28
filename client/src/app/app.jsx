@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { NotificationContainer } from 'react-notifications';
 import Header from 'app/modules/header';
 import StoragePage from 'app/modules/storage/index';
 import TestPage from 'app/modules/test';
@@ -33,6 +34,7 @@ export default class App extends React.Component {
                     <Navbar />
                     <Route exact path="/" component={StoragePage} />
                     <Route path="/test" component={TestPage} />
+                    <NotificationContainer />
                 </div>
             </Router>
         );

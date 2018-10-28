@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { NotificationManager } from 'react-notifications';
 import categoryApi from 'app/utils/api-services/categories';
 import { loading } from 'app/redux/actions/app';
 import CategoryItem from './category.item';
@@ -39,8 +40,7 @@ export default class CategoriesContainer extends Component {
         try {
             await this.setCategories();
         } catch (err) {
-            // TODO add normal error handling
-            console.log(err); //eslint-disable-line
+            NotificationManager.error(err);
         }
 
         this.props.loading(false);

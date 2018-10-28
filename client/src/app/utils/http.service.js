@@ -12,13 +12,14 @@ let apiService = {
     delete: (url, query, headers) => makeRequest('DELETE', url, query, null, headers),
 };
 
-function makeRequest(method, url, query, body, headers) {
-    return fetch(getUrl(url, query), {
+async function makeRequest(method, url, query, body, headers) {
+    let response = await fetch(getUrl(url, query), {
         method,
         headers: Object.assign(defaultHeaders, headers),
         body: body ? JSON.stringify(body) : null,
-    })
-        .then(response => response.json());
+    });
+
+    return response.json();
 }
 
 function getUrl(url, query) {

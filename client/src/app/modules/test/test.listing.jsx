@@ -76,7 +76,7 @@ export default class Test extends React.Component {
             });
         } catch (err) {
             // TODO handle error properly
-            console.log(err); // eslint-disable-line
+            console.log(err); //eslint-disable-line
         }
         this.props.loading(false);
     }
@@ -96,8 +96,6 @@ export default class Test extends React.Component {
                             ...p,
                             answered: false,
                         };
-
-                        console.log(pair);
 
                         return pair;
                     }),
