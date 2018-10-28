@@ -7,7 +7,7 @@ export default function () {
                 <span> Dictify </span>
             </div>
             <div className="header__content_small">
-                <span> Use this dictionary anywhere in big town </span>
+                <span> Use it anywhere in big town </span>
             </div>
         </div>
     );

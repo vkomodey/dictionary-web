@@ -74,7 +74,12 @@ export default class CategoriesContainer extends Component {
 
         return (
             <div className="category-container">
-                {categories.length === 0 && <span> Boring message about categories absence. Do something, please </span>}
+                {
+                    categories.length === 0 &&
+                    <div className="category-container__no-info">
+                        <div> Deal with it </div>
+                    </div>
+                }
                 { view }
 
                 { this.props.displayAddForm &&
