@@ -19,7 +19,7 @@ export default class TestContainer extends React.Component {
 
                 <Categories
                     onCategoryChoosen={this.onCheckActiveCategory}
-                    displayAddForm={false}
+                    isReadMode
                 />
             </div>
         );

@@ -7,11 +7,11 @@ import CreateCategory from './create';
 export default class CategoriesContainer extends Component {
     static propTypes = {
         onCategoryChoosen: PropTypes.func,
-        displayAddForm: PropTypes.bool,
+        isReadMode: PropTypes.bool,
     }
     static defaultProps = {
         onCategoryChoosen: () => {},
-        displayAddForm: true,
+        isReadMode: false,
     }
 
     constructor(props) {
@@ -69,6 +69,7 @@ export default class CategoriesContainer extends Component {
                 isActive={category._id === this.state.activeCategoryId}
                 onClick={this.setActive}
                 onRemoveClick={this.removeCategory}
+                isReadMode={this.props.isReadMode}
             />
         ));
 
@@ -82,7 +83,7 @@ export default class CategoriesContainer extends Component {
                 }
                 { view }
 
-                { this.props.displayAddForm &&
+                { !this.props.isReadMode &&
                     <div className="widgets-container__add-category">
                         <CreateCategory
                             onAdd={this.addCategory}

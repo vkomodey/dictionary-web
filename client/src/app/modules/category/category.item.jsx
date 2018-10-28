@@ -12,12 +12,14 @@ export default class CategoryItem extends Component {
         isActive: PropTypes.bool,
         onClick: PropTypes.func,
         onRemoveClick: PropTypes.func,
+        isReadMode: PropTypes.bool,
     }
 
     static defaultProps = {
         onClick: () => {},
         onRemoveClick: () => {},
         isActive: false,
+        isReadMode: false,
     }
 
     onClick = cId => () => this.props.onClick(cId);
@@ -30,6 +32,7 @@ export default class CategoryItem extends Component {
             name,
             pairAmount,
             isActive,
+            isReadMode,
         } = this.props;
         let className = classnames('category-widget-element', {
             'category-widget-element__active': isActive,
@@ -53,15 +56,18 @@ export default class CategoryItem extends Component {
                         </div>
                     </div>
                 </div>
-                <div>
-                    <Button
-                        type="button"
-                        onClick={this.onRemoveClick(categoryId)}
-                        className="btn btn-danger"
-                    >
-                        <img src={DeleteIcon} alt="Delete pair" />
-                    </Button>
-                </div>
+                {
+                    !isReadMode &&
+                    <div>
+                        <Button
+                            type="button"
+                            onClick={this.onRemoveClick(categoryId)}
+                            className="btn btn-danger"
+                        >
+                            <img src={DeleteIcon} alt="Delete pair" />
+                        </Button>
+                    </div>
+                }
             </div>
         );
     }
