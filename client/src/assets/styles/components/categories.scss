@@ -15,13 +15,13 @@
     }
 }
 
-.category-widget {
+.category-item-container {
     display: flex;
     flex-direction: row;
     align-items: center;
 }
 
-.category-widget-element {
+.category-widget {
     border: 1px solid $grey;
     background-color: rgba(71,75,79,0.6);
     cursor: pointer;
@@ -48,8 +48,8 @@
     }
 }
 
-.category-widget-element:hover,
-.category-widget-element__active{
+.category-widget:hover,
+.category-widget__active{
     border: 2px solid $green;
     background-color: rgba(75,79,79,0.98);
 }

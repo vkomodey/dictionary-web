@@ -37,7 +37,7 @@ export default class PairsPage extends React.Component {
             } else {
                 await pairApi.removeById(ids);
 
-                toastr.warning('Oh no! You are destroying your treasure...');
+                toastr.info('Oh no! You are destroying your treasure...');
             }
         } catch (err) {
             toastr.error('Cant\'t delete pair(s)');

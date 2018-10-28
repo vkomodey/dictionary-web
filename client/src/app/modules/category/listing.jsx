@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import Button from 'app/components/button';
 import categoryApi from 'app/utils/api-services/categories';
+import DeleteIcon from 'assets/icons/delete.svg';
 import CategoryItem from './category.item';
 import CreateCategory from './create';
 
@@ -46,7 +48,7 @@ export default class CategoriesContainer extends Component {
         this.props.onCategoryChoosen(categoryId);
     }
 
-    removeCategory = async (categoryId) => {
+    removeCategory = categoryId => async () => {
         await categoryApi.removeById(categoryId);
 
         await this.setCategories();
@@ -61,16 +63,28 @@ export default class CategoriesContainer extends Component {
     render() {
         let { categories } = this.state;
         let view = categories.map(category => (
-            <CategoryItem
-                key={category._id}
-                categoryId={category._id}
-                name={category.name}
-                pairAmount={category.pairAmount}
-                isActive={category._id === this.state.activeCategoryId}
-                onClick={this.setActive}
-                onRemoveClick={this.removeCategory}
-                isReadMode={this.props.isReadMode}
-            />
+            <div key={category._id} className="category-item-container">
+                <CategoryItem
+                    categoryId={category._id}
+                    name={category.name}
+                    pairAmount={category.pairAmount}
+                    isActive={category._id === this.state.activeCategoryId}
+                    onClick={this.setActive}
+                    isReadMode={this.props.isReadMode}
+                />
+                {
+                    !this.props.isReadMode &&
+                    <div>
+                        <Button
+                            type="button"
+                            onClick={this.removeCategory(category._id)}
+                            className="btn btn-danger"
+                        >
+                            <img src={DeleteIcon} alt="Delete pair" />
+                        </Button>
+                    </div>
+                }
+            </div>
         ));
 
         return (
