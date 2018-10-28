@@ -1,23 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { loading } from 'app/redux/actions/app';
 import Button from 'app/components/button';
 import Input from 'app/components/input';
 import pairApi from 'app/utils/api-services/pairs';
 
-function mapDispatchToProps(dispatch) {
-    return {
-        loading: value => dispatch(loading(value)),
-    };
-}
-
-@connect(null, mapDispatchToProps)
 export default class CreatePair extends React.Component {
     static propTypes = {
         onAdded: PropTypes.func,
         categoryId: PropTypes.string.isRequired,
-        loading: PropTypes.func.isRequired,
     }
 
     static defaultProps = {
@@ -43,13 +33,9 @@ export default class CreatePair extends React.Component {
 
         e.preventDefault();
 
-        this.props.loading(true);
-
         this.props.onAdded(await pairApi.create(pair));
 
         this.clearInputs();
-
-        this.props.loading(false);
     }
 
     clearInputs = () => {

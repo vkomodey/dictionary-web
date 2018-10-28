@@ -47,12 +47,12 @@ export default class PairsListing extends React.Component {
         let { checkedKeyMap, lastSelectedKey } = this.state;
         let checkedIndex = pairs.findIndex(p => p[uniqKey] === pairId);
         let lastIndex = pairs.findIndex(p => p[uniqKey] === lastSelectedKey);
-        let checkValue = !checkedKeyMap[pairId];
+        let checked = !checkedKeyMap[pairId];
         let newCheckedKeyMap = {
-            [pairId]: checkValue,
+            [pairId]: checked,
         };
 
-            // In case user has not checked anything, we should consider last selected index as a first element
+        // In case user has not checked anything, we should consider last selected index as a first element
         if ( lastIndex < 0) {
             lastIndex = 0;
         }
@@ -64,7 +64,7 @@ export default class PairsListing extends React.Component {
             for ( let i = startIndex; i <= endIndex; i += 1 ) {
                 let id = pairs[i][uniqKey];
 
-                newCheckedKeyMap[id] = checkValue;
+                newCheckedKeyMap[id] = checked;
             }
         }
 
@@ -77,12 +77,12 @@ export default class PairsListing extends React.Component {
     checkAll = () => {
         let { uniqKey } = this.props;
         let checkedKeys = Object.keys(this.state.checkedKeyMap);
-        let allUnchecked = checkedKeys.filter(key => this.state.checkedKeyMap[key]).length === 0;
-        let checkValue = allUnchecked;
+        let areAllUnchecked = checkedKeys.filter(key => this.state.checkedKeyMap[key]).length === 0;
+        let globalCheckValue = areAllUnchecked;
         let keyMap = {};
 
         this.props.pairs.forEach((p) => {
-            keyMap[p[uniqKey]] = checkValue;
+            keyMap[p[uniqKey]] = globalCheckValue;
         });
 
         this.setState({

@@ -1,22 +1,12 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
 import categoryApi from 'app/utils/api-services/categories';
-import { loading } from 'app/redux/actions/app';
 import CategoryItem from './category.item';
 import CreateCategory from './create';
 
-function mapDispatchToProps(dispatch) {
-    return {
-        loading: value => dispatch(loading(value)),
-    };
-}
-
-@connect(null, mapDispatchToProps)
 export default class CategoriesContainer extends Component {
     static propTypes = {
         onCategoryChoosen: PropTypes.func,
-        loading: PropTypes.func.isRequired,
         displayAddForm: PropTypes.bool,
     }
     static defaultProps = {
@@ -34,47 +24,38 @@ export default class CategoriesContainer extends Component {
     }
 
     async componentWillMount() {
-        this.props.loading(true);
-
         await this.setCategories();
-
-        this.props.loading(false);
     }
 
     async setCategories() {
-        let categories = await categoryApi.findAll() || [];
+        let categories;
+
+        try {
+            categories = await categoryApi.findAll();
+        } catch (err) {
+            categories = [];
+        }
 
         this.setState({ categories });
-
         this.setActive(categories[0] && categories[0]._id);
     }
 
     setActive = (categoryId) => {
         this.setState({ activeCategoryId: categoryId });
+
         this.props.onCategoryChoosen(categoryId);
     }
 
     removeCategory = async (categoryId) => {
-        this.props.loading(true);
-
         await categoryApi.removeById(categoryId);
-        await this.setCategories();
 
-        this.props.loading(false);
+        await this.setCategories();
     }
 
     addCategory = async (category) => {
-        this.props.loading(true);
+        await categoryApi.create(category);
 
-        try {
-            await categoryApi.create(category);
-            await this.setCategories();
-        } catch (err) {
-            // TODO add normal error handling
-            console.log(err); //eslint-disable-line
-        }
-
-        this.props.loading(false);
+        await this.setCategories();
     }
 
     render() {
@@ -93,7 +74,7 @@ export default class CategoriesContainer extends Component {
 
         return (
             <div className="category-container">
-                {categories.length === 0 && <span> No categories, wannna som? </span>}
+                {categories.length === 0 && <span> Boring message about categories absence. Do something, please </span>}
                 { view }
 
                 { this.props.displayAddForm &&

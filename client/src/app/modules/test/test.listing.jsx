@@ -1,12 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
 import Input from 'app/components/input';
 import Button from 'app/components/button';
 import { shuffle } from 'app/utils/array';
 import CheckIcon from 'assets/icons/check.svg';
 import ErrorIcon from 'assets/icons/error.svg';
-import { loading } from 'app/redux/actions/app';
 import pairApi from 'app/utils/api-services/pairs';
 import MatchedList from './answers';
 
@@ -20,17 +18,9 @@ function isMatch(value1 = '', value2 = '') {
     return cleared1 === cleared2;
 }
 
-function mapDispatchToProps(dispatch) {
-    return {
-        loading: value => dispatch(loading(value)),
-    };
-}
-
-@connect(null, mapDispatchToProps)
 export default class Test extends React.Component {
     static propTypes = {
         categoryId: PropTypes.string.isRequired,
-        loading: PropTypes.func.isRequired,
     }
 
     constructor(props) {
@@ -68,8 +58,6 @@ export default class Test extends React.Component {
     }
 
     fetchPairs = async (categoryId) => {
-        this.props.loading(true);
-
         try {
             this.setState({
                 pairs: await pairApi.findAll({ categoryId }),
@@ -79,8 +67,6 @@ export default class Test extends React.Component {
                 pairs: [],
             });
         }
-
-        this.props.loading(false);
     }
 
     handleStartFinish = actionType =>

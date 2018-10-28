@@ -1,6 +1,8 @@
 import 'whatwg-fetch';
 import urlLib from 'url';
 import _ from 'lodash';
+import store from 'app/store';
+import { loading } from 'app/redux/actions/app';
 import toastr from './toastr';
 
 let defaultHeaders = {
@@ -15,6 +17,8 @@ let apiService = {
 
 async function makeRequest(method, url, query, body, headers) {
     let response;
+
+    store.dispatch(loading(true));
 
     try {
         response = await fetch(getUrl(url, query), {
@@ -35,9 +39,16 @@ async function makeRequest(method, url, query, body, headers) {
 
         toastr.error(message);
 
+        store.dispatch(loading(false));
+
+        // eslint-disable-next-line
+        console.error(err);
+
         // propagate the error to give an ability to catch and handle it properly
         throw err;
     }
+
+    store.dispatch(loading(false));
 
     return response;
 }

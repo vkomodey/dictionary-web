@@ -1,23 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
 import pairApi from 'app/utils/api-services/pairs';
-import { loading } from 'app/redux/actions/app';
 import toastr from 'app/utils/toastr';
 import Listing from './listing';
 import CreatePair from './create';
 
-function mapDispatchToProps(dispatch) {
-    return {
-        loading: value => dispatch(loading(value)),
-    };
-}
-
-@connect(null, mapDispatchToProps)
 export default class PairsPage extends React.Component {
     static propTypes = {
         categoryId: PropTypes.string.isRequired,
-        loading: PropTypes.func.isRequired,
     }
 
     constructor(props) {
@@ -39,8 +29,6 @@ export default class PairsPage extends React.Component {
     }
 
     onRemove = async (ids) => {
-        this.props.loading(true);
-
         try {
             if ( Array.isArray(ids) ) {
                 await pairApi.removeMultiple(ids);
@@ -52,8 +40,6 @@ export default class PairsPage extends React.Component {
         }
 
         await this.fetchPairs(this.props.categoryId);
-
-        this.props.loading(false);
     }
 
     onAdded = async (pair) => {
@@ -66,8 +52,6 @@ export default class PairsPage extends React.Component {
     }
 
     fetchPairs = async (categoryId) => {
-        this.props.loading(true);
-
         try {
             this.setState({
                 pairs: await pairApi.findAll({ categoryId }),
@@ -77,8 +61,6 @@ export default class PairsPage extends React.Component {
                 pairs: [],
             });
         }
-
-        this.props.loading(false);
     }
 
     render() {

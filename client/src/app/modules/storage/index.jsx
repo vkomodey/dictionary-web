@@ -18,9 +18,7 @@ export default class Storage extends React.Component {
                 { this.state.activeCategoryId && <Pairs
                     categoryId={this.state.activeCategoryId}
                 /> }
-                <Categories
-                    onCategoryChoosen={this.onCheckActiveCategory}
-                />
+                <Categories onCategoryChoosen={this.onCheckActiveCategory} />
             </div>
         );
     }
