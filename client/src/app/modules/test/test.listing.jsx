@@ -75,9 +75,11 @@ export default class Test extends React.Component {
                 pairs: await pairApi.findAll({ categoryId }),
             });
         } catch (err) {
-            // TODO handle error properly
-            console.log(err); //eslint-disable-line
+            this.setState({
+                pairs: [],
+            });
         }
+
         this.props.loading(false);
     }
 

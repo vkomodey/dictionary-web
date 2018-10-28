@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import pairApi from 'app/utils/api-services/pairs';
 import { loading } from 'app/redux/actions/app';
+import toastr from 'app/utils/toastr';
 import Listing from './listing';
 import CreatePair from './create';
 
@@ -46,12 +47,11 @@ export default class PairsPage extends React.Component {
             } else {
                 await pairApi.removeById(ids);
             }
-
-            await this.fetchPairs(this.props.categoryId);
         } catch (err) {
-            // TODO handle the error properly
-            console.log(err); // eslint-disable-line
+            toastr.error('Cant\'t delete pair(s)');
         }
+
+        await this.fetchPairs(this.props.categoryId);
 
         this.props.loading(false);
     }
@@ -73,8 +73,9 @@ export default class PairsPage extends React.Component {
                 pairs: await pairApi.findAll({ categoryId }),
             });
         } catch (err) {
-            // TODO handle the error properly
-            console.error(err); // eslint-disable-line
+            this.setState({
+                pairs: [],
+            });
         }
 
         this.props.loading(false);

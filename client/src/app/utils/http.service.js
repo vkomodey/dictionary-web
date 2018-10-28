@@ -1,6 +1,7 @@
 import 'whatwg-fetch';
 import urlLib from 'url';
 import _ from 'lodash';
+import toastr from './toastr';
 
 let defaultHeaders = {
     'Content-Type': 'application/json',
@@ -13,13 +14,32 @@ let apiService = {
 };
 
 async function makeRequest(method, url, query, body, headers) {
-    let response = await fetch(getUrl(url, query), {
-        method,
-        headers: Object.assign(defaultHeaders, headers),
-        body: body ? JSON.stringify(body) : null,
-    });
+    let response;
 
-    return response.json();
+    try {
+        response = await fetch(getUrl(url, query), {
+            method,
+            headers: Object.assign(defaultHeaders, headers),
+            body: body ? JSON.stringify(body) : null,
+        });
+
+        let { status } = response;
+
+        response = await response.json();
+
+        if ( status === 500 ) {
+            throw response;
+        }
+    } catch (err) {
+        let message = getMessageFromError(err);
+
+        toastr.error(message);
+
+        // propagate the error to give an ability to catch and handle it properly
+        throw err;
+    }
+
+    return response;
 }
 
 function getUrl(url, query) {
@@ -32,6 +52,10 @@ function getUrl(url, query) {
     }
 
     return urlToSend;
+}
+
+function getMessageFromError(err) {
+    return _.get(err, 'message', 'Something went wrong');
 }
 
 export default apiService;

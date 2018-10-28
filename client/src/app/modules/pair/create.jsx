@@ -45,13 +45,9 @@ export default class CreatePair extends React.Component {
 
         this.props.loading(true);
 
-        try {
-            this.props.onAdded(await pairApi.create(pair));
+        this.props.onAdded(await pairApi.create(pair));
 
-            this.clearInputs();
-        } catch (err) {
-            console.log(err); // eslint-disable-line
-        }
+        this.clearInputs();
 
         this.props.loading(false);
     }
