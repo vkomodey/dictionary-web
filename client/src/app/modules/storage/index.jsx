@@ -15,9 +15,13 @@ export default class Storage extends React.Component {
     render() {
         return (
             <div className="storage-container">
-                { this.state.activeCategoryId && <Pairs
-                    categoryId={this.state.activeCategoryId}
-                /> }
+                { this.state.activeCategoryId &&
+                    <Pairs
+                        categoryId={this.state.activeCategoryId}
+                        pairAdded={this.onPairsAdded}
+                        pairsRemoved={this.onPairsRemove}
+                    />
+                }
                 <Categories onCategoryChoosen={this.onCheckActiveCategory} />
             </div>
         );

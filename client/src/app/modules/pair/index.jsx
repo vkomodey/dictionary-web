@@ -32,8 +32,12 @@ export default class PairsPage extends React.Component {
         try {
             if ( Array.isArray(ids) ) {
                 await pairApi.removeMultiple(ids);
+
+                toastr.warning(`${ids.length} pairs have been deleted`);
             } else {
                 await pairApi.removeById(ids);
+
+                toastr.warning('Oh no! You are destroying your treasure...');
             }
         } catch (err) {
             toastr.error('Cant\'t delete pair(s)');
@@ -49,6 +53,8 @@ export default class PairsPage extends React.Component {
                 ...this.state.pairs,
             ],
         });
+
+        toastr.success('Pair has been added');
     }
 
     fetchPairs = async (categoryId) => {

@@ -6,6 +6,7 @@ import { shuffle } from 'app/utils/array';
 import CheckIcon from 'assets/icons/check.svg';
 import ErrorIcon from 'assets/icons/error.svg';
 import pairApi from 'app/utils/api-services/pairs';
+import toastr from 'app/utils/toastr';
 import MatchedList from './answers';
 
 const START = 'start';
@@ -47,6 +48,46 @@ export default class Test extends React.Component {
         }
     }
 
+    onStartFinishClick = actionType =>
+        (e) => {
+            e.preventDefault();
+
+            this.handleStartFinish(actionType);
+        }
+
+    handleStartFinish = (actionType) => {
+        if ( actionType === START) {
+            this.setState({
+                inProgress: true,
+                rightLen: 0,
+                currentPairIndex: 0,
+                finished: false,
+                pairs: shuffle(this.state.pairs).map((p) => {
+                    let pair = {
+                        ...p,
+                        answered: false,
+                    };
+
+                    return pair;
+                }),
+            });
+            toastr.info('Let\'s go, boy');
+        } else if ( actionType === FINISH ) {
+            let { rightLen } = this.state;
+
+            if ( rightLen > this.state.pairs.length - rightLen ) {
+                toastr.success('Wow! So much knowledges');
+            } else {
+                toastr.info('Not so impressive');
+            }
+            this.setState({
+                inProgress: false,
+                finished: true,
+                answer: '',
+            });
+        }
+    }
+
     resetTestActivities = () => {
         this.setState({
             answer: '',
@@ -69,34 +110,6 @@ export default class Test extends React.Component {
         }
     }
 
-    handleStartFinish = actionType =>
-        (e) => {
-            e.preventDefault();
-
-            if ( actionType === START) {
-                this.setState({
-                    inProgress: true,
-                    rightLen: 0,
-                    currentPairIndex: 0,
-                    finished: false,
-                    pairs: shuffle(this.state.pairs).map((p) => {
-                        let pair = {
-                            ...p,
-                            answered: false,
-                        };
-
-                        return pair;
-                    }),
-                });
-            } else if ( actionType === FINISH ) {
-                this.setState({
-                    inProgress: false,
-                    finished: true,
-                    answer: '',
-                });
-            }
-        }
-
     handleAnswerChange = (e) => {
         this.setState({
             answer: e.target.value,
@@ -115,11 +128,12 @@ export default class Test extends React.Component {
         let newIndex = currentPairIndex + 1;
         let isTestFinished = newIndex > pairs.length - 1;
         let newPairs = [
-            Object.assign({}, currentPair, {
+            {
+                ...currentPair,
                 isAnswerRight,
                 answer,
                 answered: true,
-            }),
+            },
             ...pairs.slice(0, currentPairIndex),
             ...pairs.slice(currentPairIndex + 1, pairs.length),
         ];
@@ -128,11 +142,15 @@ export default class Test extends React.Component {
 
         this.setState({
             answer: '',
+            inProgress: !isTestFinished,
+            finished: isTestFinished,
             currentPairIndex: newIndex,
             rightLen: isAnswerRight ? rightLen + 1 : rightLen,
-            finished: isTestFinished,
-            inProgress: !isTestFinished,
             pairs: newPairs,
+        }, () => {
+            if ( isTestFinished) {
+                this.handleStartFinish(FINISH);
+            }
         });
     }
 
@@ -144,6 +162,7 @@ export default class Test extends React.Component {
             finished,
             pairs,
         } = this.state;
+
         let currentPair = pairs[currentPairIndex];
 
         return (
@@ -151,14 +170,14 @@ export default class Test extends React.Component {
                 <div className="testing__control-panel">
                     { !inProgress &&
                         <Button
-                            disabled={pairs.length === 1}
-                            onClick={this.handleStartFinish(START)}
+                            disabled={pairs.length === 0}
+                            onClick={this.onStartFinishClick(START)}
                             className="btn btn-primary"
                         >
                             Start
                         </Button>
                     }
-                    { pairs.length === 1 &&
+                    { pairs.length === 0 &&
                         <div><span>No pairs found</span></div>
                     }
                 </div>
@@ -183,7 +202,7 @@ export default class Test extends React.Component {
                             </Button>
                             <Button
                                 className="btn btn-danger"
-                                onClick={this.handleStartFinish(FINISH)}
+                                onClick={this.onStartFinishClick(FINISH)}
                             > END
                             </Button>
                         </form>
