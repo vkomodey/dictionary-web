@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import Button from 'app/components/button';
+import Button from 'app/components/button/index';
 import categoryApi from 'app/utils/api-services/categories';
 import DeleteIcon from 'assets/icons/delete.svg';
 import CategoryItem from './category.item';
 import CreateCategory from './create';
+import './style.scss';
 
 export default class CategoriesContainer extends Component {
     static propTypes = {

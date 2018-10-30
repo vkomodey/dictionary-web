@@ -4,6 +4,7 @@ import pairApi from 'app/utils/api-services/pairs';
 import toastr from 'app/utils/toastr';
 import Listing from './listing';
 import CreatePair from './create';
+import './style.scss';
 
 export default class PairsPage extends React.Component {
     static propTypes = {

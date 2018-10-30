@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Button from 'app/components/button';
+import Button from 'app/components/button/index';
 import Checkbox from 'app/components/checkbox/index';
 import DeleteIcon from 'assets/icons/delete.svg';
 
@@ -130,7 +130,7 @@ export default class PairsListing extends React.Component {
         return (
             <div>
                 { !allUnchecked &&
-                <div className="actions">
+                <div>
                     <Button
                         type="button"
                         onClick={this.onRemoveClick(checkedKeys)}

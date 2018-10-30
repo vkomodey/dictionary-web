@@ -1,8 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Button from 'app/components/button';
-import Input from 'app/components/input';
+import Button from 'app/components/button/index';
+import Input from 'app/components/input/index';
 import pairApi from 'app/utils/api-services/pairs';
+import './style.scss';
 
 export default class CreatePair extends React.Component {
     static propTypes = {

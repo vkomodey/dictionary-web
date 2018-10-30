@@ -1,6 +1,7 @@
 import React from 'react';
 import Categories from 'app/modules/category/listing';
 import Tests from './test.listing';
+import './style.scss';
 
 export default class TestContainer extends React.Component {
     constructor(props) {

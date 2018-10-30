@@ -7,7 +7,7 @@ import Header from 'app/modules/header';
 import StoragePage from 'app/modules/storage/index';
 import TestPage from 'app/modules/test';
 import Navbar from 'app/modules/header/navbar';
-import Loader from 'app/components/loader';
+import Loader from 'app/components/loader/';
 
 function mapStateToProps({ isLoading }) {
     return {

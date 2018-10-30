@@ -34,7 +34,14 @@ let config = {
             use: [
                 {loader: "style-loader"},
                 {loader: "css-loader" },
-                {loader: "sass-loader"}
+                {loader: 'resolve-url-loader'},
+                {
+                    loader: "sass-loader",
+                    options: {
+                        outputStyle: 'expanded',
+                        data: '@import \'src/assets/styles/theme.scss\';',
+                    }
+                }
             ]
         }, {
             test: /\.css$/,
@@ -55,7 +62,7 @@ let config = {
             path.resolve(__dirname, 'src'),
             path.resolve(__dirname, 'node_modules'),
         ],
-        extensions: ['.js', '.jsx', '.css']
+        extensions: ['.js', '.jsx', '.scss']
     },
     devtool: 'source-map',
 };

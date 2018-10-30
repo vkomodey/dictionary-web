@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Input from 'app/components/input';
-import Button from 'app/components/button';
+import Input from 'app/components/input/index';
+import Button from 'app/components/button/index';
 import { shuffle } from 'app/utils/array';
 import CheckIcon from 'assets/icons/check.svg';
 import ErrorIcon from 'assets/icons/error.svg';

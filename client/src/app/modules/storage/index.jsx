@@ -1,6 +1,7 @@
 import React from 'react';
 import Pairs from 'app/modules/pair/index';
 import Categories from 'app/modules/category/listing';
+import './style.scss';
 
 export default class Storage extends React.Component {
     constructor(props) {

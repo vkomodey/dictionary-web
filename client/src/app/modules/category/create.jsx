@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import Input from 'app/components/input';
-import Button from 'app/components/button';
+import Input from 'app/components/input/index';
+import Button from 'app/components/button/index';
 
 export default class CreateCategory extends Component {
     static propTypes = {
