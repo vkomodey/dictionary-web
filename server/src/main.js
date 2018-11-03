@@ -20,7 +20,7 @@ mongoose.connect(envConfig.mongodbUrl, {
     useMongoClient: true,
 }).then(() => {
     /* eslint-disable */
-    console.log(`MongoDB connected to ${envConfig.mongodbUrl}`);
+    console.log(`MongoDB connected`);
     console.log('*******************************************************');
     /* eslint-enable */
 });

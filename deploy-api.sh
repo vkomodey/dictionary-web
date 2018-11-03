@@ -1,4 +1,4 @@
-scp env.sh personal:/root/
+source env.sh
 
 cd server/
 
@@ -13,8 +13,6 @@ docker push vkomodey/dictify-api
 echo "Running the container in destination server"
 
 ssh -T -o "StrictHostKeyChecking no" personal << EOF
-
-source /root/env.sh
 
 docker stop dictify-api
 docker rm dictify-api
