@@ -3,3 +3,4 @@ server/.eslintcache
 client/.eslintcache
 dist/
 yarn-error.log
+env.sh

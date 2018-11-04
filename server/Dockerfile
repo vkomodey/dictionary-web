@@ -1,9 +1,4 @@
-FROM node:8.9
-
-RUN apt-get update && apt-get install openssh-server openssh-client -y
-RUN rm /bin/sh && ln -s /bin/bash /bin/sh
-
-ADD ./.profile.d /app/.profile.d
+FROM node:10.11.0-alpine
 
 WORKDIR /usr/src/app/
 
