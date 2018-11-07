@@ -3,4 +3,5 @@ server/.eslintcache
 client/.eslintcache
 dist/
 yarn-error.log
-env.sh
+devops/client/env.sh
+devops/server/env.sh

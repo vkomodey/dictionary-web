@@ -1,5 +1,3 @@
-source env.sh
-
 cd client/
 
 echo "Build dictify-web"
@@ -18,6 +16,12 @@ docker stop dictify-web
 docker rm dictify-web
 docker rmi vkomodey/dictify-web
 
-docker run --name dictify-web -d --restart=unless-stopped -e API_URL="http://dictify-pro.com:3000" -p 80:3001 vkomodey/dictify-web
+docker run \
+    --name dictify-web \
+    -d \
+    --restart=unless-stopped \
+    -e API_URL="https://dictify-pro.com:3000" \
+    --network="dictify-network" \
+    vkomodey/dictify-web
 
 EOF

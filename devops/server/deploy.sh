@@ -1,4 +1,6 @@
-source env.sh
+DIR=`dirname $0`
+ENV_SCRIPT="$DIR/env.sh"
+source $ENV_SCRIPT
 
 cd server/
 
@@ -18,6 +20,12 @@ docker stop dictify-api
 docker rm dictify-api
 docker rmi vkomodey/dictify-api
 
-docker run --name dictify-api -d --restart=unless-stopped -p 3000:3000 -e MONGODB_URL=$MONGODB_URL vkomodey/dictify-api
+docker run \
+    --name dictify-api \
+    --restart=unless-stopped \
+    -e MONGODB_URL=$MONGODB_URL \
+    --network="dictify-network" \
+    -d \
+    vkomodey/dictify-api
 
 EOF
