@@ -1,6 +1,5 @@
 version: '2'
 services:
-  # it's used for holding all data in one container instead of spreading all data in one machine volumes
   db-data:
     container_name: db-data-mohito
     image: mongo

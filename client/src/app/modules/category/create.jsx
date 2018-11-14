@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Input from 'app/components/input/index';
 import Button from 'app/components/button/index';
+import Modal from 'app/components/modal/';
 
 export default class CreateCategory extends Component {
     static propTypes = {
@@ -17,6 +18,7 @@ export default class CreateCategory extends Component {
 
         this.state = {
             value: '',
+            isModalOpen: false,
         };
     }
 
@@ -26,9 +28,7 @@ export default class CreateCategory extends Component {
         this.setState({ value });
     }
 
-    submit = (event) => {
-        event.preventDefault();
-
+    addCategory = () => {
         this.props.onAdd({
             name: this.state.value,
             firstLang: 'en',
@@ -37,28 +37,51 @@ export default class CreateCategory extends Component {
 
         this.setState({
             value: '',
+            isModalOpen: false,
+        });
+    }
+
+    openModal = (e) => {
+        e.preventDefault();
+
+        this.setState({
+            isModalOpen: true,
+        });
+    }
+
+    closeModal = () => {
+        this.setState({
+            isModalOpen: false,
         });
     }
 
     render() {
         return (
-            <form>
-                <Input
-                    type="text"
-                    placeholder="New Category"
-                    onChange={this.handleChange}
-                    value={this.state.value}
-                    className="inpt"
-                />
+            <div>
+                <Modal
+                    isOpen={this.state.isModalOpen}
+                    onCloseClick={this.closeModal}
+                    title="Add a category"
+                    onActionClick={this.addCategory}
+                    isActionButtonDisabled={!this.state.value}
+                    actionButtonTitle="Add"
+                >
+                    <Input
+                        type="text"
+                        placeholder="New Category"
+                        onChange={this.handleChange}
+                        value={this.state.value}
+                        className="inpt inpt--full-width"
+                    />
+                </Modal>
                 <Button
-                    type="submit"
-                    onClick={this.submit}
-                    disabled={!this.state.value}
-                    className="btn btn-primary"
+                    type="button"
+                    onClick={this.openModal}
+                    className="btn btn-primary btn--full-width"
                 >
                     Add
                 </Button>
-            </form>
+            </div>
         );
     }
 }
