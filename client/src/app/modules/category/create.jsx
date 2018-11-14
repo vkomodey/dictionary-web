@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import Input from 'app/components/input/index';
 import Button from 'app/components/button/index';
 import Modal from 'app/components/modal/';
+import PlusIcon from 'assets/icons/plus.svg';
 
 export default class CreateCategory extends Component {
     static propTypes = {
@@ -79,7 +80,7 @@ export default class CreateCategory extends Component {
                     onClick={this.openModal}
                     className="btn btn-primary btn--full-width"
                 >
-                    Add
+                    <img src={PlusIcon} alt="Add pair" />
                 </Button>
             </div>
         );
