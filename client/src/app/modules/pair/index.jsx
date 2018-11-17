@@ -73,12 +73,10 @@ export default class PairsPage extends React.Component {
     render() {
         return (
             <div className="pair-page">
-                <div className="pair-page__section">
-                    <CreatePair
-                        onAdded={this.onAdded}
-                        categoryId={this.props.categoryId}
-                    />
-                </div>
+                <CreatePair
+                    onAdded={this.onAdded}
+                    categoryId={this.props.categoryId}
+                />
                 <div className="pair-page__section">
                     <Listing
                         pairs={this.state.pairs}

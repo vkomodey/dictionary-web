@@ -42,9 +42,7 @@ export default class CreateCategory extends Component {
         });
     }
 
-    openModal = (e) => {
-        e.preventDefault();
-
+    openModal = () => {
         this.setState({
             isModalOpen: true,
         });

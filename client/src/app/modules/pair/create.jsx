@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import Button from 'app/components/button/index';
 import Input from 'app/components/input/index';
 import pairApi from 'app/utils/api-services/pairs';
+import Modal from 'app/components/modal/';
+import PlusIcon from 'assets/icons/plus.svg';
 import './style.scss';
 
 export default class CreatePair extends React.Component {
@@ -20,10 +22,11 @@ export default class CreatePair extends React.Component {
         this.state = {
             firstLangExpression: '',
             secondLangExpression: '',
+            isModalOpen: false,
         };
     }
 
-    onClick = async (e) => {
+    addPair = async () => {
         let pair = {
             firstLangExpression: this.state.firstLangExpression,
             secondLangExpression: this.state.secondLangExpression,
@@ -32,17 +35,23 @@ export default class CreatePair extends React.Component {
             secondLang: 'ru',
         };
 
-        e.preventDefault();
-
         this.props.onAdded(await pairApi.create(pair));
 
-        this.clearInputs();
-    }
-
-    clearInputs = () => {
         this.setState({
             firstLangExpression: '',
             secondLangExpression: '',
+        });
+    }
+
+    openModal = () => {
+        this.setState({
+            isModalOpen: true,
+        });
+    }
+
+    closeModal = () => {
+        this.setState({
+            isModalOpen: false,
         });
     }
 
@@ -63,44 +72,48 @@ export default class CreatePair extends React.Component {
 
     render() {
         return (
-            <div className="create-pair">
-                <div className="create-pair__title">
-                    <span> Pair </span>
-                </div>
-                <form className="create-pair__form">
-                    <div className="create-pair__inputs-group">
-                        <div className="create-pair__inputs-group__item">
+            <React.Fragment>
+                <Modal
+                    isOpen={this.state.isModalOpen}
+                    onCloseClick={this.closeModal}
+                    title="Add a pair"
+                    onActionClick={() => {
+                        this.addPair();
+                        this.closeModal();
+                    }}
+                    isActionButtonDisabled={!this.state.firstLangExpression || !this.state.secondLangExpression}
+                    actionButtonTitle="Add"
+                >
+                    <div>
+                        <div>
                             <Input
                                 type="text"
                                 placeholder="en"
                                 value={this.state.firstLangExpression}
                                 onChange={this.handleChange('en')}
-                                className="inpt"
+                                className="inpt inpt--full-width"
                                 autoFocus
                             />
                         </div>
-                        <div className="create-pair__inputs-group__item">
+                        <div>
                             <Input
                                 type="text"
                                 placeholder="ru"
                                 value={this.state.secondLangExpression}
                                 onChange={this.handleChange('ru')}
-                                className="inpt"
+                                className="inpt inpt--full-width"
                             />
                         </div>
                     </div>
-                    <div>
-                        <Button
-                            type="submit"
-                            onClick={this.onClick}
-                            disabled={!this.state.firstLangExpression || !this.state.secondLangExpression}
-                            className="btn btn-primary"
-                        >
-                            Add
-                        </Button>
-                    </div>
-                </form>
-            </div>
+                </Modal>
+                <Button
+                    type="button"
+                    onClick={this.openModal}
+                    className="btn btn-primary btn--full-width"
+                >
+                    <img src={PlusIcon} alt="Add pair" />
+                </Button>
+            </React.Fragment>
         );
     }
 }
