@@ -16,8 +16,7 @@
     "koa-router": "^7.2.1",
     "koa2-cors": "^2.0.5",
     "lodash": "^4.17.5",
-    "mongoose": "^4.13.1",
-    "shortid": "^2.2.8"
+    "mongoose": "^4.13.1"
   },
   "devDependencies": {
     "eslint": "^4.10.0",
