@@ -13,6 +13,7 @@ services:
       - ./dh-param/dhparam-2048.pem:/etc/ssl/certs/dhparam-2048.pem
       - /docker-volumes/etc/letsencrypt/live/dictify-pro.com/fullchain.pem:/etc/letsencrypt/live/dictify-pro.com/fullchain.pem
       - /docker-volumes/etc/letsencrypt/live/dictify-pro.com/privkey.pem:/etc/letsencrypt/live/dictify-pro.com/privkey.pem
+      - /docker-volumes/data/letsencrypt:/data/letsencrypt
 
 networks:
   default:
