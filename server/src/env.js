@@ -8,7 +8,7 @@ let config = {
     host: 'localhost',
     schema: 'http',
     apiPrefix: '/v1',
-    mongodbUrl: 'mongodb://localhost:27017/dictionary',
+    mongodbUrl: 'mongodb://localhost:27020/dictify',
 };
 
 let proxiedConfig = new Proxy(config, {
