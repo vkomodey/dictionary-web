@@ -8,16 +8,10 @@ import ErrorIcon from 'assets/icons/error.svg';
 import pairApi from 'app/utils/api-services/pairs';
 import toastr from 'app/utils/toastr';
 import MatchedList from './answers';
+import { areEqual } from './answer.checks';
 
 const START = 'start';
 const FINISH = 'finish';
-
-function isMatch(value1 = '', value2 = '') {
-    let cleared1 = value1.trim().toLowerCase();
-    let cleared2 = value2.trim().toLowerCase();
-
-    return cleared1 === cleared2;
-}
 
 export default class Test extends React.Component {
     static propTypes = {
@@ -124,7 +118,7 @@ export default class Test extends React.Component {
             pairs,
         } = this.state;
         let currentPair = pairs[currentPairIndex];
-        let isAnswerRight = isMatch(answer, currentPair.firstLangExpression);
+        let isAnswerRight = areEqual(answer, currentPair.firstLangExpression, currentPair.firstLang);
         let newIndex = currentPairIndex + 1;
         let isTestFinished = newIndex > pairs.length - 1;
         let newPairs = [
