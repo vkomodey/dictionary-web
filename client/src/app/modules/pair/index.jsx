@@ -80,7 +80,7 @@ export default class PairsPage extends React.Component {
                 <div className="pair-page__section">
                     <Listing
                         pairs={this.state.pairs}
-                        uniqKey="_id"
+                        uniqKey="id"
                         onRemove={this.onRemove}
                     />
                 </div>

@@ -6,7 +6,7 @@ import ErrorIcon from 'assets/icons/error.svg';
 export default function MatchedList(props) {
     let answeredPairs = props.pairs.filter(p => p.answered);
     let pairsView = answeredPairs.map(p => (
-        <tr key={p._id}>
+        <tr key={p.id}>
             <td> {p.firstLangExpression} </td>
             <td> {p.secondLangExpression} </td>
             <td> {p.answer} </td>
@@ -40,7 +40,7 @@ MatchedList.propTypes = {
         answer: PropTypes.string.required,
         isAnswerRight: PropTypes.string.required,
         answered: PropTypes.string.required,
-        _id: PropTypes.string.required,
+        id: PropTypes.string.required,
     })),
 };
 

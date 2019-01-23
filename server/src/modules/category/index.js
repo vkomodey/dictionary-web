@@ -22,7 +22,8 @@ async function findById(ctx) {
 
 async function findAll(ctx) {
     try {
-        let categories = await Category.find().lean().exec();
+        let categoryDocs = await Category.find();
+        let categories = categoryDocs.map(c => c.toObject());
 
         let pairStatistics = await Pair.aggregate([
             {
@@ -31,10 +32,16 @@ async function findAll(ctx) {
                     count: { $sum: 1 },
                 },
             },
+            {
+                $project: {
+                    id: '$_id',
+                    count: 1,
+                },
+            },
         ]);
 
         for (let category of categories) {
-            let pairStats = pairStatistics.find(s => s._id.toString() === category._id.toString());
+            let pairStats = pairStatistics.find(s => s.id === category.id);
 
             category.pairAmount = _.get(pairStats, 'count', 0);
         }

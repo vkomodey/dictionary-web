@@ -40,7 +40,7 @@ export default class CategoriesContainer extends Component {
         }
 
         this.setState({ categories });
-        this.setActive(categories[0] && categories[0]._id);
+        this.setActive(categories[0] && categories[0].id);
     }
 
     setActive = (categoryId) => {
@@ -64,12 +64,12 @@ export default class CategoriesContainer extends Component {
     render() {
         let { categories } = this.state;
         let view = categories.map(category => (
-            <div key={category._id} className="category-item-container">
+            <div key={category.id} className="category-item-container">
                 <CategoryItem
-                    categoryId={category._id}
+                    categoryId={category.id}
                     name={category.name}
                     pairAmount={category.pairAmount}
-                    isActive={category._id === this.state.activeCategoryId}
+                    isActive={category.id === this.state.activeCategoryId}
                     onClick={this.setActive}
                     isReadMode={this.props.isReadMode}
                 />
@@ -78,7 +78,7 @@ export default class CategoriesContainer extends Component {
                     <div>
                         <Button
                             type="button"
-                            onClick={this.removeCategory(category._id)}
+                            onClick={this.removeCategory(category.id)}
                             className="btn btn-danger"
                         >
                             <img src={DeleteIcon} alt="Delete pair" />
