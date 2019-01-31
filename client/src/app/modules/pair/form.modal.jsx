@@ -5,28 +5,38 @@ import Input from 'app/components/input/index';
 import pairApi from 'app/utils/api-services/pairs';
 import Modal from 'app/components/modal/';
 import PlusIcon from 'assets/icons/plus.svg';
+import EditIcon from 'assets/icons/update.svg';
 import './style.scss';
 
-export default class CreatePair extends React.Component {
+export default class PairModal extends React.Component {
     static propTypes = {
-        onAdded: PropTypes.func,
+        onSubmit: PropTypes.func,
         categoryId: PropTypes.string.isRequired,
+        isCreate: PropTypes.bool,
+        firstLangExpression: PropTypes.string,
+        secondLangExpression: PropTypes.string,
+        pairId: PropTypes.string,
     }
 
     static defaultProps = {
-        onAdded: () => {},
+        onSubmit: () => {},
+        isCreate: false,
+        firstLangExpression: '',
+        secondLangExpression: '',
+        pairId: '',
     };
 
     constructor(props) {
         super(props);
+
         this.state = {
-            firstLangExpression: '',
-            secondLangExpression: '',
+            firstLangExpression: this.props.firstLangExpression,
+            secondLangExpression: this.props.secondLangExpression,
             isModalOpen: false,
         };
     }
 
-    addPair = async () => {
+    onModalActionClick = async () => {
         let pair = {
             firstLangExpression: this.state.firstLangExpression,
             secondLangExpression: this.state.secondLangExpression,
@@ -34,13 +44,11 @@ export default class CreatePair extends React.Component {
             firstLang: 'en',
             secondLang: 'ru',
         };
+        let result = this.props.isCreate ? await pairApi.create(pair) : await pairApi.edit(this.props.pairId, pair);
 
-        this.props.onAdded(await pairApi.create(pair));
+        this.props.onSubmit(result);
 
-        this.setState({
-            firstLangExpression: '',
-            secondLangExpression: '',
-        });
+        this.closeModal();
     }
 
     openModal = () => {
@@ -71,18 +79,19 @@ export default class CreatePair extends React.Component {
     }
 
     render() {
+        let { isCreate } = this.props;
+        let title = isCreate ? 'Add a pair' : 'Edit the pair';
+        let actionButtonTitle = isCreate ? 'Add' : 'Edit';
+
         return (
             <React.Fragment>
                 <Modal
                     isOpen={this.state.isModalOpen}
                     onCloseClick={this.closeModal}
-                    title="Add a pair"
-                    onActionClick={() => {
-                        this.addPair();
-                        this.closeModal();
-                    }}
+                    title={title}
+                    onActionClick={this.onModalActionClick}
                     isActionButtonDisabled={!this.state.firstLangExpression || !this.state.secondLangExpression}
-                    actionButtonTitle="Add"
+                    actionButtonTitle={actionButtonTitle}
                 >
                     <div>
                         <div>
@@ -106,13 +115,25 @@ export default class CreatePair extends React.Component {
                         </div>
                     </div>
                 </Modal>
-                <Button
-                    type="button"
-                    onClick={this.openModal}
-                    className="btn btn-primary btn--full-width"
-                >
-                    <img src={PlusIcon} alt="Add pair" />
-                </Button>
+                { isCreate &&
+                    <Button
+                        type="button"
+                        onClick={this.openModal}
+                        className="btn btn-primary btn--full-width"
+                    >
+                        <img src={PlusIcon} alt={title} />
+                    </Button>
+                }
+
+                { !isCreate &&
+                    <Button
+                        type="button"
+                        onClick={this.openModal}
+                        className="btn btn-primary btn--full-width"
+                    >
+                        <img src={EditIcon} alt={title} />
+                    </Button>
+                }
             </React.Fragment>
         );
     }

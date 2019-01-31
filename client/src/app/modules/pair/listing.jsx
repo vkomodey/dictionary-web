@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import Button from 'app/components/button/index';
 import Checkbox from 'app/components/checkbox/index';
 import DeleteIcon from 'assets/icons/delete.svg';
+import FormModal from './form.modal';
 
 export default class PairsListing extends React.Component {
     static propTypes = {
@@ -11,12 +12,14 @@ export default class PairsListing extends React.Component {
             secondLangExpression: PropTypes.string,
         })),
         onRemove: PropTypes.func,
+        onEdit: PropTypes.func,
         uniqKey: PropTypes.string.isRequired,
     }
 
     static defaultProps = {
         pairs: [],
         onRemove: () => {},
+        onEdit: () => {},
     }
 
     constructor(props) {
@@ -40,6 +43,10 @@ export default class PairsListing extends React.Component {
         e.preventDefault();
 
         this.props.onRemove(id);
+    }
+
+    onEditClick = index => (pair) => {
+        this.props.onEdit(index, pair);
     }
 
     onChecked = pairId => (e) => {
@@ -90,7 +97,13 @@ export default class PairsListing extends React.Component {
         });
     }
 
-    renderRow = (entity) => {
+    renderRow = (entity, index) => {
+        let {
+            firstLangExpression,
+            secondLangExpression,
+            categoryId,
+            id: pairId,
+        } = entity;
         let { checkedKeyMap, lastSelectedKey } = this.state;
         let { uniqKey } = this.props;
         let entityKey = entity[uniqKey];
@@ -106,8 +119,18 @@ export default class PairsListing extends React.Component {
                         uniqValue={entityKey}
                     />
                 </td>
-                <td onClick={this.onChecked(entityKey)}> {entity.firstLangExpression} </td>
-                <td onClick={this.onChecked(entityKey)}> {entity.secondLangExpression} </td>
+                <td onClick={this.onChecked(entityKey)}> {firstLangExpression} </td>
+                <td onClick={this.onChecked(entityKey)}> {secondLangExpression} </td>
+                <td>
+                    <FormModal
+                        isCreate={false}
+                        firstLangExpression={firstLangExpression}
+                        secondLangExpression={secondLangExpression}
+                        onSubmit={this.onEditClick(index)}
+                        categoryId={categoryId}
+                        pairId={pairId}
+                    />
+                </td>
                 <td>
                     <Button
                         type="button"
@@ -154,6 +177,7 @@ export default class PairsListing extends React.Component {
                             </th>
                             <th>English</th>
                             <th>Russian</th>
+                            <th />
                             <th />
                         </tr>
                     </thead>

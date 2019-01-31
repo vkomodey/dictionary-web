@@ -10,12 +10,13 @@ let defaultHeaders = {
 };
 
 let apiService = {
-    get: (url, query, headers) => makeRequest('GET', url, query, null, headers),
-    post: (url, query, body, headers) => makeRequest('POST', url, query, body, headers),
-    delete: (url, query, headers) => makeRequest('DELETE', url, query, null, headers),
+    get: (url, query, headers) => performRequest('GET', url, query, null, headers),
+    post: (url, query, body, headers) => performRequest('POST', url, query, body, headers),
+    put: (url, query, body, headers) => performRequest('PUT', url, query, body, headers),
+    delete: (url, query, headers) => performRequest('DELETE', url, query, null, headers),
 };
 
-async function makeRequest(method, url, query, body, headers) {
+async function performRequest(method, url, query, body, headers) {
     let response;
 
     store.dispatch(loading(true));

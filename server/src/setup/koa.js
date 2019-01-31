@@ -23,6 +23,14 @@ module.exports = (app) => {
             };
         };
 
+        ctx.notFound = (message) => {
+            ctx.status = httpStatuses.notFound;
+
+            ctx.body = {
+                message: message || 'Resource not found',
+            };
+        };
+
         await next();
     });
 };

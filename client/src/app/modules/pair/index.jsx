@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import pairApi from 'app/utils/api-services/pairs';
 import toastr from 'app/utils/toastr';
 import Listing from './listing';
-import CreatePair from './create';
+import PairModal from './form.modal';
 import './style.scss';
 
 export default class PairsPage extends React.Component {
@@ -58,6 +58,18 @@ export default class PairsPage extends React.Component {
         toastr.success('Pair has been added');
     }
 
+    onEdit = async (index, pair) => {
+        this.setState({
+            pairs: [
+                ...this.state.pairs.slice(0, index),
+                pair,
+                ...this.state.pairs.slice(index + 1),
+            ],
+        });
+
+        toastr.success('Pair has been updated');
+    }
+
     fetchPairs = async (categoryId) => {
         try {
             this.setState({
@@ -73,15 +85,17 @@ export default class PairsPage extends React.Component {
     render() {
         return (
             <div className="pair-page">
-                <CreatePair
-                    onAdded={this.onAdded}
+                <PairModal
+                    onSubmit={this.onAdded}
                     categoryId={this.props.categoryId}
+                    isCreate
                 />
                 <div className="pair-page__section">
                     <Listing
                         pairs={this.state.pairs}
                         uniqKey="id"
                         onRemove={this.onRemove}
+                        onEdit={this.onEdit}
                     />
                 </div>
             </div>

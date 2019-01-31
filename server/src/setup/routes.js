@@ -10,6 +10,8 @@ module.exports = (app) => {
 
     addRoute(mainRouter, pairRouter, app, 'pairs');
     addRoute(mainRouter, categoryRouter, app, 'categories');
+
+    app.use(ctx => ctx.notFound('Page not found'));
 };
 
 function addRoute(mainRouter, childRouter, app, path) {

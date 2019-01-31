@@ -9,10 +9,26 @@ let router = new Router();
 router.get('/:id', findById);
 router.get('/', findAll);
 router.post('/', create);
+router.put('/:id', isExistsById, update);
 router.delete('/multiple', removeMultiple);
 router.delete('/:id', remove);
 router.post('/move', move);
 
+async function isExistsById(ctx, next) {
+    let pair;
+
+    try {
+        pair = await Pair.findOne({ _id: ctx.params.id });
+    } catch (err) {
+        return ctx.internalError();
+    }
+
+    if (pair) {
+        return next();
+    }
+
+    return ctx.notFound('Pair not found');
+}
 async function findById(ctx) {
     try {
         ctx.body = await Pair.findById(ctx.params.id);
@@ -37,6 +53,31 @@ async function create(ctx) {
     } catch (err) {
         ctx.internalError(err);
     }
+}
+
+async function update(ctx) {
+    let pairId = ctx.params.id;
+    let { firstLangExpression, secondLangExpression } = ctx.request.body;
+
+    try {
+        let body = {};
+
+        if (firstLangExpression) {
+            body.firstLangExpression = firstLangExpression;
+        }
+
+        if (secondLangExpression) {
+            body.secondLangExpression = secondLangExpression;
+        }
+
+        let result = await Pair.update({ _id: pairId }, { $set: body });
+
+        ctx.respondSuccess(result);
+    } catch (err) {
+        ctx.internalError(err);
+    }
+
+    ctx.respondSuccess({ ...ctx.request.body, id: pairId });
 }
 
 async function remove(ctx) {

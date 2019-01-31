@@ -6,6 +6,8 @@ let endpoint = endpoints.pairs;
 export default {
     create: pair => httpService.post(endpoint, null, pair),
 
+    edit: (id, pair) => httpService.put(`${endpoint}/${id}`, null, pair),
+
     findAll: query => httpService.get(endpoint, query),
 
     findById: id => httpService.get(`${endpoint}/${id}`),
